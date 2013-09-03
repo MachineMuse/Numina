@@ -9,6 +9,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent
  * Created: 11:31 AM, 9/3/13
  */
 object NuminaConfig {
+
   var config: Configuration = null
 
   def init(event: FMLPreInitializationEvent) {
