@@ -131,7 +131,7 @@
     <target name="copy-source">
         <delete dir="${mcpsrc.dir}/net/machinemuse"/>
         <copy todir="${mcpsrc.dir}/net/machinemuse">
-            <fileset dir="${src.dir}/minecraft/net/machinemuse"/>
+            <fileset dir="${src.dir}/net/machinemuse"/>
             <filterset>
                 <filter token="MOD_VERSION" value="${fullversion}"/>
                 <filter token="MC_VERSION" value="${minecraft.version}"/>

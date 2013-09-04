@@ -32,10 +32,10 @@ object CommandNick extends CommandBase {
     s.size > 2 && s.size < 16
   }
 
-  @ForgeSubscribe def onNameFormat(e: PlayerEvent.NameFormat) {
-    nameToNicknameMap.get(e.username) map {
-      dn:String =>
-        e.displayname = dn
-    }
-  }
+//  @ForgeSubscribe def onNameFormat(e: PlayerEvent.NameFormat) {
+//    nameToNicknameMap.get(e.username) map {
+//      dn:String =>
+//        e.displayname = dn
+//    }
+//  }
 }
