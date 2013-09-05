@@ -16,7 +16,7 @@ object Localization {
   val LANG_PATH = "/assets/powersuits/lang/"
   var extractedLanguage = ""
 
-  def getCurrentLanguage = Minecraft.getMinecraft.func_135016_M().func_135041_c().func_135034_a()
+  def getCurrentLanguage = Minecraft.getMinecraft.getLanguageManager.getCurrentLanguage.getLanguageCode
 
   def loadCurrentLanguage() {
     if (getCurrentLanguage != extractedLanguage) {

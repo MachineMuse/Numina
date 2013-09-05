@@ -44,7 +44,7 @@ object Musique {
         if (!soundsystem.playing(soundid)) {
           val soundfile = getSoundPoolEntry(soundname)
           val amp: Float = 16.0F * Math.max(1, volume)
-          soundsystem.newSource(unknownflag, soundid, soundfile.func_110457_b, soundfile.func_110458_a, false, player.posX.toFloat, player.posY.toFloat, player.posZ.toFloat, 2, amp)
+          soundsystem.newSource(unknownflag, soundid, soundfile.getSoundUrl, soundfile.getSoundName, false, player.posX.toFloat, player.posY.toFloat, player.posZ.toFloat, 2, amp)
           soundsystem.setLooping(soundid, continuous)
           soundsystem.play(soundid)
         }

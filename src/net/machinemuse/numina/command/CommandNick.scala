@@ -25,7 +25,7 @@ object CommandNick extends CommandBase {
           nameToNicknameMap.putName(player.username, args(0))
           OptionCast[EntityPlayerMP](player) map {
             p =>
-              p.mcServer.getConfigurationManager.sendChatMsg(ChatMessageComponent.func_111077_e(player.username + " is now known as " + args(0)))
+              p.mcServer.getConfigurationManager.sendChatMsg(ChatMessageComponent.createFromText(player.username + " is now known as " + args(0)))
           }
         }
         case _ => MuseLogger.logError(sender.getCommandSenderName + " not a player")

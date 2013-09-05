@@ -1,4 +1,4 @@
-package net.machinemuse.numina.item.moded
+package net.machinemuse.numina.item
 
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
