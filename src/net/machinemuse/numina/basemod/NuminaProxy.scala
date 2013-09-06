@@ -2,6 +2,7 @@ package net.machinemuse.numina.basemod
 
 import net.minecraftforge.common.MinecraftForge
 import net.machinemuse.numina.mouse.MouseEventHandler
+import net.machinemuse.numina.render.RenderGameOverlayEventHandler
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -19,6 +20,7 @@ object NuminaProxyClient extends NuminaProxy {
 
   override def Init() = {
     MinecraftForge.EVENT_BUS.register(MouseEventHandler)
+    MinecraftForge.EVENT_BUS.register(RenderGameOverlayEventHandler)
   }
 }
 
