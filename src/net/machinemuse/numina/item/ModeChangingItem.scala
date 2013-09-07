@@ -19,9 +19,9 @@ trait ModeChangingItem {
 
   def getNextModeIcon(stack: ItemStack): Icon
 
-  def cycleMode(stack: ItemStack, dmode: Int, player: EntityPlayer)
+  def cycleMode(stack: ItemStack, dmode: Int)
 
-  def cycleModeForward(stack: ItemStack, player: EntityPlayer) = cycleMode(stack, 1, player)
+  def cycleModeForward(stack: ItemStack) = cycleMode(stack, 1)
 
-  def cycleModeBackward(stack: ItemStack, player: EntityPlayer) = cycleMode(stack, -1, player)
+  def cycleModeBackward(stack: ItemStack) = cycleMode(stack, -1)
 }

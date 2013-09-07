@@ -6,7 +6,7 @@ import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.common.event.{FMLServerStartingEvent, FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent}
 import net.machinemuse.numina.general.MuseLogger
 import net.machinemuse.numina.command.Commander
-import net.machinemuse.numina.network.MusePacketHandler
+import net.machinemuse.numina.network.{NuminaPackets, MusePacketHandler}
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -26,6 +26,7 @@ object Numina {
 
   @Mod.EventHandler def init(e: FMLInitializationEvent) {
     proxy.Init()
+    NuminaPackets.init()
   }
 
   @Mod.EventHandler def postinit(e: FMLPostInitializationEvent) {

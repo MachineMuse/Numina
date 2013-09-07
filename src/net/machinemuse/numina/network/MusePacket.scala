@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{CompressedStreamTools, NBTTagCompound}
 import net.machinemuse.numina.general.MuseLogger
 import net.machinemuse.numina.basemod.Numina
+import cpw.mods.fml.relauncher.{Side, SideOnly}
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -44,6 +45,7 @@ abstract class MusePacket(val player: Player) {
    *
    * @param player
    */
+  @SideOnly(Side.CLIENT)
   def handleClient(player: EntityClientPlayerMP) {}
 
   def handleServer(player: EntityPlayerMP) {}

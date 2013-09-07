@@ -18,7 +18,7 @@ object MouseEventHandler {
         stack <- Option(p.getCurrentEquippedItem)
         item <- OptionCast[ModeChangingItem](stack.getItem)
       } {
-        item.cycleMode(stack, e.dwheel / 120, p)
+        item.cycleMode(stack, e.dwheel / 120)
         e.setCanceled(true)
       }
     }
