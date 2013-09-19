@@ -69,7 +69,7 @@ object RenderGameOverlayEventHandler {
       val screen = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight)
 
       MuseTextureUtils.pushTexture(MuseTextureUtils.ITEM_TEXTURE_QUILT)
-      RenderState.blendingOn
+      RenderState.blendingOn()
       val swapTime = Math.min(System.currentTimeMillis - lastSwapTime, SWAPTIME)
       val currentMode: Icon = item.getCurrentModeIcon(stack)
       val nextMode: Icon = item.getNextModeIcon(stack)
@@ -106,26 +106,26 @@ object RenderGameOverlayEventHandler {
         val r1: Double = 1 - swapTime / SWAPTIME.asInstanceOf[Double]
         val r2: Double = swapTime / SWAPTIME.asInstanceOf[Double]
         if (lastSwapDirection == -1) {
-          nextX = (currX * r1 + nextX * r2)
-          nextY = (currY * r1 + nextY * r2)
-          currX = (prevX * r1 + currX * r2)
-          currY = (prevY * r1 + currY * r2)
+          nextX = currX * r1 + nextX * r2
+          nextY = currY * r1 + nextY * r2
+          currX = prevX * r1 + currX * r2
+          currY = prevY * r1 + currY * r2
           drawIcon(currX, currY, currentMode, 0.8)
           drawIcon(nextX, nextY, nextMode, 0.8)
         }
         else {
-          prevX = (currX * r1 + prevX * r2)
-          prevY = (currY * r1 + prevY * r2)
-          currX = (nextX * r1 + currX * r2)
-          currY = (nextY * r1 + currY * r2)
+          prevX = currX * r1 + prevX * r2
+          prevY = currY * r1 + prevY * r2
+          currX = nextX * r1 + currX * r2
+          currY = nextY * r1 + currY * r2
           drawIcon(prevX, prevY, prevMode, 0.8)
           drawIcon(currX, currY, currentMode, 0.8)
         }
       }
-      RenderState.scissorsOff
-      RenderState.blendingOff
-      Colour.WHITE.doGL
-      MuseTextureUtils.popTexture
+      RenderState.scissorsOff()
+      RenderState.blendingOff()
+      Colour.WHITE.doGL()
+      MuseTextureUtils.popTexture()
 
     }
   }
@@ -134,7 +134,7 @@ object RenderGameOverlayEventHandler {
     MuseIconUtils.drawIconAt(x, y, icon, Colour.WHITE.withAlpha(alpha))
   }
 
-  def updateSwap(dModeSig:Int) {
+  def updateSwap(dModeSig: Int) {
     lastSwapTime = System.currentTimeMillis
     lastSwapDirection = dModeSig
   }

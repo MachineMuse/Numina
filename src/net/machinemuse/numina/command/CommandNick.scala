@@ -26,7 +26,7 @@ object CommandNick extends CommandBase {
           OptionCast[EntityPlayerMP](player) map {
             p =>
               p.mcServer.getConfigurationManager.sendChatMsg(ChatMessageComponent.createFromText(p.username + " is now known as " + args(0)))
-              PacketDispatcher.sendPacketToAllPlayers(new MusePacketNameChangeRequest(p.asInstanceOf[Player], p.username, args(0)).getPacket131)
+              PacketDispatcher.sendPacketToAllPlayers(new MusePacketNameChangeRequest(p.asInstanceOf[Player], p.username, args(0), p.entityId).getPacket131)
               p.refreshDisplayName()
           }
         }

@@ -20,6 +20,11 @@ trait InventoriedItem {
     }
   }
 
+  def setSelectedSlot(stack:ItemStack, i:Int) = {
+    val tag = NuminaItemUtils.getTagCompound(stack)
+    tag.setInteger("selected", i)
+  }
+
   def getContentsAsNBTTagList(stack: ItemStack) = {
     val tag = NuminaItemUtils.getTagCompound(stack)
     if (tag.hasKey("contents")) tag.getTagList("contents")
@@ -44,6 +49,10 @@ trait InventoriedItem {
         list.appendTag(item.writeToNBT(new NBTTagCompound()))
     }
     NuminaItemUtils.getTagCompound(stack).setTag("contents", list)
+  }
+
+  def insertItem(bag:ItemStack, stackToInsert:ItemStack) {
+    setContents(bag, getContents(bag) :+ stackToInsert)
   }
 
   def getNumStacks(stack:ItemStack) = {

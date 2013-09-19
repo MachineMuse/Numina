@@ -3,10 +3,10 @@ package net.machinemuse.numina.network
 import java.io.DataInputStream
 import cpw.mods.fml.common.network.Player
 import net.minecraft.client.entity.EntityClientPlayerMP
-import net.machinemuse.numina.command.{NicknameMap, CommandNick}
+import net.machinemuse.numina.command.NicknameMap
 import cpw.mods.fml.relauncher.{SideOnly, Side}
-import net.minecraft.command.PlayerSelector
 import net.minecraft.entity.player.EntityPlayer
+import net.machinemuse.numina.scala.OptionCast
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -16,11 +16,12 @@ object MusePacketNameChangeRequest extends MusePackager {
   def read(d: DataInputStream, p: Player) = {
     val username = readString(d)
     val newnick = readString(d)
-    new MusePacketNameChangeRequest(p, username, newnick)
+    val entityID = readInt(d)
+    new MusePacketNameChangeRequest(p, username, newnick, entityID)
   }
 }
 
-class MusePacketNameChangeRequest(player: Player, username: String, newnick: String) extends MusePacket(player) {
+class MusePacketNameChangeRequest(player: Player, username: String, newnick: String, entityID: Int) extends MusePacket(player) {
   override val packager = MusePacketNameChangeRequest
 
   override def write() {
@@ -32,7 +33,8 @@ class MusePacketNameChangeRequest(player: Player, username: String, newnick: Str
   override def handleClient(player: EntityClientPlayerMP) {
     NicknameMap.removeName(username)
     NicknameMap.putName(username, newnick)
-    val target = Option(PlayerSelector.matchOnePlayer(player, username))
-    target.map(t=> t.refreshDisplayName())
+    OptionCast[EntityPlayer](player.worldObj.getEntityByID(entityID)) map {
+      t => t.refreshDisplayName()
+    }
   }
 }
