@@ -17,6 +17,7 @@ object MouseEventHandler {
         p <- Option(Minecraft.getMinecraft.thePlayer)
         stack <- Option(p.getCurrentEquippedItem)
         item <- OptionCast[ModeChangingItem](stack.getItem)
+        if p.isSneaking
       } {
         item.cycleMode(stack, e.dwheel / 120)
         e.setCanceled(true)
