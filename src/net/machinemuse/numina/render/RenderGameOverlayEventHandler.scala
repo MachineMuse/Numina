@@ -71,9 +71,9 @@ object RenderGameOverlayEventHandler {
       MuseTextureUtils.pushTexture(MuseTextureUtils.ITEM_TEXTURE_QUILT)
       RenderState.blendingOn()
       val swapTime = Math.min(System.currentTimeMillis - lastSwapTime, SWAPTIME)
-      val currentMode: Icon = item.getCurrentModeIcon(stack)
-      val nextMode: Icon = item.getNextModeIcon(stack)
-      val prevMode: Icon = item.getPrevModeIcon(stack)
+      val currentMode: Option[Icon] = item.getCurrentModeIcon(stack)
+      val nextMode: Option[Icon] = item.getNextModeIcon(stack)
+      val prevMode: Option[Icon] = item.getPrevModeIcon(stack)
       var prevX: Double = .0
       var prevY: Double = .0
       var currX: Double = .0
@@ -130,8 +130,8 @@ object RenderGameOverlayEventHandler {
     }
   }
 
-  private def drawIcon(x: Double, y: Double, icon: Icon, alpha: Double) {
-    MuseIconUtils.drawIconAt(x, y, icon, Colour.WHITE.withAlpha(alpha))
+  private def drawIcon(x: Double, y: Double, icon: Option[Icon], alpha: Double) {
+    icon.map(i => MuseIconUtils.drawIconAt(x, y, i, Colour.WHITE.withAlpha(alpha)))
   }
 
   def updateSwap(dModeSig: Int) {

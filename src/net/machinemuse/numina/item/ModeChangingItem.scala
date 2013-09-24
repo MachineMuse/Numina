@@ -13,11 +13,11 @@ trait ModeChangingItem {
 
   def getActiveMode(stack: ItemStack): String = NuminaItemUtils.getTagCompound(stack).getString("mode")
 
-  def getPrevModeIcon(stack: ItemStack): Icon
+  def getPrevModeIcon(stack: ItemStack): Option[Icon]
 
-  def getCurrentModeIcon(stack: ItemStack): Icon
+  def getCurrentModeIcon(stack: ItemStack): Option[Icon]
 
-  def getNextModeIcon(stack: ItemStack): Icon
+  def getNextModeIcon(stack: ItemStack): Option[Icon]
 
   def cycleMode(stack: ItemStack, dmode: Int)
 
