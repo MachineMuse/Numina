@@ -5,7 +5,7 @@ import cpw.mods.fml.common.network.NetworkMod
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.common.event.{FMLServerStartingEvent, FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent}
 import net.machinemuse.numina.general.MuseLogger
-import net.machinemuse.numina.command.Commander
+import net.machinemuse.numina.command.{NicknameMap, Commander}
 import net.machinemuse.numina.network.{NuminaPackets, MusePacketHandler}
 import net.minecraftforge.common.MinecraftForge
 import net.machinemuse.numina.player.PlayerTickHandler
@@ -23,7 +23,7 @@ object Numina {
   @Mod.EventHandler def preinit(e: FMLPreInitializationEvent) {
     NuminaConfig.init(e)
     MuseLogger.logDebug("test")
-    MinecraftForge.EVENT_BUS.register(PlayerTickHandler)
+    //MinecraftForge.EVENT_BUS.register(PlayerTickHandler)
     proxy.PreInit()
   }
 

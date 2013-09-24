@@ -16,8 +16,7 @@ object MusePacketNameChangeRequest extends MusePackager {
   def read(d: DataInputStream, p: Player) = {
     val username = readString(d)
     val newnick = readString(d)
-    val entityID = readInt(d)
-    new MusePacketNameChangeRequest(p, username, newnick, entityID)
+    new MusePacketNameChangeRequest(p, username, newnick, 0)
   }
 }
 
@@ -33,6 +32,7 @@ class MusePacketNameChangeRequest(player: Player, username: String, newnick: Str
   override def handleClient(player: EntityClientPlayerMP) {
     NicknameMap.removeName(username)
     NicknameMap.putName(username, newnick)
+
     OptionCast[EntityPlayer](player.worldObj.getEntityByID(entityID)) map {
       t => t.refreshDisplayName()
     }
