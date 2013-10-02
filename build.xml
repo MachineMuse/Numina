@@ -113,8 +113,8 @@
             </fileset>
         </delete>
         <copy file="${download.dir}/slick-util.jar" todir="${dist.dir}"/>
-        <get src="http://files.minecraftforge.net/fmllibs/scala-library.jar"
-             dest="${dist.dir}/scala-library.jar"/>
+        <!--<get src="http://files.minecraftforge.net/fmllibs/scala-library.jar"-->
+             <!--dest="${dist.dir}/scala-library.jar"/>-->
 
         <jar destfile="${dist.dir}/Numina-${minecraft.version}-${fullversion}.jar" basedir="${classes.dir}"/>
         <delete dir="${classes.dir}"/>
