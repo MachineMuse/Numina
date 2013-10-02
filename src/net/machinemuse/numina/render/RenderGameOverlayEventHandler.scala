@@ -18,39 +18,41 @@ import net.machinemuse.numina.geometry.Colour
 object RenderGameOverlayEventHandler {
   @ForgeSubscribe def onPreRenderGameOverlayEvent(e: RenderGameOverlayEvent.Pre) {
     e.`type` match {
-      case ElementType.ALL =>
-      case ElementType.HELMET =>
-      case ElementType.PORTAL =>
-      case ElementType.CROSSHAIRS =>
-      case ElementType.BOSSHEALTH =>
-      case ElementType.ARMOR =>
-      case ElementType.HEALTH =>
-      case ElementType.FOOD =>
-      case ElementType.AIR =>
-      case ElementType.HOTBAR =>
-      case ElementType.EXPERIENCE =>
-      case ElementType.TEXT =>
-      case ElementType.HEALTHMOUNT =>
-      case ElementType.JUMPBAR =>
+//      case ElementType.ALL =>
+//      case ElementType.HELMET =>
+//      case ElementType.PORTAL =>
+//      case ElementType.CROSSHAIRS =>
+//      case ElementType.BOSSHEALTH =>
+//      case ElementType.ARMOR =>
+//      case ElementType.HEALTH =>
+//      case ElementType.FOOD =>
+//      case ElementType.AIR =>
+//      case ElementType.HOTBAR =>
+//      case ElementType.EXPERIENCE =>
+//      case ElementType.TEXT =>
+//      case ElementType.HEALTHMOUNT =>
+//      case ElementType.JUMPBAR =>
+      case _ =>
     }
   }
 
   @ForgeSubscribe def onPostRenderGameOverlayEvent(e: RenderGameOverlayEvent.Post) {
     e.`type` match {
-      case ElementType.ALL =>
-      case ElementType.HELMET =>
-      case ElementType.PORTAL =>
-      case ElementType.CROSSHAIRS =>
-      case ElementType.BOSSHEALTH =>
-      case ElementType.ARMOR =>
-      case ElementType.HEALTH =>
-      case ElementType.FOOD =>
-      case ElementType.AIR =>
+//      case ElementType.ALL =>
+//      case ElementType.HELMET =>
+//      case ElementType.PORTAL =>
+//      case ElementType.CROSSHAIRS =>
+//      case ElementType.BOSSHEALTH =>
+//      case ElementType.ARMOR =>
+//      case ElementType.HEALTH =>
+//      case ElementType.FOOD =>
+//      case ElementType.AIR =>
       case ElementType.HOTBAR => drawModeChangeIcons()
-      case ElementType.EXPERIENCE =>
-      case ElementType.TEXT =>
-      case ElementType.HEALTHMOUNT =>
+//      case ElementType.EXPERIENCE =>
+//      case ElementType.TEXT =>
+//      case ElementType.HEALTHMOUNT =>
       case ElementType.JUMPBAR =>
+      case _ =>
     }
   }
 
