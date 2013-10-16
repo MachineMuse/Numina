@@ -7,6 +7,7 @@ import net.minecraft.world.World
 import net.minecraftforge.oredict.OreDictionary
 import java.lang.Object
 import java.util.ArrayList
+import net.machinemuse.numina.scala.OptionCast
 
 
 /**
@@ -17,54 +18,37 @@ case class SerializableRecipe(inputs:Array[Array[String]], output:ItemStack) ext
   private final val MAX_CRAFT_GRID_WIDTH: Int = 3
   private final val MAX_CRAFT_GRID_HEIGHT: Int = 3
 
-  val width = inputs(0).length
-  val height = inputs.length
-//
-//  private def checkMatch(inv: InventoryCrafting, startX: Int, startY: Int, mirror: Boolean): Boolean = {
-//
-//    for(x <- 0 until MAX_CRAFT_GRID_WIDTH) {
-//      for(y <- 0 until MAX_CRAFT_GRID_HEIGHT) {
-//        val subX: Int = x - startX
-//        val subY: Int = y - startY
-//        var target: AnyRef = null
-//        if (subX >= 0 && subY >= 0 && subX < width && subY < height) {
-//          if (mirror) {
-//            target = input(width - subX - 1 + subY * width)
-//          }
-//          else {
-//            target = input(subX + subY * width)
-//          }
-//        }
-//
-//
-//
-//        val slot: ItemStack = inv.getStackInRowAndColumn(x, y)
-//
-//
-//
-//        if (target.isInstanceOf[ItemStack]) {
-//          if (!checkItemEquals(target.asInstanceOf[ItemStack], slot)) {
-//            return false
-//          }
-//        }
-//        else if (target.isInstanceOf[ArrayList[_]]) {
-//          var matched: Boolean = false
-//          import scala.collection.JavaConversions._
-//          for (item <- target.asInstanceOf[ArrayList[ItemStack]]) {
-//            matched = matched || checkItemEquals(item, slot)
-//          }
-//          if (!matched) {
-//            return false
-//          }
-//        }
-//        else if (target == null && slot != null) {
-//          return false
-//        }
-//      }
-//    }
-//  }
-//  def matches(inventorycrafting: InventoryCrafting, world: World): Boolean = {
-//  }
+
+  private def checkMatch(inv: InventoryCrafting, startX: Int, startY: Int, mirror: Boolean): Boolean = {
+    val width = inputs(0).length
+    val height = inputs.length
+    for(x <- 0 until MAX_CRAFT_GRID_WIDTH) {
+      for(y <- 0 until MAX_CRAFT_GRID_HEIGHT) {
+        val subX: Int = x - startX
+        val subY: Int = y - startY
+        var target: String = null
+        if (subX >= 0 && subY >= 0 && subX < width && subY < height) {
+          if (mirror) {
+            target = inputs(width - subX - 1)(subY)
+          }
+          else {
+            target = inputs(subX)(subY)
+          }
+        }
+
+        val stackInSlot: ItemStack = inv.getStackInRowAndColumn(x, y)
+
+        Option(stackInSlot) match {
+          case Some(stack) => if(!matchItemToString(stackInSlot, target)) return false
+          case None => return false
+        }
+      }
+    }
+    true
+  }
+  def matchItemToString(stack:ItemStack, name:String): Boolean = {
+    true
+  }
 
   def getCraftingResult(inventorycrafting: InventoryCrafting): ItemStack = output
 
@@ -81,5 +65,5 @@ case class SerializableRecipe(inputs:Array[Array[String]], output:ItemStack) ext
     target.itemID == input.itemID && (target.getItemDamage == OreDictionary.WILDCARD_VALUE || target.getItemDamage == input.getItemDamage)
   }
 
-  def matches(inventorycrafting: InventoryCrafting, world: World): Boolean = ???
+  def matches(inventorycrafting: InventoryCrafting, world: World): Boolean = {true}
 }

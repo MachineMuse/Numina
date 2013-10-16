@@ -1,14 +1,15 @@
 package net.machinemuse.numina.basemod
 
 import cpw.mods.fml.common.{FMLCommonHandler, Mod}
-import cpw.mods.fml.common.network.NetworkMod
+import cpw.mods.fml.common.network.{NetworkRegistry, NetworkMod}
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.common.event.{FMLServerStartingEvent, FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent}
 import net.machinemuse.numina.general.MuseLogger
-import net.machinemuse.numina.command.{NicknameMap, Commander}
+import net.machinemuse.numina.command.Commander
 import net.machinemuse.numina.network.{NuminaPackets, MusePacketHandler}
+import net.machinemuse.numina.death.DeathEventHandler
 import net.minecraftforge.common.MinecraftForge
-import net.machinemuse.numina.player.PlayerTickHandler
+import net.machinemuse.numina.gui.NuminaGuiHandler
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -24,6 +25,8 @@ object Numina {
     NuminaConfig.init(e)
     MuseLogger.logDebug("test")
     //MinecraftForge.EVENT_BUS.register(PlayerTickHandler)
+//    MinecraftForge.EVENT_BUS.register(DeathEventHandler)
+//    NetworkRegistry.instance.registerGuiHandler(Numina, NuminaGuiHandler)
     proxy.PreInit()
   }
 
