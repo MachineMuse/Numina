@@ -9,14 +9,14 @@ import net.minecraft.client.renderer.texture.IconRegister
  * Created: 11:54 PM, 10/15/13
  */
 trait NuminaItemBase extends Item {
-  val unlocalizedName: String
-  setUnlocalizedName(unlocalizedName)
+  val name: String
+  setUnlocalizedName(name)
 
   val creativeTab: CreativeTabs
   setCreativeTab(creativeTab)
 
-  val maxDamage: Int
-  setMaxDamage(maxDamage)
+  val maxdamage: Int
+  setMaxDamage(maxdamage)
 
   val noRepair: Boolean
   if (noRepair) setNoRepair()
@@ -26,7 +26,11 @@ trait NuminaItemBase extends Item {
 
   //also remember to setHasSubtypes
 
-  override def registerIcons(register:IconRegister)
+  override def registerIcons(register:IconRegister) {
+    iconRegistration(register)
+  }
+
+  def iconRegistration(register:IconRegister)
 
   override def requiresMultipleRenderPasses = true // Required in order to have it use the itemstack-based icon functions
 
