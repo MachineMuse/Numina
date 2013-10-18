@@ -73,9 +73,9 @@ object RenderGameOverlayEventHandler {
       MuseTextureUtils.pushTexture(MuseTextureUtils.ITEM_TEXTURE_QUILT)
       RenderState.blendingOn()
       val swapTime = Math.min(System.currentTimeMillis - lastSwapTime, SWAPTIME)
-      val currentMode: Option[Icon] = item.getCurrentModeIcon(stack)
-      val nextMode: Option[Icon] = item.getNextModeIcon(stack)
-      val prevMode: Option[Icon] = item.getPrevModeIcon(stack)
+      val currentMode: Option[Icon] = item.getModeIcon(item.getActiveMode(stack, player), stack, player)
+      val nextMode: Option[Icon] = item.getModeIcon(item.nextMode(stack, player), stack, player)
+      val prevMode: Option[Icon] = item.getModeIcon(item.prevMode(stack, player), stack, player)
       var prevX: Double = .0
       var prevY: Double = .0
       var currX: Double = .0
@@ -126,8 +126,8 @@ object RenderGameOverlayEventHandler {
       }
       RenderState.scissorsOff()
       RenderState.blendingOff()
-      Colour.WHITE.doGL()
       MuseTextureUtils.popTexture()
+      Colour.WHITE.doGL()
 
     }
   }

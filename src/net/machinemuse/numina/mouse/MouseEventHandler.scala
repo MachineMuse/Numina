@@ -14,12 +14,12 @@ object MouseEventHandler {
   @ForgeSubscribe def onMouseEvent(e: MouseEvent) {
     if (e.dwheel != 0) {
       for {
-        p <- Option(Minecraft.getMinecraft.thePlayer)
-        stack <- Option(p.getCurrentEquippedItem)
+        player <- Option(Minecraft.getMinecraft.thePlayer)
+        stack <- Option(player.getCurrentEquippedItem)
         item <- OptionCast[ModeChangingItem](stack.getItem)
-        if p.isSneaking
+        if player.isSneaking
       } {
-        item.cycleMode(stack, e.dwheel / 120)
+        item.cycleMode(stack, player, e.dwheel / 120)
         e.setCanceled(true)
       }
     }

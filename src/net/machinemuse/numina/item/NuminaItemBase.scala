@@ -12,8 +12,8 @@ trait NuminaItemBase extends Item {
   val name: String
   setUnlocalizedName(name)
 
-  val creativeTab: CreativeTabs
-  setCreativeTab(creativeTab)
+//  val creativeTab: CreativeTabs
+//  setCreativeTab(creativeTab)
 
   val maxdamage: Int
   setMaxDamage(maxdamage)
@@ -32,6 +32,6 @@ trait NuminaItemBase extends Item {
 
   def iconRegistration(register:IconRegister)
 
-  override def requiresMultipleRenderPasses = true // Required in order to have it use the itemstack-based icon functions
+//  override def requiresMultipleRenderPasses = true // Required in order to have it use the itemstack-based icon functions
 
 }

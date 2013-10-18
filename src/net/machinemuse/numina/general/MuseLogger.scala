@@ -14,21 +14,27 @@ import net.machinemuse.numina.basemod.NuminaConfig
  *
  */
 object MuseLogger {
-  val logger = Logger.getLogger("MachineMuse -" + FMLCommonHandler.instance().getEffectiveSide)
+  val logger = Logger.getLogger("MachineMuse")
   logger.setParent(FMLLog.getLogger)
 
   def logDebug(string: String) = {
-    if (NuminaConfig.isDebugging) logger.info(string)
+    var debugging = true
+    try {
+      if (!NuminaConfig.isDebugging) debugging = false
+    } catch {
+      case _: Exception =>
+    }
+    if (debugging) logger.info("[" + FMLCommonHandler.instance().getEffectiveSide + "] " + string)
     None
   }
 
   def logError(string: String) = {
-    logger.warning(string)
+    logger.warning("[" + FMLCommonHandler.instance().getEffectiveSide + "] " + string)
     None
   }
 
   def logException(string: String, exception: Throwable) = {
-    logger.warning(string)
+    logger.warning("[" + FMLCommonHandler.instance().getEffectiveSide + "] " + string)
     exception.printStackTrace()
     None
   }
