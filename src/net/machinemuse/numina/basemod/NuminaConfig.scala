@@ -17,14 +17,21 @@ object NuminaConfig {
       val configFile: File = new File(event.getModConfigurationDirectory + "/machinemuse/numina.cfg")
       config = new Configuration(configFile)
     }
+    // Initialize config file
     isDebugging
     useSounds
+    useFOVFix
     config.save()
   }
 
-  def useSounds = config.get(Configuration.CATEGORY_GENERAL, "Use Sounds", true).getBoolean(true)
+  def useSounds = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Use Sounds", default = true)
 
+  def useFOVFix = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Ignore speed boosts for field of view", default = true)
 
-  def isDebugging = config.get(Configuration.CATEGORY_GENERAL, "Debugging info", false).getBoolean(false)
+  def isDebugging = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Debugging info", default = false)
 
+  def getConfigBoolean(category:String, name:String, default:Boolean) = {
+    val ret = config.get(category, name, default)
+    ret.getBoolean(default)
+  }
 }

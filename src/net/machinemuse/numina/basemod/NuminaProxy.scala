@@ -2,7 +2,7 @@ package net.machinemuse.numina.basemod
 
 import net.minecraftforge.common.MinecraftForge
 import net.machinemuse.numina.mouse.MouseEventHandler
-import net.machinemuse.numina.render.RenderGameOverlayEventHandler
+import net.machinemuse.numina.render.{FOVUpdateEventHandler, RenderGameOverlayEventHandler}
 import net.machinemuse.numina.network.MusePacket
 import net.minecraft.entity.player.{EntityPlayerMP, EntityPlayer}
 import net.minecraft.client.Minecraft
@@ -30,6 +30,7 @@ object NuminaProxyClient extends NuminaProxy {
   override def Init() = {
     MinecraftForge.EVENT_BUS.register(MouseEventHandler)
     MinecraftForge.EVENT_BUS.register(RenderGameOverlayEventHandler)
+    MinecraftForge.EVENT_BUS.register(FOVUpdateEventHandler)
   }
 }
 

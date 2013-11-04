@@ -27,7 +27,6 @@ object Numina {
     MuseLogger.logDebug("test")
     //MinecraftForge.EVENT_BUS.register(PlayerTickHandler)
 //    MinecraftForge.EVENT_BUS.register(DeathEventHandler)
-    MinecraftForge.EVENT_BUS.register(FOVUpdateEventHandler)
 //    NetworkRegistry.instance.registerGuiHandler(Numina, NuminaGuiHandler)
     proxy.PreInit()
   }
