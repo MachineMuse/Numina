@@ -37,7 +37,6 @@ object Numina {
 
   @Mod.EventHandler def postinit(e: FMLPostInitializationEvent) {
     proxy.PostInit()
-    JSONRecipeList.loadRecipes(configDir + "/machinemuse/recipes/default.json")
   }
 
   @Mod.EventHandler def serverstart(e: FMLServerStartingEvent) {

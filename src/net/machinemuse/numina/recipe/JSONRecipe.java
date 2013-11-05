@@ -37,7 +37,7 @@ public class JSONRecipe implements IRecipe {
     private boolean matchSpot(InventoryCrafting inv, int xoffset, int yoffset, int width, int height, boolean mirror) {
         boolean mismatch = false;
         for (int xinventory = 0; xinventory < MAX_WIDTH; xinventory++) {
-            for (int yinventory = 0; yinventory < MAX_WIDTH; yinventory++) {
+            for (int yinventory = 0; yinventory < MAX_HEIGHT; yinventory++) {
                 SimpleItemMatcher matcher;
                 if(!mirror) {
                     matcher = getMatcher(-xoffset + xinventory, -yoffset + yinventory);
