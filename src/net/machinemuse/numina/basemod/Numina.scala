@@ -1,16 +1,13 @@
 package net.machinemuse.numina.basemod
 
 import cpw.mods.fml.common.{FMLCommonHandler, Mod}
-import cpw.mods.fml.common.network.{NetworkRegistry, NetworkMod}
+import cpw.mods.fml.common.network.NetworkMod
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.common.event.{FMLServerStartingEvent, FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent}
 import net.machinemuse.numina.general.MuseLogger
 import net.machinemuse.numina.command.Commander
 import net.machinemuse.numina.network.{NuminaPackets, MusePacketHandler}
-import net.machinemuse.numina.death.DeathEventHandler
-import net.minecraftforge.common.MinecraftForge
-import net.machinemuse.numina.gui.NuminaGuiHandler
-import net.machinemuse.numina.render.FOVUpdateEventHandler
+import net.machinemuse.numina.recipe.JSONRecipeList
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -21,13 +18,15 @@ import net.machinemuse.numina.render.FOVUpdateEventHandler
 object Numina {
   //@SidedProxy(clientSide = "net.machinemuse.anima.ClientProxy", serverSide = "net.machinemuse.anima.ServerProxy")
   var proxy: NuminaProxy = if (FMLCommonHandler.instance().getSide == Side.CLIENT) NuminaProxyClient else NuminaProxyServer
+  var configDir: java.io.File = null
 
   @Mod.EventHandler def preinit(e: FMLPreInitializationEvent) {
     NuminaConfig.init(e)
     MuseLogger.logDebug("test")
+    configDir = e.getModConfigurationDirectory
     //MinecraftForge.EVENT_BUS.register(PlayerTickHandler)
-//    MinecraftForge.EVENT_BUS.register(DeathEventHandler)
-//    NetworkRegistry.instance.registerGuiHandler(Numina, NuminaGuiHandler)
+    //    MinecraftForge.EVENT_BUS.register(DeathEventHandler)
+    //    NetworkRegistry.instance.registerGuiHandler(Numina, NuminaGuiHandler)
     proxy.PreInit()
   }
 
@@ -38,6 +37,7 @@ object Numina {
 
   @Mod.EventHandler def postinit(e: FMLPostInitializationEvent) {
     proxy.PostInit()
+    JSONRecipeList.loadRecipes(configDir + "/machinemuse/recipes/default.json")
   }
 
   @Mod.EventHandler def serverstart(e: FMLServerStartingEvent) {
