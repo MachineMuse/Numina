@@ -23,8 +23,9 @@ public class JSONRecipeList {
         try {
             json = readFile(dir, StandardCharsets.UTF_8);
             recipesList = gson.fromJson(json, JSONRecipe[].class);
-            for(JSONRecipe recipe : recipesList) {
-                GameRegistry.addRecipe(recipe);
+            for (JSONRecipe recipe : recipesList) {
+                if (recipe != null)
+                    GameRegistry.addRecipe(recipe);
             }
         } catch (IOException e) {
             e.printStackTrace();

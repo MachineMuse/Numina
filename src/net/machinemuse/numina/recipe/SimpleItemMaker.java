@@ -41,6 +41,7 @@ public class SimpleItemMaker implements IItemMaker {
         } else if (oredictName != null) {
             try {
                 ItemStack stack = OreDictionary.getOres(oredictName).get(0).copy();
+                stack.stackSize = newquantity;
                 return stack;
             } catch (Exception e) {
                 MuseLogger.logError("Unable to load " + oredictName + " from oredict");
