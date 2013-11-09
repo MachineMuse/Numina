@@ -54,10 +54,10 @@ public class SimpleItemMatcher implements IItemMatcher {
             }
             if (!found) return false;
         }
-
         if (nbt != null && !nbt.equals(stack.getTagCompound())) {
             return false;
         }
+
         return true;
     }
 
