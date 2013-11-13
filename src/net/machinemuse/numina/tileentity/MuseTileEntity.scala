@@ -27,11 +27,13 @@ class MuseTileEntity extends TileEntity {
 
   def getDouble(nbt: NBTTagCompound, name: String) = if (nbt.hasKey(name)) Some(nbt.getDouble(name)) else None
 
+  def getBoolean(nbt: NBTTagCompound, name: String) = if (nbt.hasKey(name)) Some(nbt.getBoolean(name)) else None
+
   def getItemStack(nbt: NBTTagCompound, name: String) = if (nbt.hasKey(name)) Some(ItemStack.loadItemStackFromNBT(nbt.getCompoundTag(name))) else None
 
   def writeItemStack(nbt:NBTTagCompound, name:String, stack:ItemStack) {
     val itemnbt = new NBTTagCompound()
     stack.writeToNBT(itemnbt)
-    nbt.setCompoundTag("incense", itemnbt)
+    nbt.setCompoundTag(name, itemnbt)
   }
 }
