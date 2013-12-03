@@ -4,7 +4,10 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.machinemuse.numina.general.MuseLogger;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.ByteBuffer;
@@ -24,10 +27,30 @@ public class JSONRecipeList {
     static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
     static final Gson gson = new Gson();
 
+    private static FilenameFilter filter = new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+            return name.endsWith(".recipe") || name.endsWith(".recipes");
+        }
+    };
+
     public static void loadRecipesFromDir(String dir) {
         try {
-            String json = readFile(dir, StandardCharsets.UTF_8);
-            loadRecipesFromString(json);
+            File file= new File(dir);
+            if(file.exists()) {
+                if(file.isDirectory()) {
+                    String[] filenames = file.list(filter);
+                    for(String filename:filenames) {
+                        String json = readFile(dir + "/" + filename, StandardCharsets.UTF_8);
+                        MuseLogger.logDebug("Loading recipes from " + filename);
+                        loadRecipesFromString(json);
+                    }
+                } else {
+                    String json = readFile(dir, StandardCharsets.UTF_8);
+                    MuseLogger.logDebug("Loading recipes from " + dir);
+                    loadRecipesFromString(json);
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

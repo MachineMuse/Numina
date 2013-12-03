@@ -22,8 +22,8 @@ object Numina {
 
   @Mod.EventHandler def preinit(e: FMLPreInitializationEvent) {
     NuminaConfig.init(e)
-    MuseLogger.logDebug("test")
     configDir = e.getModConfigurationDirectory
+    JSONRecipeList.loadRecipesFromDir(configDir.toString + "/machinemuse/recipes/")
     //MinecraftForge.EVENT_BUS.register(PlayerTickHandler)
     //    MinecraftForge.EVENT_BUS.register(DeathEventHandler)
     //    NetworkRegistry.instance.registerGuiHandler(Numina, NuminaGuiHandler)
