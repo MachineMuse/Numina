@@ -90,9 +90,9 @@
         <get src="${apisource.url}/slick-util.jar"
              dest="${download.dir}/slick-util.jar"/>
         <copy file="${download.dir}/slick-util.jar" todir="${mcp.dir}/lib"/>
-        <get src="${apisource.url}/NotEnoughItems-dev-${neiversion}.jar"
-             dest="${download.dir}/NotEnoughItems-dev-${neiversion}.jar"/>
-        <copy file="${download.dir}/NotEnoughItems-dev-${neiversion}.jar" todir="${mcp.dir}/lib"/>
+        <get src="${apisource.url}/neidev-${neiversion}.jar"
+             dest="${download.dir}/neidev-${neiversion}.jar"/>
+        <copy file="${download.dir}/neidev-${neiversion}.jar" todir="${mcp.dir}/lib"/>
 
     </target>
 
