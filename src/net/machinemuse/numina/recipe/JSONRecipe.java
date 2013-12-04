@@ -97,7 +97,7 @@ public class JSONRecipe implements IRecipe {
         return result.getRecipeOutput();
     }
 
-    private int getWidth() {
+    public int getWidth() {
         int size = 0;
         for (IItemMatcher[] row : ingredients) {
             if (row != null) {
