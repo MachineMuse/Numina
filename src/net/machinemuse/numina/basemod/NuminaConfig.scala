@@ -30,7 +30,7 @@ object NuminaConfig {
 
   def isDebugging = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Debugging info", default = false)
 
-  def getConfigBoolean(category:String, name:String, default:Boolean) = {
+  def getConfigBoolean(category: String, name: String, default: Boolean) = {
     val ret = config.get(category, name, default)
     ret.getBoolean(default)
   }
