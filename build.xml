@@ -12,6 +12,7 @@
     <property name="minecraft.version" value="1.6.2"/>
     <property name="forgemajor.version" value="9.10.1"/>
     <property name="forgebuild" value="871"/>
+    <property name="neiversion" value="1.6.1.4"/>
 
     <property name="forge.version" value="${minecraft.version}-${forgemajor.version}.${forgebuild}"/>
     <property name="forgeant.version" value="${forgemajor.version}.${forgebuild}"/>
@@ -85,11 +86,14 @@
     <!-- Dependencies -->
     <target name="extract-apis" depends="setup-forge">
         <get-api filename="scalalib-${scala.version}.zip" into="${mcp.dir}"/>
-
         <echo message="Importing Slick-Util..."/>
         <get src="${apisource.url}/slick-util.jar"
              dest="${download.dir}/slick-util.jar"/>
         <copy file="${download.dir}/slick-util.jar" todir="${mcp.dir}/lib"/>
+        <get src="${apisource.url}/NotEnoughItems-dev ${neiversion}.jar"
+             dest="${download.dir}/NotEnoughItems-dev ${neiversion}.jar"/>
+        <copy file="${download.dir}/NotEnoughItems-dev ${neiversion}.jar" todir="${mcp.dir}/lib"/>
+
     </target>
 
     <target name="update-names" depends="copy-source">
