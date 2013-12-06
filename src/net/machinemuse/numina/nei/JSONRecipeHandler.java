@@ -1,24 +1,20 @@
 package net.machinemuse.numina.nei;
 
+import codechicken.nei.ItemList;
+import codechicken.nei.NEIServerUtils;
+import codechicken.nei.recipe.ShapedRecipeHandler;
+import net.machinemuse.numina.recipe.ItemNameMappings;
+import net.machinemuse.numina.recipe.JSONRecipe;
+import net.machinemuse.numina.recipe.SimpleItemMatcher;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import codechicken.nei.recipe.ShapedRecipeHandler;
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.ItemList;
-
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-
-import net.machinemuse.numina.recipe.JSONRecipe;
-import net.machinemuse.numina.recipe.SimpleItemMatcher;
-import net.machinemuse.numina.recipe.ItemNameMappings;
 
 public class JSONRecipeHandler extends ShapedRecipeHandler {
 
@@ -194,7 +190,12 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         for (int y=0; y < height; y++) {
             if (recipe.ingredients[y] != null) {
                 for (int x=0; x < width; x++) {
-                    List<ItemStack> item = getIngredient(recipe.ingredients[y][x]);
+                    List<ItemStack> item;
+                    if(recipe.ingredients[y].length > x) {
+                        item = getIngredient(recipe.ingredients[y][x]);
+                    } else {
+                        item = null;
+                    }
                     if (item != null && item.isEmpty())
                         return null;
                     items[y * width + x] = item;
