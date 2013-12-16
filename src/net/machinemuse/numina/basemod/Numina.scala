@@ -8,6 +8,7 @@ import net.machinemuse.numina.general.MuseLogger
 import net.machinemuse.numina.command.Commander
 import net.machinemuse.numina.network.{NuminaPackets, MusePacketHandler}
 import net.machinemuse.numina.recipe.JSONRecipeList
+import java.io.File
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -23,7 +24,10 @@ object Numina {
   @Mod.EventHandler def preinit(e: FMLPreInitializationEvent) {
     NuminaConfig.init(e)
     configDir = e.getModConfigurationDirectory
-    JSONRecipeList.loadRecipesFromDir(configDir.toString + "/machinemuse/recipes/")
+
+    val recipesFolder = new File(configDir, "machinemuse/recipes")
+    recipesFolder.mkdirs()
+    recipesFolder.mkdir()
     //MinecraftForge.EVENT_BUS.register(PlayerTickHandler)
     //    MinecraftForge.EVENT_BUS.register(DeathEventHandler)
     //    NetworkRegistry.instance.registerGuiHandler(Numina, NuminaGuiHandler)
@@ -37,6 +41,7 @@ object Numina {
 
   @Mod.EventHandler def postinit(e: FMLPostInitializationEvent) {
     proxy.PostInit()
+    JSONRecipeList.loadRecipesFromDir(configDir.toString + "/machinemuse/recipes/")
   }
 
   @Mod.EventHandler def serverstart(e: FMLServerStartingEvent) {
