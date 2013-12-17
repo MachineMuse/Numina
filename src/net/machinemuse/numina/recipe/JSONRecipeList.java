@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -41,12 +40,12 @@ public class JSONRecipeList {
                 if(file.isDirectory()) {
                     String[] filenames = file.list(filter);
                     for(String filename:filenames) {
-                        String json = readFile(dir + "/" + filename, StandardCharsets.UTF_8);
+                        String json = readFile(dir + "/" + filename, Charsets.UTF_8);
                         MuseLogger.logDebug("Loading recipes from " + filename);
                         loadRecipesFromString(json);
                     }
                 } else {
-                    String json = readFile(dir, StandardCharsets.UTF_8);
+                    String json = readFile(dir, Charsets.UTF_8);
                     MuseLogger.logDebug("Loading recipes from " + dir);
                     loadRecipesFromString(json);
                 }
