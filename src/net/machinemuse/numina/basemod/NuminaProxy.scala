@@ -3,9 +3,12 @@ package net.machinemuse.numina.basemod
 import net.minecraftforge.common.MinecraftForge
 import net.machinemuse.numina.mouse.MouseEventHandler
 import net.machinemuse.numina.render.{FOVUpdateEventHandler, RenderGameOverlayEventHandler}
-import net.machinemuse.numina.network.MusePacket
+import net.machinemuse.numina.network.{MusePacketRecipeUpdate, MusePacket}
 import net.minecraft.entity.player.{EntityPlayerMP, EntityPlayer}
 import net.minecraft.client.Minecraft
+import net.machinemuse.numina.recipe.{JSONRecipe, JSONRecipeList}
+import cpw.mods.fml.common.IPlayerTracker
+import cpw.mods.fml.common.network.{Player, PacketDispatcher}
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -18,10 +21,11 @@ trait NuminaProxy {
 
   def PostInit() = {}
 
-  def sendPacketToClient(packet:MusePacket, player:EntityPlayer) = {
+  def sendPacketToClient(packet: MusePacket, player: EntityPlayer) = {
     player.asInstanceOf[EntityPlayerMP].playerNetServerHandler.sendPacketToPlayer(packet.getPacket131)
   }
-  def sendPacketToServer(packet:MusePacket) = {
+
+  def sendPacketToServer(packet: MusePacket) = {
     Minecraft.getMinecraft.thePlayer.sendQueue.addToSendQueue(packet.getPacket131)
   }
 }
@@ -35,4 +39,27 @@ object NuminaProxyClient extends NuminaProxy {
 }
 
 object NuminaProxyServer extends NuminaProxy {
+  override def PostInit() = {
+    JSONRecipeList.loadRecipesFromDir(Numina.configDir.toString + "/machinemuse/recipes/")
+  }
 }
+
+class NuminaPlayerTracker extends IPlayerTracker {
+  def onPlayerLogin(player: EntityPlayer) {
+    for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
+      val recipeArray = Array(recipe)
+      val recipeAsString:String = JSONRecipeList.gson.toJson(recipeArray)
+      PacketDispatcher.sendPacketToPlayer(
+        new MusePacketRecipeUpdate(player.asInstanceOf[Player], recipeAsString).getPacket131,
+        player.asInstanceOf[Player]
+      )
+    }
+  }
+
+  def onPlayerLogout(player: EntityPlayer) {}
+
+  def onPlayerChangedDimension(player: EntityPlayer) {}
+
+  def onPlayerRespawn(player: EntityPlayer) {}
+}
+

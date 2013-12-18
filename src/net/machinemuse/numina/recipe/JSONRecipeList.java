@@ -3,17 +3,14 @@ package net.machinemuse.numina.recipe;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.machinemuse.numina.general.MuseLogger;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +21,7 @@ import java.util.List;
  */
 public class JSONRecipeList {
     static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
-    static final Gson gson = new Gson();
+    public static final Gson gson = new Gson();
 
     private static FilenameFilter filter = new FilenameFilter() {
         @Override
@@ -69,13 +66,24 @@ public class JSONRecipeList {
         recipesList.addAll(Arrays.asList(newrecipes));
         for (JSONRecipe recipe : newrecipes) {
             if (recipe != null)
-                GameRegistry.addRecipe(recipe);
+                getCraftingRecipeList().add(recipe);
         }
+    }
+
+    public static List<IRecipe> getCraftingRecipeList() {
+        return CraftingManager.getInstance().getRecipeList();
+    }
+
+    public static List<JSONRecipe> getJSONRecipesList() {
+        return recipesList;
     }
 
     static String readFile(String path, Charset encoding)
             throws IOException {
-        byte[] encoded = Files.readAllBytes(Paths.get(path));
-        return encoding.decode(ByteBuffer.wrap(encoded)).toString();
+        File file = new File(path);
+        DataInputStream is = new DataInputStream(new FileInputStream(file));
+        byte[] bytes = new byte[(int) file.length()];
+        is.readFully(bytes);
+        return encoding.decode(ByteBuffer.wrap(bytes)).toString();
     }
 }
