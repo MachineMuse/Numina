@@ -36,6 +36,9 @@ public class SimpleItemMatcher implements IItemMatcher {
         if (stack == null) {
             return false;
         }
+        if(stack.getItem() == null) {
+            return false;
+        }
         if (id != null && id != stack.itemID) {
             return false;
         }
