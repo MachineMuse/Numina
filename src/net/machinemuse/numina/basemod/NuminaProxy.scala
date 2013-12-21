@@ -9,6 +9,8 @@ import net.minecraft.client.Minecraft
 import net.machinemuse.numina.recipe.{JSONRecipe, JSONRecipeList}
 import cpw.mods.fml.common.IPlayerTracker
 import cpw.mods.fml.common.network.{Player, PacketDispatcher}
+import cpw.mods.fml.common.registry.GameRegistry
+import net.machinemuse.powersuits.event.PlayerTracker
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -41,6 +43,7 @@ object NuminaProxyClient extends NuminaProxy {
 object NuminaProxyServer extends NuminaProxy {
   override def PostInit() = {
     JSONRecipeList.loadRecipesFromDir(Numina.configDir.toString + "/machinemuse/recipes/")
+    GameRegistry.registerPlayerTracker(new NuminaPlayerTracker)
   }
 }
 
