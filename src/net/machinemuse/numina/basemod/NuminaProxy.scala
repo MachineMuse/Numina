@@ -6,11 +6,10 @@ import net.machinemuse.numina.render.{FOVUpdateEventHandler, RenderGameOverlayEv
 import net.machinemuse.numina.network.{MusePacketRecipeUpdate, MusePacket}
 import net.minecraft.entity.player.{EntityPlayerMP, EntityPlayer}
 import net.minecraft.client.Minecraft
-import net.machinemuse.numina.recipe.{JSONRecipe, JSONRecipeList}
+import net.machinemuse.numina.recipe.JSONRecipeList
 import cpw.mods.fml.common.IPlayerTracker
 import cpw.mods.fml.common.network.{Player, PacketDispatcher}
 import cpw.mods.fml.common.registry.GameRegistry
-import net.machinemuse.powersuits.event.PlayerTracker
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -51,7 +50,7 @@ class NuminaPlayerTracker extends IPlayerTracker {
   def onPlayerLogin(player: EntityPlayer) {
     for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
       val recipeArray = Array(recipe)
-      val recipeAsString:String = JSONRecipeList.gson.toJson(recipeArray)
+      val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)
       PacketDispatcher.sendPacketToPlayer(
         new MusePacketRecipeUpdate(player.asInstanceOf[Player], recipeAsString).getPacket131,
         player.asInstanceOf[Player]
