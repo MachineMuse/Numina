@@ -7,12 +7,13 @@ import net.machinemuse.numina.network.{MusePacketRecipeUpdate, MusePacket}
 import net.minecraft.entity.player.{EntityPlayerMP, EntityPlayer}
 import net.minecraft.client.Minecraft
 import net.machinemuse.numina.recipe.JSONRecipeList
-import cpw.mods.fml.common.IPlayerTracker
+import cpw.mods.fml.common.{FMLCommonHandler, IPlayerTracker}
 import cpw.mods.fml.common.network.{IConnectionHandler, Player, PacketDispatcher}
 import net.machinemuse.numina.general.MuseLogger
 import net.minecraft.network.packet.{Packet1Login, NetHandler}
 import net.minecraft.network.{NetLoginHandler, INetworkManager}
 import net.minecraft.server.MinecraftServer
+import cpw.mods.fml.relauncher.Side
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -58,13 +59,15 @@ object NuminaPlayerTracker extends IPlayerTracker {
 object NuminaConnectionTracker extends IConnectionHandler {
 
   def playerLoggedIn(player: Player, netHandler: NetHandler, manager: INetworkManager): Unit = {
-    for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
-      val recipeArray = Array(recipe)
-      val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)
-      PacketDispatcher.sendPacketToPlayer(
-        new MusePacketRecipeUpdate(player, recipeAsString).getPacket131,
-        player
-      )
+    if(FMLCommonHandler.instance().getEffectiveSide == Side.SERVER) {
+      for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
+        val recipeArray = Array(recipe)
+        val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)
+        PacketDispatcher.sendPacketToPlayer(
+          new MusePacketRecipeUpdate(player, recipeAsString).getPacket131,
+          player
+        )
+      }
     }
   }
 
