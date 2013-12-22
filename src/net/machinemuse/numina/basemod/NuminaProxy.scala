@@ -8,8 +8,11 @@ import net.minecraft.entity.player.{EntityPlayerMP, EntityPlayer}
 import net.minecraft.client.Minecraft
 import net.machinemuse.numina.recipe.JSONRecipeList
 import cpw.mods.fml.common.IPlayerTracker
-import cpw.mods.fml.common.network.{Player, PacketDispatcher}
-import cpw.mods.fml.common.registry.GameRegistry
+import cpw.mods.fml.common.network.{IConnectionHandler, Player, PacketDispatcher}
+import net.machinemuse.numina.general.MuseLogger
+import net.minecraft.network.packet.{Packet1Login, NetHandler}
+import net.minecraft.network.{NetLoginHandler, INetworkManager}
+import net.minecraft.server.MinecraftServer
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -31,37 +34,48 @@ trait NuminaProxy {
   }
 }
 
-object NuminaProxyClient extends NuminaProxy {
+class NuminaProxyClient extends NuminaProxy {
   override def Init() = {
+    MuseLogger.logDebug("Client Proxy Started")
     MinecraftForge.EVENT_BUS.register(MouseEventHandler)
     MinecraftForge.EVENT_BUS.register(RenderGameOverlayEventHandler)
     MinecraftForge.EVENT_BUS.register(FOVUpdateEventHandler)
   }
 }
 
-object NuminaProxyServer extends NuminaProxy {
-  override def PostInit() = {
-    JSONRecipeList.loadRecipesFromDir(Numina.configDir.toString + "/machinemuse/recipes/")
-    GameRegistry.registerPlayerTracker(new NuminaPlayerTracker)
-  }
-}
+class NuminaProxyServer extends NuminaProxy
 
-class NuminaPlayerTracker extends IPlayerTracker {
-  def onPlayerLogin(player: EntityPlayer) {
-    for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
-      val recipeArray = Array(recipe)
-      val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)
-      PacketDispatcher.sendPacketToPlayer(
-        new MusePacketRecipeUpdate(player.asInstanceOf[Player], recipeAsString).getPacket131,
-        player.asInstanceOf[Player]
-      )
-    }
-  }
+object NuminaPlayerTracker extends IPlayerTracker {
+  def onPlayerLogin(player: EntityPlayer) {}
 
   def onPlayerLogout(player: EntityPlayer) {}
 
   def onPlayerChangedDimension(player: EntityPlayer) {}
 
   def onPlayerRespawn(player: EntityPlayer) {}
+}
+
+object NuminaConnectionTracker extends IConnectionHandler {
+
+  def playerLoggedIn(player: Player, netHandler: NetHandler, manager: INetworkManager): Unit = {
+    for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
+      val recipeArray = Array(recipe)
+      val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)
+      PacketDispatcher.sendPacketToPlayer(
+        new MusePacketRecipeUpdate(player, recipeAsString).getPacket131,
+        player
+      )
+    }
+  }
+
+  def connectionReceived(netHandler: NetLoginHandler, manager: INetworkManager): String = "" // Return non-empty to refuse the connection
+
+  def connectionOpened(netClientHandler: NetHandler, server: String, port: Int, manager: INetworkManager): Unit = {}
+
+  def connectionOpened(netClientHandler: NetHandler, server: MinecraftServer, manager: INetworkManager): Unit = {}
+
+  def connectionClosed(manager: INetworkManager): Unit = {}
+
+  def clientLoggedIn(clientHandler: NetHandler, manager: INetworkManager, login: Packet1Login): Unit = {}
 }
 
