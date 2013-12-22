@@ -13,7 +13,6 @@ import net.machinemuse.numina.general.MuseLogger
 import net.minecraft.network.packet.{Packet1Login, NetHandler}
 import net.minecraft.network.{NetLoginHandler, INetworkManager}
 import net.minecraft.server.MinecraftServer
-import cpw.mods.fml.relauncher.Side
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -59,7 +58,7 @@ object NuminaPlayerTracker extends IPlayerTracker {
 object NuminaConnectionTracker extends IConnectionHandler {
 
   def playerLoggedIn(player: Player, netHandler: NetHandler, manager: INetworkManager): Unit = {
-    if(FMLCommonHandler.instance().getEffectiveSide == Side.SERVER) {
+    if(!FMLCommonHandler.instance().getMinecraftServerInstance.isSinglePlayer) {
       for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
         val recipeArray = Array(recipe)
         val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)

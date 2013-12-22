@@ -2,7 +2,7 @@ package net.machinemuse.numina.basemod
 
 import cpw.mods.fml.common.{SidedProxy, Mod}
 import cpw.mods.fml.common.network.{NetworkRegistry, NetworkMod}
-import cpw.mods.fml.common.event.{FMLServerStartingEvent, FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent}
+import cpw.mods.fml.common.event._
 import net.machinemuse.numina.command.Commander
 import net.machinemuse.numina.network.{NuminaPackets, MusePacketHandler}
 import java.io.File
@@ -42,7 +42,7 @@ object Numina {
     proxy.PostInit()
   }
 
-  @Mod.EventHandler def serverstart(e: FMLServerStartingEvent) {
+  @Mod.EventHandler def serverstart(e: FMLServerStartedEvent) {
     Commander.init()
     JSONRecipeList.loadRecipesFromDir(Numina.configDir.toString + "/machinemuse/recipes/")
     GameRegistry.registerPlayerTracker(NuminaPlayerTracker)
