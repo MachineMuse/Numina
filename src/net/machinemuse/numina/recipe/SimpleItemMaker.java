@@ -49,7 +49,8 @@ public class SimpleItemMaker implements IItemMaker {
             }
         } else if (unlocalizedName != null) {
             try {
-                ItemStack stack = ItemNameMappings.getItem(unlocalizedName);
+                ItemStack stack = ItemNameMappings.getItem(unlocalizedName).copy();
+                newmeta = getOrElse(this.meta, stack.getItemDamage());
                 stack.setItemDamage(newmeta);
                 stack.stackSize = newquantity;
                 return stack;
