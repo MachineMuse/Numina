@@ -33,6 +33,11 @@ object MuseLogger {
     None
   }
 
+  def logInfo(string:String) = {
+    logger.info(string)
+    None
+  }
+
   def logException(string: String, exception: Throwable) = {
     logger.warning("[" + FMLCommonHandler.instance().getEffectiveSide + "] " + string)
     exception.printStackTrace()
