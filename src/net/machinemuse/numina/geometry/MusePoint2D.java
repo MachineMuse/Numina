@@ -41,8 +41,16 @@ public class MusePoint2D {
         return new MusePoint2D(x() + b.x(), y() + b.y());
     }
 
+    public MusePoint2D plus(double x, double y) {
+        return new MusePoint2D(x() + x, y() + y);
+    }
+
     public MusePoint2D minus(MusePoint2D b) {
         return new MusePoint2D(x() - b.x(), y() - b.y());
+    }
+
+    public MusePoint2D minus(double x, double y) {
+        return new MusePoint2D(x() - x, y() - y);
     }
 
     public MusePoint2D times(double scalefactor) {
