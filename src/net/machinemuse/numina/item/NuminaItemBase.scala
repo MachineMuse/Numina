@@ -15,15 +15,6 @@ trait NuminaItemBase extends Item {
 //  val creativeTab: CreativeTabs
 //  setCreativeTab(creativeTab)
 
-  val maxdamage: Int
-  setMaxDamage(maxdamage)
-
-  val noRepair: Boolean
-  if (noRepair) setNoRepair()
-
-  val maxstacksize:Int
-  setMaxStackSize(maxstacksize)
-
   //also remember to setHasSubtypes
 
   override def registerIcons(register:IconRegister) {
