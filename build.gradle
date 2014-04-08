@@ -34,8 +34,8 @@ def getLibrary(filename) {
 }
 
 
-getLibrary('CodeChickenCore-dev 0.9.0.7.jar')
-getLibrary('NotEnoughItems-dev 1.6.1.8.jar')
+getLibrary('CodeChickenCore-dev-0.9.0.7.jar')
+getLibrary('NotEnoughItems-dev-1.6.1.8.jar')
 
 version = "${config.mod_version}." + System.getenv("BUILD_NUMBER") ?: "1"
 group= "${config.group_id}.${config.mod_id}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
