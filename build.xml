@@ -145,7 +145,7 @@
         </copy>
     </target>
 
-    <target name="build" depends="extract-apis,copy-source,update-names" unless="already-compiled">
+    <target name="build" depends="extract-apis,copy-source" unless="already-compiled">
 
         <echo message="Applying Scala mcp patch..."/>
         <get src="${apisource.url}/scalapatch.sh" dest="${mcp.dir}/conf/scalapatch.sh"/>
