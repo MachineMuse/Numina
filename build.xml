@@ -35,8 +35,6 @@
     <property name="resources.dir" value="assets/numina"/>
 
     <!-- URLs -->
-    <property name="forge.url"
-              value="http://machinemuse.net/forge-${forge.version}-src.zip"/>
     <property name="apisource.url"
               value="http://machinemuse.minecraftforge.net"/>
 
@@ -265,8 +263,8 @@
         </getMethod>
         -->
 
-        <get src="${apisource.url}/minecraftforge-src-${forge.version}.zip"
-             dest="${download.dir}/minecraftforge-src-${forge.version}.zip"/>
+        <get src="http://machinemuse.net/forge-${forge.version}-src.zip"
+             dest="${download.dir}/forge-${forge.version}-src.zip"/>
     </target>
 
     <target name="download-ant-contrib" unless="should-download-ant-contrib">
