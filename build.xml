@@ -207,7 +207,7 @@
 
         <unzip dest="${build.dir}">
             <fileset dir="${download.dir}">
-                <include name="minecraftforge-src-${forge.version}.zip"/>
+                <include name="forge-${forge.version}-src.zip"/>
             </fileset>
         </unzip>
 
