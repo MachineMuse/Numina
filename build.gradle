@@ -14,7 +14,6 @@ buildscript {
 apply plugin: 'forge'
 apply plugin: 'scala'
 
-
 // define the properties file
 ext.configFile = file "project.properties"
 
@@ -25,6 +24,19 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
+
+
+def getLibrary(filename) {
+    def f = new File(config.libs_dir + filename)
+    if (!f.exists()) {
+        new URL(config.apisource_url + filename).withInputStream{ i -> f.withOutputStream{ it << i }}
+    }
+}
+
+
+getLibrary('CodeChickenCore-dev 0.9.0.7.jar')
+getLibrary('NotEnoughItems-dev 1.6.1.8.jar')
+
 version = "${config.mod_version}." + System.getenv("BUILD_NUMBER") ?: "1"
 group= "${config.group_id}.${config.mod_id}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "${config.mod_id}"
@@ -32,18 +44,28 @@ archivesBaseName = "${config.mod_id}"
 minecraft {
 	version = "${config.minecraft_version}"
 }
+
 processResources
 {
-    // replace stuff in mcmod.info, nothing else
+    // replace stuff in text files, not binary ones.
     from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod/info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        include '**/*.info'
+        // replace version and MCVersion
+        expand 'version':version,'MCversion':config.minecraft_version
     }
-        
-    // copy everything else, thats not the mcmod.info
+
+    // copy everything else, thats not text
     from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        exclude '**/*.info'
     }
+}
+
+
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+artifacts {
+    archives deobfJar
 }
