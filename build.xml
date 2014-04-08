@@ -36,7 +36,7 @@
 
     <!-- URLs -->
     <property name="forge.url"
-              value="http://files.minecraftforge.net/minecraftforge/minecraftforge-src-${forge.version}.zip"/>
+              value="http://machinemuse.net/forge-${forge.version}-src.zip"/>
     <property name="apisource.url"
               value="http://machinemuse.minecraftforge.net"/>
 
