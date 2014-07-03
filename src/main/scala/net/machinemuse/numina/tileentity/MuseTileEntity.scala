@@ -1,8 +1,8 @@
 package net.machinemuse.numina.tileentity
 
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.network.INetworkManager
-import net.minecraft.network.packet.{Packet, Packet132TileEntityData}
+import net.minecraft.network.{NetworkManager, Packet}
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.item.ItemStack
 
@@ -12,15 +12,15 @@ import net.minecraft.item.ItemStack
  */
 class MuseTileEntity extends TileEntity {
 
-  override def onDataPacket(net: INetworkManager, pkt: Packet132TileEntityData) {
-    readFromNBT(pkt.data)
+  override def onDataPacket(net: NetworkManager, pkt: S35PacketUpdateTileEntity) {
+    readFromNBT(pkt.func_148857_g)
     worldObj.markBlockForUpdate(xCoord, yCoord, zCoord)
   }
 
   override def getDescriptionPacket: Packet = {
     val tag = new NBTTagCompound
     writeToNBT(tag)
-    new Packet132TileEntityData(xCoord, yCoord, zCoord, 0, tag)
+    new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, tag)
   }
 
   def getInteger(nbt: NBTTagCompound, name: String) = if (nbt.hasKey(name)) Some(nbt.getInteger(name)) else None
@@ -34,6 +34,6 @@ class MuseTileEntity extends TileEntity {
   def writeItemStack(nbt:NBTTagCompound, name:String, stack:ItemStack) {
     val itemnbt = new NBTTagCompound()
     stack.writeToNBT(itemnbt)
-    nbt.setCompoundTag(name, itemnbt)
+    nbt.setTag(name, itemnbt)
   }
 }

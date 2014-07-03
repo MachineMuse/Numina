@@ -6,7 +6,6 @@ import java.util.Properties
 import cpw.mods.fml.common.registry.LanguageRegistry
 import net.minecraft.client.Minecraft
 import com.google.common.base.Charsets
-import net.machinemuse.numina.general.MuseLogger
 
 /**
  * Author: MachineMuse (Claire Semple)

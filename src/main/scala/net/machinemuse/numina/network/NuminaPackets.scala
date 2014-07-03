@@ -6,8 +6,7 @@ package net.machinemuse.numina.network
  */
 object NuminaPackets {
   def init() {
-    MusePacketHandler.packagers.put(20, MusePacketNameChangeRequest)
-    MusePacketHandler.packagers.put(21, MusePacketModeChangeRequest)
-    MusePacketHandler.packagers.put(22, MusePacketRecipeUpdate)
+    //MusePacketHandlerOld.packagers.put(20, MusePacketModeChangeRequest)
+    //MusePacketHandlerOld.packagers.put(21, MusePacketRecipeUpdate)
   }
 }

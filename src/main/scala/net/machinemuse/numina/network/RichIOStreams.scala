@@ -1,7 +1,7 @@
 package net.machinemuse.numina.network
 
 import java.io.{DataOutputStream, DataInputStream}
-import net.minecraft.item.ItemStack
+import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.CompressedStreamTools
 
 /**
@@ -18,10 +18,10 @@ object RichInputStream {
      * Reads an ItemStack from the InputStream
      */
     def readItemStack = {
-      val itemID: Short = in.readShort
+      val item: Item = Item.itemRegistry.getObject(in.readString).asInstanceOf[Item]
       val stackSize: Byte = in.readByte
       val damageAmount: Short = in.readShort
-      val stack = new ItemStack(itemID, stackSize, damageAmount)
+      val stack = new ItemStack(item, stackSize, damageAmount)
       stack.stackTagCompound = readNBTTagCompound
       stack
     }
