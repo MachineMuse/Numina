@@ -1,6 +1,6 @@
 package net.machinemuse.numina.death
 
-import net.minecraftforge.event.ForgeSubscribe
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraft.entity.player.EntityPlayer
 import net.machinemuse.numina.scala.OptionCast
@@ -15,7 +15,7 @@ import net.minecraft.client.Minecraft
  * Created: 6:31 PM, 10/15/13
  */
 object DeathEventHandler {
-  @ForgeSubscribe def onLivingDeath(e: LivingDeathEvent) {
+  @SubscribeEvent def onLivingDeath(e: LivingDeathEvent) {
     OptionCast[EntityPlayer](e.entityLiving) map {
       player =>
         e.setCanceled(true)
@@ -25,7 +25,7 @@ object DeathEventHandler {
     }
   }
 
-  @ForgeSubscribe def onOpenGui(e: GuiOpenEvent) {
+  @SubscribeEvent def onOpenGui(e: GuiOpenEvent) {
     if (e.gui.isInstanceOf[GuiGameOver]) {
       e.setCanceled(true)
       val player = Minecraft.getMinecraft.thePlayer

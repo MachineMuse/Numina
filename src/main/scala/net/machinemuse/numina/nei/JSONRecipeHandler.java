@@ -80,7 +80,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             if(irecipe instanceof JSONRecipe)
                 recipe = JSONShapedRecipe((JSONRecipe) irecipe);
 
-            if(recipe == null || !recipe.contains(recipe.ingredients, ingredient.itemID))
+            if(recipe == null || !recipe.contains(recipe.ingredients, ingredient.getItem()))
                 continue;
 
             recipe.computeVisuals();
@@ -143,24 +143,24 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             }
         }
 
-        if (cell.id != null) {
+        if (cell.item != null) {
             int meta = OreDictionary.WILDCARD_VALUE;
             if (cell.meta != null)
-                meta = cell.meta.intValue();
+                meta = cell.meta;
             if (result == null) {
                 result = new ArrayList<ItemStack>();
-                result.add(new ItemStack(cell.id.intValue(), 1, meta));
+                result.add(new ItemStack(cell.item, 1, meta));
             } else {
                 ArrayList<ItemStack> t = new ArrayList<ItemStack>();
                 for (ItemStack stack : result)
-                    if (stack.itemID == cell.id.intValue() && (meta == OreDictionary.WILDCARD_VALUE || meta == stack.getItemDamage()))
+                    if (stack.getItem() == cell.item && (meta == OreDictionary.WILDCARD_VALUE || meta == stack.getItemDamage()))
                         t.add(stack);
                 result = t;
             }
-        } else if (cell.meta != null && result != null && cell.meta.intValue() != OreDictionary.WILDCARD_VALUE) {
+        } else if (cell.meta != null && result != null && cell.meta != OreDictionary.WILDCARD_VALUE) {
             ArrayList<ItemStack> t = new ArrayList<ItemStack>();
             for (ItemStack stack : result)
-                if (cell.meta.intValue() == stack.getItemDamage())
+                if (cell.meta == stack.getItemDamage())
                     t.add(stack);
             result = t;
         }

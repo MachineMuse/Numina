@@ -2,7 +2,7 @@ package net.machinemuse.numina.geometry;
 
 import net.machinemuse.numina.render.MuseTextureUtils;
 import net.machinemuse.numina.render.RenderState;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -19,12 +19,12 @@ public class RadialIndicator {
     protected DoubleBuffer textures;
     protected DoubleBuffer background;
     protected DoubleBuffer foreground;
-    protected Icon icon;
+    protected IIcon icon;
     protected String textureFile;
 
     public RadialIndicator(double innerRadius, double outerRadius, double startangle, double endangle, Colour backgroundColour,
                            Colour foregroundColour,
-                           Icon icon, String texturefile) {
+                           IIcon icon, String texturefile) {
         this.icon = icon;
         this.textureFile = texturefile;
         DoubleBuffer arcPoints1 = GradientAndArcCalculator.getArcPoints(startangle, endangle, outerRadius, 0, 0, 1);

@@ -1,5 +1,6 @@
 package net.machinemuse.numina.recipe;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
@@ -9,7 +10,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * Created: 2:48 PM, 11/4/13
  */
 public class SimpleItemMatcher implements IItemMatcher {
-    public Integer id;
+    public Item item;
     public Integer meta;
     public String unlocalizedName;
     public String oredictName;
@@ -18,16 +19,16 @@ public class SimpleItemMatcher implements IItemMatcher {
     public SimpleItemMatcher() {
     }
 
-    public SimpleItemMatcher(int id) {
-        this.id = id;
+    public SimpleItemMatcher(Item item) {
+        this.item = item;
     }
 
     public SimpleItemMatcher(String oredictName) {
         this.oredictName = oredictName;
     }
 
-    public SimpleItemMatcher(int id, int meta) {
-        this.id = id;
+    public SimpleItemMatcher(Item item, int meta) {
+        this.item = item;
         this.meta = meta;
     }
 
@@ -39,7 +40,7 @@ public class SimpleItemMatcher implements IItemMatcher {
         if(stack.getItem() == null) {
             return false;
         }
-        if (id != null && id != stack.itemID) {
+        if (item != null && item != stack.getItem()) {
             return false;
         }
         if (meta != null && meta != stack.getItemDamage()) {
@@ -51,7 +52,7 @@ public class SimpleItemMatcher implements IItemMatcher {
         if (oredictName != null) {
             boolean found = false;
             for (ItemStack ore : OreDictionary.getOres(oredictName)) {
-                if (ore.itemID == stack.itemID && ore.getItemDamage() == stack.getItemDamage()) {
+                if (ore.getItem() == stack.getItem() && ore.getItemDamage() == stack.getItemDamage()) {
                     found = true;
                 }
             }
@@ -66,7 +67,7 @@ public class SimpleItemMatcher implements IItemMatcher {
 
     public SimpleItemMatcher copy() {
         SimpleItemMatcher copy = new SimpleItemMatcher();
-        copy.id = this.id;
+        copy.item = this.item;
         copy.meta = this.meta;
         copy.unlocalizedName = this.unlocalizedName;
         copy.oredictName = this.unlocalizedName;

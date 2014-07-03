@@ -1,8 +1,7 @@
 package net.machinemuse.numina.item
 
 import net.minecraft.item.Item
-import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.client.renderer.texture.IconRegister
+import net.minecraft.client.renderer.texture.IIconRegister
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -17,11 +16,11 @@ trait NuminaItemBase extends Item {
 
   //also remember to setHasSubtypes
 
-  override def registerIcons(register:IconRegister) {
+  override def registerIcons(register:IIconRegister) {
     iconRegistration(register)
   }
 
-  def iconRegistration(register:IconRegister)
+  def iconRegistration(register:IIconRegister)
 
 //  override def requiresMultipleRenderPasses = true // Required in order to have it use the itemstack-based icon functions
 

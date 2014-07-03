@@ -1,11 +1,10 @@
 package net.machinemuse.numina.item
 
+import net.machinemuse.numina.network.message.MusePacketModeChangeRequest
 import net.minecraft.item.ItemStack
-import net.minecraft.util.Icon
+import net.minecraft.util.IIcon
 import net.minecraft.entity.player.EntityPlayer
-import net.machinemuse.numina.basemod.Numina
-import net.machinemuse.numina.network.MusePacketModeChangeRequest
-import cpw.mods.fml.common.network.Player
+import net.machinemuse.numina.network.MusePacketHandler
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -36,7 +35,7 @@ trait ModeChangingItem {
       val newindex = clampMode(modes.indexOf(getActiveMode(stack, player)) + dMode, modes.size)
       val newmode = modes(newindex)
       setActiveMode(stack, newmode)
-      Numina.proxy.sendPacketToServer(new MusePacketModeChangeRequest(player.asInstanceOf[Player], newmode, player.inventory.currentItem))
+      MusePacketHandler.INSTANCE.sendToServer(new MusePacketModeChangeRequest(player.inventory.currentItem, newmode))
     }
   }
   def nextMode(stack:ItemStack, player:EntityPlayer) = {
@@ -66,7 +65,7 @@ trait ModeChangingItem {
     }
   }
 
-  def getModeIcon(mode: String, stack: ItemStack, player: EntityPlayer): Option[Icon]
+  def getModeIcon(mode: String, stack: ItemStack, player: EntityPlayer): Option[IIcon]
 
   def getValidModes(stack: ItemStack, player: EntityPlayer): Seq[String]
 

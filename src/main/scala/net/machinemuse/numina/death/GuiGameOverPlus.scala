@@ -18,13 +18,13 @@ import org.lwjgl.opengl.GL11
     this.buttonList.clear()
     if (this.mc.theWorld.getWorldInfo.isHardcoreModeEnabled) {
       if (this.mc.isIntegratedServerRunning) {
-        addButton(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, I18n.getString("deathScreen.deleteWorld")))
+        addButton(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, I18n.format("deathScreen.deleteWorld")))
       } else {
-        addButton(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, I18n.getString("deathScreen.leaveServer")))
+        addButton(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, I18n.format("deathScreen.leaveServer")))
       }
     } else {
-      addButton(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 72, I18n.getString("deathScreen.respawn")))
-      addButton(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 96, I18n.getString("deathScreen.titleScreen")))
+      addButton(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 72, I18n.format("deathScreen.respawn")))
+      addButton(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 96, I18n.format("deathScreen.titleScreen")))
       addButton(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 120, "Revive"))
       if (this.mc.getSession == null) {
         this.buttonList.get(1).asInstanceOf[GuiButton].enabled = false
@@ -73,13 +73,13 @@ import org.lwjgl.opengl.GL11
     GL11.glPushMatrix()
     GL11.glScalef(2.0F, 2.0F, 2.0F)
     val flag: Boolean = this.mc.theWorld.getWorldInfo.isHardcoreModeEnabled
-    val s: String = if (flag) I18n.getString("deathScreen.title.hardcore") else I18n.getString("deathScreen.title")
-    this.drawCenteredString(this.fontRenderer, s, this.width / 2 / 2, 30, 16777215)
+    val s: String = if (flag) I18n.format("deathScreen.title.hardcore") else I18n.format("deathScreen.title")
+    this.drawCenteredString(this.fontRendererObj, s, this.width / 2 / 2, 30, 16777215)
     GL11.glPopMatrix()
     if (flag) {
-      this.drawCenteredString(this.fontRenderer, I18n.getString("deathScreen.hardcoreInfo"), this.width / 2, 144, 16777215)
+      this.drawCenteredString(this.fontRendererObj, I18n.format("deathScreen.hardcoreInfo"), this.width / 2, 144, 16777215)
     }
-    this.drawCenteredString(this.fontRenderer, I18n.getString("deathScreen.score") + ": " + EnumChatFormatting.YELLOW + this.mc.thePlayer.getScore, this.width / 2, 100, 16777215)
+    this.drawCenteredString(this.fontRendererObj, I18n.format("deathScreen.score") + ": " + EnumChatFormatting.YELLOW + this.mc.thePlayer.getScore, this.width / 2, 100, 16777215)
     super.drawScreen(par1, par2, par3)
   }
 

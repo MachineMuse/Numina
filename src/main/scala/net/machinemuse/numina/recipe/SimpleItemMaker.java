@@ -2,6 +2,7 @@ package net.machinemuse.numina.recipe;
 
 import net.machinemuse.numina.general.MuseLogger;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
@@ -11,7 +12,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * Created: 2:55 PM, 11/4/13
  */
 public class SimpleItemMaker implements IItemMaker {
-    public Integer id;
+    public Item item;
     public Integer meta;
     public Integer quantity;
     public String unlocalizedName;
@@ -34,8 +35,8 @@ public class SimpleItemMaker implements IItemMaker {
     public ItemStack getRecipeOutput() {
         int newmeta = getOrElse(this.meta, 0);
         int newquantity = getOrElse(this.quantity, 1);
-        if (id != null) {
-            ItemStack stack = new ItemStack(id, newquantity, newmeta);
+        if (item != null) {
+            ItemStack stack = new ItemStack(item, newquantity, newmeta);
             if (nbt != null) stack.stackTagCompound = (NBTTagCompound) nbt.copy();
             return stack;
         } else if (oredictName != null) {

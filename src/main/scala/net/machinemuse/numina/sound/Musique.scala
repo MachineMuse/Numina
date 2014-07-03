@@ -1,8 +1,9 @@
-package net.machinemuse.numina.sound
+/*package net.machinemuse.numina.sound
 
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.relauncher.Side
 import net.minecraft.client.Minecraft
+import net.minecraft.client.audio.PositionedSoundRecord
 import net.minecraft.entity.player.EntityPlayer
 import scala.Predef.String
 import net.machinemuse.numina.basemod.NuminaConfig
@@ -13,7 +14,7 @@ import net.machinemuse.numina.general.MuseLogger
  */
 object Musique {
 
-  def mcsound = Minecraft.getMinecraft.sndManager
+  def mcsound = Minecraft.getMinecraft.getSoundHandler
 
   def soundsystem = mcsound.sndSystem
 
@@ -21,19 +22,19 @@ object Musique {
 
   val soundprefix = "Numina"
 
-
+  //TODO See if this is for MC only or if it is used in MPS. Assuming it's MC only for the time being.
   def playClientSound(soundname: String, volume: Float) {
     try {
       if ((FMLCommonHandler.instance.getEffectiveSide == Side.CLIENT) && NuminaConfig.useSounds) {
         val pitch: Float = 1.0f
-        mcsound.playSoundFX(soundname, volume, pitch)
+        mcsound.playSound(new PositionedSoundRecord(soundname, volume, pitch, 0F, 0F, 0F))
       }
     } catch {
       case e: NullPointerException => MuseLogger.logDebug("No Soundsystem")
     }
   }
 
-  def makeSoundString(player: EntityPlayer, soundname: String): String = soundprefix + player.username + soundname
+  def makeSoundString(player: EntityPlayer, soundname: String): String = soundprefix + player.getCommandSenderName + soundname
 
   def playerSound(player: EntityPlayer, soundname: String, volume: Float, pitch: Float = 1.0f, continuous: Boolean = true) {
     try {
@@ -75,4 +76,4 @@ object Musique {
   }
 
   def getSoundPoolEntry(s: String) = mcsound.soundPoolSounds.getRandomSoundFromSoundPool(s)
-}
+}*/
