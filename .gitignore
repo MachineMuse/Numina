@@ -1,13 +1,21 @@
-*.class
-*.log
+# ForgeGradle
+/.gradle
+/build
+/run
 
-# sbt specific
-dist/*
-target/
-lib_managed/
-src_managed/
-project/boot/
-project/plugins/project/
+# Eclipse
+.classpath
+.project
+/.settings
+/bin
 
-# Scala-IDE specific
-.scala_dependencies
+# IntelliJ
+/.idea
+*.iml
+*.ipr
+*.iws
+/out
+
+# Mac Stuff
+.DS_Store
+*.command

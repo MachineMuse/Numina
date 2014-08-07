@@ -17,14 +17,16 @@ public class ItemNameMappings {
     private static Map<String, ItemStack> getItemMap() {
         if (itemMap == null) {
             itemMap = new HashMap<String, ItemStack>();
-            for (Block b : Block.blocksList) {
-                if (b != null && b.getUnlocalizedName() != null) {
-                    itemMap.put(b.getUnlocalizedName(), new ItemStack(b));
+            for (Object obj : Block.blockRegistry) {
+                Block block = (Block)obj;
+                if (block != null && block.getUnlocalizedName() != null) {
+                    itemMap.put(block.getUnlocalizedName(), new ItemStack(block));
                 }
             }
-            for (Item b : Item.itemsList) {
-                if (b != null && b.getUnlocalizedName() != null) {
-                    itemMap.put(b.getUnlocalizedName(), new ItemStack(b));
+            for (Object obj : Item.itemRegistry) {
+                Item item = (Item)obj;
+                if (item != null && item.getUnlocalizedName() != null) {
+                    itemMap.put(item.getUnlocalizedName(), new ItemStack(item));
                 }
             }
         }

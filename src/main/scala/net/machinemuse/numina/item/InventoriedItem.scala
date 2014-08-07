@@ -27,7 +27,7 @@ trait InventoriedItem {
 
   def getContentsAsNBTTagList(stack: ItemStack) = {
     val tag = NuminaItemUtils.getTagCompound(stack)
-    if (tag.hasKey("contents")) tag.getTagList("contents")
+    if (tag.hasKey("contents")) tag.getTagList("contents", 10)
     else {
       val list = new NBTTagList()
       tag.setTag("contents", list)
@@ -38,7 +38,7 @@ trait InventoriedItem {
   def getContents(stack: ItemStack): Seq[ItemStack] = {
     val list = getContentsAsNBTTagList(stack)
     for (i <- 0 until list.tagCount()) yield {
-      ItemStack.loadItemStackFromNBT(list.tagAt(i).asInstanceOf[NBTTagCompound])
+      ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i).asInstanceOf[NBTTagCompound])
     }
   }
 
@@ -57,6 +57,6 @@ trait InventoriedItem {
 
   def getNumStacks(stack:ItemStack) = {
     val tag = NuminaItemUtils.getTagCompound(stack)
-    if (tag.hasKey("contents")) tag.getTagList("contents").tagCount() else 0
+    if (tag.hasKey("contents")) tag.getTagList("contents", 10).tagCount() else 0
   }
 }

@@ -26,7 +26,6 @@ object BillboardHelper {
     matrix.put(0, scalex)
     matrix.put(5, scaley)
     matrix.put(10, scalez)
-    matrix
     GL11.glLoadMatrix(matrix)
   }
 

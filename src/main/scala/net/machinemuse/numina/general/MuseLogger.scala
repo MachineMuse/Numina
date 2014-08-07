@@ -1,11 +1,9 @@
 package net.machinemuse.numina.general
 
-
-import java.util.logging.Logger
-
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.FMLLog
 import net.machinemuse.numina.basemod.NuminaConfig
+import org.apache.logging.log4j.LogManager
 
 /**
  * Logger access class. May become more fleshed out in the future.
@@ -14,8 +12,7 @@ import net.machinemuse.numina.basemod.NuminaConfig
  *
  */
 object MuseLogger {
-  val logger = Logger.getLogger("MachineMuse")
-  logger.setParent(FMLLog.getLogger)
+  val logger = LogManager.getLogger("MachineMuse")
 
   def logDebug(string: String) = {
     var debugging = true
@@ -24,12 +21,12 @@ object MuseLogger {
     } catch {
       case _: Exception =>
     }
-    if (debugging) logger.info("[" + FMLCommonHandler.instance().getEffectiveSide + "] " + string)
+    if (debugging) logger.info(string)
     None
   }
 
   def logError(string: String) = {
-    logger.warning("[" + FMLCommonHandler.instance().getEffectiveSide + "] " + string)
+    logger.warn(string)
     None
   }
 
@@ -39,7 +36,7 @@ object MuseLogger {
   }
 
   def logException(string: String, exception: Throwable) = {
-    logger.warning("[" + FMLCommonHandler.instance().getEffectiveSide + "] " + string)
+    logger.warn(string)
     exception.printStackTrace()
     None
   }

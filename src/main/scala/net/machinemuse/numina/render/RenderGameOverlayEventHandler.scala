@@ -1,12 +1,12 @@
 package net.machinemuse.numina.render
 
-import net.minecraftforge.event.ForgeSubscribe
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.Minecraft
 import net.machinemuse.numina.item.ModeChangingItem
-import net.minecraft.util.Icon
+import net.minecraft.util.IIcon
 import net.minecraftforge.common.ForgeHooks
 import net.machinemuse.numina.scala.OptionCast
 import net.machinemuse.numina.geometry.Colour
@@ -16,7 +16,7 @@ import net.machinemuse.numina.geometry.Colour
  * Created: 2:17 PM, 9/6/13
  */
 object RenderGameOverlayEventHandler {
-  @ForgeSubscribe def onPreRenderGameOverlayEvent(e: RenderGameOverlayEvent.Pre) {
+  @SubscribeEvent def onPreRenderGameOverlayEvent(e: RenderGameOverlayEvent.Pre) {
     e.`type` match {
 //      case ElementType.ALL =>
 //      case ElementType.HELMET =>
@@ -36,7 +36,7 @@ object RenderGameOverlayEventHandler {
     }
   }
 
-  @ForgeSubscribe def onPostRenderGameOverlayEvent(e: RenderGameOverlayEvent.Post) {
+  @SubscribeEvent def onPostRenderGameOverlayEvent(e: RenderGameOverlayEvent.Post) {
     e.`type` match {
 //      case ElementType.ALL =>
 //      case ElementType.HELMET =>
@@ -68,14 +68,14 @@ object RenderGameOverlayEventHandler {
       stack <- Option(player.inventory.getCurrentItem)
       item <- OptionCast[ModeChangingItem](stack.getItem)
     } {
-      val screen = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight)
+      val screen = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight)
 
       MuseTextureUtils.pushTexture(MuseTextureUtils.ITEM_TEXTURE_QUILT)
       RenderState.blendingOn()
       val swapTime = Math.min(System.currentTimeMillis - lastSwapTime, SWAPTIME)
-      val currentMode: Option[Icon] = item.getModeIcon(item.getActiveMode(stack, player), stack, player)
-      val nextMode: Option[Icon] = item.getModeIcon(item.nextMode(stack, player), stack, player)
-      val prevMode: Option[Icon] = item.getModeIcon(item.prevMode(stack, player), stack, player)
+      val currentMode: Option[IIcon] = item.getModeIcon(item.getActiveMode(stack, player), stack, player)
+      val nextMode: Option[IIcon] = item.getModeIcon(item.nextMode(stack, player), stack, player)
+      val prevMode: Option[IIcon] = item.getModeIcon(item.prevMode(stack, player), stack, player)
       var prevX: Double = .0
       var prevY: Double = .0
       var currX: Double = .0
@@ -132,7 +132,7 @@ object RenderGameOverlayEventHandler {
     }
   }
 
-  private def drawIcon(x: Double, y: Double, icon: Option[Icon], alpha: Double) {
+  private def drawIcon(x: Double, y: Double, icon: Option[IIcon], alpha: Double) {
     icon.map(i => MuseIconUtils.drawIconAt(x, y, i, Colour.WHITE.withAlpha(alpha)))
   }
 
