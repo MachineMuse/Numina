@@ -36,6 +36,7 @@ abstract class MusePacket {
     new FMLProxyPacket(bytes, MusePacketHandler.networkChannelName)
   }
 
+  def getPacket131 = this
 
   /**
    * Called by the network manager since it does all the packet mapping

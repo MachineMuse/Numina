@@ -8,66 +8,66 @@ import net.minecraft.util.ResourceLocation;
  *
  * @author Parker8283
  */
-public class MuseSound implements ISound {
+public class Musique implements ISound {
     private ResourceLocation soundLoc;
     private float volume, pitch, xPos, yPos, zPos;
     private boolean canRepeat;
     private int repeatDelay;
     private AttenuationType type;
 
-    public MuseSound(String sound) {
+    public Musique(String sound) {
         this(sound, 1.0F);
     }
 
-    public MuseSound(String sound, float volume) {
+    public Musique(String sound, float volume) {
         this(sound, volume, 1.0F);
     }
 
-    public MuseSound(String sound, float volume, float pitch) {
+    public Musique(String sound, float volume, float pitch) {
         this(sound, volume, pitch, 0.0F, 0.0F, 0.0F, AttenuationType.NONE);
     }
 
-    public MuseSound(String sound, float xPos, float yPos, float zPos) {
+    public Musique(String sound, float xPos, float yPos, float zPos) {
         this(sound, 1.0F, 1.0F, xPos, yPos, zPos, AttenuationType.LINEAR);
     }
 
-    public MuseSound(String sound, boolean canRepeat, int repeatDelay) {
+    public Musique(String sound, boolean canRepeat, int repeatDelay) {
         this(sound, 1.0F, 1.0F, canRepeat, repeatDelay, 0.0F, 0.0F, 0.0F, AttenuationType.NONE);
     }
 
-    public MuseSound(String sound, float volume, float pitch, float xPos, float yPos, float zPos, AttenuationType type) {
+    public Musique(String sound, float volume, float pitch, float xPos, float yPos, float zPos, AttenuationType type) {
         this(sound, volume, pitch, false, 0, xPos, yPos, zPos, type);
     }
 
-    public MuseSound(String sound, float volume, float pitch, boolean canRepeat, int repeatDelay, float xPos, float yPos, float zPos, AttenuationType type) {
+    public Musique(String sound, float volume, float pitch, boolean canRepeat, int repeatDelay, float xPos, float yPos, float zPos, AttenuationType type) {
         this(new ResourceLocation(sound), volume, pitch, canRepeat, repeatDelay, xPos, yPos, zPos, type);
     }
 
-    public MuseSound(ResourceLocation soundLoc) {
+    public Musique(ResourceLocation soundLoc) {
         this(soundLoc, 1.0F);
     }
 
-    public MuseSound(ResourceLocation soundLoc, float volume) {
+    public Musique(ResourceLocation soundLoc, float volume) {
         this(soundLoc, volume, 1.0F);
     }
 
-    public MuseSound(ResourceLocation soundLoc, float volume, float pitch) {
+    public Musique(ResourceLocation soundLoc, float volume, float pitch) {
         this(soundLoc, volume, pitch, 0.0F, 0.0F, 0.0F, AttenuationType.NONE);
     }
 
-    public MuseSound(ResourceLocation soundLoc, float xPos, float yPos, float zPos) {
+    public Musique(ResourceLocation soundLoc, float xPos, float yPos, float zPos) {
         this(soundLoc, 1.0F, 1.0F, xPos, yPos, zPos, AttenuationType.LINEAR);
     }
 
-    public MuseSound(ResourceLocation soundLoc, boolean canRepeat, int repeatDelay) {
+    public Musique(ResourceLocation soundLoc, boolean canRepeat, int repeatDelay) {
         this(soundLoc, 1.0F, 1.0F, canRepeat, repeatDelay, 0.0F, 0.0F, 0.0F, AttenuationType.NONE);
     }
 
-    public MuseSound(ResourceLocation soundLoc, float volume, float pitch, float xPos, float yPos, float zPos, AttenuationType type) {
+    public Musique(ResourceLocation soundLoc, float volume, float pitch, float xPos, float yPos, float zPos, AttenuationType type) {
         this(soundLoc, volume, pitch, false, 0, xPos, yPos, zPos, type);
     }
 
-    public MuseSound(ResourceLocation soundLoc, float volume, float pitch, boolean canRepeat, int repeatDelay, float xPos, float yPos, float zPos, AttenuationType type) {
+    public Musique(ResourceLocation soundLoc, float volume, float pitch, boolean canRepeat, int repeatDelay, float xPos, float yPos, float zPos, AttenuationType type) {
         this.soundLoc = soundLoc;
         this.volume = volume;
         this.pitch = pitch;
@@ -79,23 +79,23 @@ public class MuseSound implements ISound {
         this.type = type;
     }
 
-    public MuseSound setVolume(float volume) {
+    public Musique setVolume(float volume) {
         this.volume = volume;
         return this;
     }
 
-    public MuseSound setPitch(float pitch) {
+    public Musique setPitch(float pitch) {
         this.pitch = pitch;
         return this;
     }
 
-    public MuseSound setVolumeAndPitch(float volume, float pitch) {
+    public Musique setVolumeAndPitch(float volume, float pitch) {
         this.volume = volume;
         this.pitch = pitch;
         return this;
     }
 
-    public MuseSound setLocation(float xPos, float yPos, float zPos) {
+    public Musique setLocation(float xPos, float yPos, float zPos) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.zPos = zPos;
@@ -103,19 +103,19 @@ public class MuseSound implements ISound {
         return this;
     }
 
-    public MuseSound removeLocation() {
+    public Musique removeLocation() {
         this.xPos = this.yPos = this.zPos = 0.0F;
         this.type = AttenuationType.NONE;
         return this;
     }
 
-    public MuseSound setRepeatable(int repeatDelay) {
+    public Musique setRepeatable(int repeatDelay) {
         this.canRepeat = true;
         this.repeatDelay = repeatDelay;
         return this;
     }
 
-    public MuseSound unsetRepeatable() {
+    public Musique unsetRepeatable() {
         this.canRepeat = false;
         this.repeatDelay = 0;
         return this;
