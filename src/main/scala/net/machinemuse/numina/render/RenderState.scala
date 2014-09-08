@@ -88,7 +88,7 @@ object RenderState {
     val mc: Minecraft = Minecraft.getMinecraft
     val dw: Int = mc.displayWidth
     val dh: Int = mc.displayHeight
-    val res: ScaledResolution = new ScaledResolution(mc.gameSettings, dw, dh)
+    val res: ScaledResolution = new ScaledResolution(mc, dw, dh)
     val newx: Double = x * res.getScaleFactor
     val newy: Double = dh - h * res.getScaleFactor - y * res.getScaleFactor
     val neww: Double = w * res.getScaleFactor

@@ -4,7 +4,7 @@ import net.machinemuse.numina.general.MuseMathUtils
 import org.lwjgl.opengl.GL11
 import net.minecraft.client.renderer.Tessellator
 import net.machinemuse.numina.geometry.Colour
-import net.minecraft.util.Icon
+import net.minecraft.util.IIcon
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -19,11 +19,11 @@ object MuseIconUtils {
    * @param icon
    * @param colour
    */
-  def drawIconAt(x: Double, y: Double, icon: Icon, colour: Colour) {
+  def drawIconAt(x: Double, y: Double, icon: IIcon, colour: Colour) {
     drawIconPartial(x, y, icon, colour, 0, 0, 16, 16)
   }
 
-  def drawIconPartialOccluded(x: Double, y: Double, icon: Icon, colour: Colour, left: Double, top: Double, right: Double, bottom: Double) {
+  def drawIconPartialOccluded(x: Double, y: Double, icon: IIcon, colour: Colour, left: Double, top: Double, right: Double, bottom: Double) {
     val xmin: Double = MuseMathUtils.clampDouble(left - x, 0, 16)
     val ymin: Double = MuseMathUtils.clampDouble(top - y, 0, 16)
     val xmax: Double = MuseMathUtils.clampDouble(right - x, 0, 16)
@@ -39,7 +39,7 @@ object MuseIconUtils {
    * @param icon
    * @param colour
    */
-  def drawIconPartial(x: Double, y: Double, icon: Icon, colour: Colour, left: Double, top: Double, right: Double, bottom: Double) {
+  def drawIconPartial(x: Double, y: Double, icon: IIcon, colour: Colour, left: Double, top: Double, right: Double, bottom: Double) {
     if (icon == null) {
       return
     }

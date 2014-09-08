@@ -1,6 +1,6 @@
 package net.machinemuse.numina.basemod
 
-import net.minecraftforge.common.Configuration
+import net.minecraftforge.common.config.Configuration
 import java.io.File
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 
@@ -19,12 +19,9 @@ object NuminaConfig {
     }
     // Initialize config file
     isDebugging
-    useSounds
     useFOVFix
     config.save()
   }
-
-  def useSounds = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Use Sounds", default = true)
 
   def useFOVFix = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Ignore speed boosts for field of view", default = true)
 

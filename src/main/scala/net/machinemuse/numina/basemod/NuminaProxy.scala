@@ -1,18 +1,18 @@
 package net.machinemuse.numina.basemod
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
+import cpw.mods.fml.common.network.simpleimpl.IMessage
+import net.machinemuse.numina.network.message.MusePacketRecipeUpdate
 import net.minecraftforge.common.MinecraftForge
 import net.machinemuse.numina.mouse.MouseEventHandler
 import net.machinemuse.numina.render.{FOVUpdateEventHandler, RenderGameOverlayEventHandler}
-import net.machinemuse.numina.network.{MusePacketRecipeUpdate, MusePacket}
+import net.machinemuse.numina.network.PacketHandler
 import net.minecraft.entity.player.{EntityPlayerMP, EntityPlayer}
 import net.minecraft.client.Minecraft
 import net.machinemuse.numina.recipe.JSONRecipeList
-import cpw.mods.fml.common.{FMLCommonHandler, IPlayerTracker}
-import cpw.mods.fml.common.network.{IConnectionHandler, Player, PacketDispatcher}
+import cpw.mods.fml.common.FMLCommonHandler
 import net.machinemuse.numina.general.MuseLogger
-import net.minecraft.network.packet.{Packet1Login, NetHandler}
-import net.minecraft.network.{NetLoginHandler, INetworkManager}
-import net.minecraft.server.MinecraftServer
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -25,12 +25,14 @@ trait NuminaProxy {
 
   def PostInit() = {}
 
-  def sendPacketToClient(packet: MusePacket, player: EntityPlayer) = {
-    player.asInstanceOf[EntityPlayerMP].playerNetServerHandler.sendPacketToPlayer(packet.getPacket131)
+  @deprecated(message = "Use the PacketHandler INSTANCE directly", since = "MC 1.7.10")
+  def sendPacketToClient(packet: IMessage, player: EntityPlayerMP) = {
+    PacketHandler.INSTANCE.sendTo(packet, player)
   }
 
-  def sendPacketToServer(packet: MusePacket) = {
-    Minecraft.getMinecraft.thePlayer.sendQueue.addToSendQueue(packet.getPacket131)
+  @deprecated(message = "Use the PacketHandler INSTANCE directly", since = "MC 1.7.10")
+  def sendPacketToServer(packet: IMessage) = {
+    PacketHandler.INSTANCE.sendToServer(packet)
   }
 }
 
@@ -45,39 +47,15 @@ class NuminaProxyClient extends NuminaProxy {
 
 class NuminaProxyServer extends NuminaProxy
 
-object NuminaPlayerTracker extends IPlayerTracker {
-  def onPlayerLogin(player: EntityPlayer) {}
-
-  def onPlayerLogout(player: EntityPlayer) {}
-
-  def onPlayerChangedDimension(player: EntityPlayer) {}
-
-  def onPlayerRespawn(player: EntityPlayer) {}
-}
-
-object NuminaConnectionTracker extends IConnectionHandler {
-
-  def playerLoggedIn(player: Player, netHandler: NetHandler, manager: INetworkManager): Unit = {
+object NuminaPlayerTracker {
+  @SubscribeEvent def onPlayerLogin(event: PlayerLoggedInEvent) {
     if(!FMLCommonHandler.instance().getMinecraftServerInstance.isSinglePlayer) {
       for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
         val recipeArray = Array(recipe)
         val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)
-        PacketDispatcher.sendPacketToPlayer(
-          new MusePacketRecipeUpdate(player, recipeAsString).getPacket131,
-          player
-        )
+        PacketHandler.INSTANCE.sendTo(new MusePacketRecipeUpdate(recipeAsString), event.player.asInstanceOf[EntityPlayerMP])
       }
     }
   }
-
-  def connectionReceived(netHandler: NetLoginHandler, manager: INetworkManager): String = "" // Return non-empty to refuse the connection
-
-  def connectionOpened(netClientHandler: NetHandler, server: String, port: Int, manager: INetworkManager): Unit = {}
-
-  def connectionOpened(netClientHandler: NetHandler, server: MinecraftServer, manager: INetworkManager): Unit = {}
-
-  def connectionClosed(manager: INetworkManager): Unit = {}
-
-  def clientLoggedIn(clientHandler: NetHandler, manager: INetworkManager, login: Packet1Login): Unit = {}
 }
 
