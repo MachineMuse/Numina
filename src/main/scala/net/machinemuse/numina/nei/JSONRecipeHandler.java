@@ -80,7 +80,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             if(irecipe instanceof JSONRecipe)
                 recipe = JSONShapedRecipe((JSONRecipe) irecipe);
 
-            if(recipe == null || !recipe.contains(recipe.ingredients, ingredient.getItem()))
+            if(recipe == null || !recipe.contains(recipe.ingredients, ingredient))
                 continue;
 
             recipe.computeVisuals();
