@@ -1,10 +1,9 @@
 package net.machinemuse.numina.item
 
-import net.machinemuse.numina.network.PacketHandler
-import net.machinemuse.numina.network.message.MusePacketModeChangeRequest
+import net.machinemuse.numina.network.{MusePacketModeChangeRequest, PacketSender}
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
-import net.minecraft.entity.player.EntityPlayer
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -35,10 +34,11 @@ trait ModeChangingItem {
       val newindex = clampMode(modes.indexOf(getActiveMode(stack, player)) + dMode, modes.size)
       val newmode = modes(newindex)
       setActiveMode(stack, newmode)
-      PacketHandler.INSTANCE.sendToServer(new MusePacketModeChangeRequest(player.inventory.currentItem, newmode))
+      PacketSender.sendToServer(new MusePacketModeChangeRequest(player,newmode, player.inventory.currentItem))
     }
   }
-  def nextMode(stack:ItemStack, player:EntityPlayer) = {
+
+  def nextMode(stack: ItemStack, player: EntityPlayer) = {
     val modes = getValidModes(stack, player)
     if (modes.size > 0) {
       val newindex = clampMode(modes.indexOf(getActiveMode(stack, player)) + 1, modes.size)
@@ -47,7 +47,8 @@ trait ModeChangingItem {
       ""
     }
   }
-  def prevMode(stack:ItemStack, player:EntityPlayer) = {
+
+  def prevMode(stack: ItemStack, player: EntityPlayer) = {
     val modes = getValidModes(stack, player)
     if (modes.size > 0) {
       val newindex = clampMode(modes.indexOf(getActiveMode(stack, player)) - 1, modes.size)
