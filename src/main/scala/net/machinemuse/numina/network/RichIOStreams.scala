@@ -1,9 +1,9 @@
 package net.machinemuse.numina.network
 
-import java.io.{DataOutputStream, DataInputStream}
-import io.netty.buffer.ByteBuf
+import java.io.{DataInputStream, DataOutputStream}
+
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.{NBTTagCompound, CompressedStreamTools}
+import net.minecraft.nbt.CompressedStreamTools
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -24,8 +24,14 @@ object RichInputStream {
      * Reads a compressed NBTTagCompound from the InputStream
      */
     def readNBTTagCompound = {
-      CompressedStreamTools.readCompressed(in)
+      val length = in.readShort()
+      if (length != -1) {
+        CompressedStreamTools.readCompressed(in)
+      } else {
+        null
+      }
     }
+
     /**
      * Reads a string from a packet
      */
