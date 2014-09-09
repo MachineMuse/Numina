@@ -23,7 +23,9 @@ object RichInputStream {
     /**
      * Reads a compressed NBTTagCompound from the InputStream
      */
-    def readNBTTagCompound = CompressedStreamTools.readCompressed(in)
+    def readNBTTagCompound = {
+      CompressedStreamTools.readCompressed(in)
+    }
     /**
      * Reads a string from a packet
      */
