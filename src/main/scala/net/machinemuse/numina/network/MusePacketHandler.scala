@@ -9,6 +9,7 @@ import java.util
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.common.network.internal.FMLProxyPacket
 import io.netty.buffer.ByteBufInputStream
+import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToMessageCodec
 import net.machinemuse.numina.general.MuseLogger
@@ -20,6 +21,7 @@ import net.minecraft.network.NetHandlerPlayServer
 /**
  * @author MachineMuse
  */
+@Sharable
 object MusePacketHandler extends MessageToMessageCodec[FMLProxyPacket, MusePacket]{
   val networkChannelName: String = "Numina"
   val packagers = new MuseNumericRegistry[MusePackager]

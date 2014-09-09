@@ -49,6 +49,12 @@ dependencies {
     compile 'codechicken:NotEnoughItems:1.7.10-1.0.2.15:dev'
 }
 
+jar {
+    manifest {
+        attributes 'FMLAT': 'numina_at.cfg'
+    }
+}
+
 processResources
 {
     // this will ensure that this task is redone when the versions change.
