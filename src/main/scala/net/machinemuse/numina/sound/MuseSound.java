@@ -3,11 +3,6 @@ package net.machinemuse.numina.sound;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.util.ResourceLocation;
 
-/**
- * Taken from 8283Lib.
- *
- * @author Parker8283
- */
 public class MuseSound implements ISound {
     private ResourceLocation soundLoc;
     private float volume, pitch, xPos, yPos, zPos;
@@ -77,6 +72,18 @@ public class MuseSound implements ISound {
         this.yPos = yPos;
         this.zPos = zPos;
         this.type = type;
+    }
+
+    public MuseSound(ISound other) {
+        this.soundLoc = other.getPositionedSoundLocation();
+        this.volume = other.getVolume();
+        this.pitch = other.getPitch();
+        this.canRepeat = other.canRepeat();
+        this.repeatDelay = other.getRepeatDelay();
+        this.xPos = other.getXPosF();
+        this.yPos = other.getYPosF();
+        this.zPos = other.getZPosF();
+        this.type = other.getAttenuationType();
     }
 
     public MuseSound setVolume(float volume) {
