@@ -18,7 +18,14 @@ object RichInputStream {
     /**
      * Reads an ItemStack from the InputStream
      */
-    def readItemStack = ItemStack.loadItemStackFromNBT(readNBTTagCompound)
+    def readItemStack = {
+      val tag = readNBTTagCompound
+      if(tag != null){
+        ItemStack.loadItemStackFromNBT(tag)
+      }else{
+        null
+      }
+    }
 
     /**
      * Reads a compressed NBTTagCompound from the InputStream
