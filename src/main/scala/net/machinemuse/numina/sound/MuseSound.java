@@ -1,6 +1,7 @@
 package net.machinemuse.numina.sound;
 
 import net.minecraft.client.audio.ISound;
+import net.minecraft.client.audio.ISound.AttenuationType;
 import net.minecraft.util.ResourceLocation;
 
 public class MuseSound implements ISound {

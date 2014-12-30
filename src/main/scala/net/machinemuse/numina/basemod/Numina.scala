@@ -5,6 +5,7 @@ import cpw.mods.fml.common.event._
 import java.io.File
 import net.machinemuse.numina.network.NuminaPackets
 import net.machinemuse.numina.recipe.JSONRecipeList
+import net.machinemuse.numina.sound.proxy.{Musique, MusiqueCommon}
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -14,7 +15,12 @@ import net.machinemuse.numina.recipe.JSONRecipeList
 object Numina {
   @SidedProxy(clientSide = "net.machinemuse.numina.basemod.NuminaProxyClient", serverSide = "net.machinemuse.numina.basemod.NuminaProxyServer")
   var proxy: NuminaProxy = null
+
+  @SidedProxy(clientSide = "net.machinemuse.numina.sound.proxy.MusiqueClient", serverSide = "net.machinemuse.numina.sound.proxy.MusiqueServer")
+  var musique: MusiqueCommon = null
+
   var configDir: java.io.File = null
+
 
   @Mod.EventHandler def preinit(e: FMLPreInitializationEvent) {
     NuminaConfig.init(e)
@@ -31,7 +37,8 @@ object Numina {
 
   @Mod.EventHandler def init(e: FMLInitializationEvent) {
     proxy.Init()
-    NuminaPackets.init()
+    NuminaPackets.init
+    Musique.init(musique)
   }
 
   @Mod.EventHandler def postinit(e: FMLPostInitializationEvent) {
