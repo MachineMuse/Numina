@@ -9,6 +9,6 @@ object NuminaPackets {
     MusePacketHandler.packagers.put(20, MusePacketNameChangeRequest)
     MusePacketHandler.packagers.put(21, MusePacketModeChangeRequest)
     MusePacketHandler.packagers.put(22, MusePacketRecipeUpdate)
-    MusePacketHandler.packagers.put(23, MusiqueUpdatePacket)
+    // MusePacketHandler.packagers.put(23, MusiqueUpdatePacket)
   }
 }

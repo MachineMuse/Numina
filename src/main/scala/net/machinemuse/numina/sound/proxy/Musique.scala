@@ -7,7 +7,7 @@ import net.minecraft.client.audio.ISound.AttenuationType
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
-import net.machinemuse.numina.network.{MusiqueUpdatePacket, PacketSender}
+//import net.machinemuse.numina.network.{MusiqueUpdatePacket, PacketSender}
 import net.machinemuse.numina.sound.MuseSound
 
 import java.io.InputStream
@@ -190,28 +190,29 @@ class MusiqueClient extends MusiqueCommon {
           var sound: MuseSound = null
           if (player == Minecraft.getMinecraft.thePlayer) {
             sound = new MuseSound(resource, volume, pitch)
-            PacketSender.sendToServer(new MusiqueUpdatePacket(new MusiqueCommonPlayer(player, resource, volume, pitch), false))
+            //PacketSender.sendToServer(new MusiqueUpdatePacket(new MusiqueCommonPlayer(player, resource, volume, pitch), false))
           } else {
             // Directional sounds broken? Hmm... Need to determine how to achive this... -- Korynkai
             //sound = new MuseSound(resource, volume, pitch, player.posX.asInstanceOf[Float], player.posY.asInstanceOf[Float], player.posZ.asInstanceOf[Float], AttenuationType.NONE)
           }
-
+          // Temporary null check
           if (sound != null) {
-            Minecraft.getMinecraft.getSoundHandler.playSound(sound)
-          }
+
+          Minecraft.getMinecraft.getSoundHandler.playSound(sound)
 
           // Show me a better way of getting this value or comparable and I'll implement it. -- Korynkai
           val duration: Deadline = OggAudioData.getSeconds(
                                     Minecraft.getMinecraft.getResourceManager.getResource(
                                       new SoundPoolEntry(
                                         Minecraft.getMinecraft.getSoundHandler.getSound(
-                                          sound.getPositionedSoundLocation
+                                          sound.getPositionedSoundLocation // NPE occurs here when not working directionally... See above conditional.
                                         ).func_148720_g
                                       ).getSoundPoolEntryLocation
                                     ).getInputStream
                                    ) seconds fromNow
 
           currentPlayerSounds += new MusiquePlayerSound(new MusiqueCommonPlayer(player, resource, volume, pitch), new MusiqueTimedInstance(sound, duration))
+          } // End of temporary null check
         }
       }
     }
@@ -226,7 +227,7 @@ class MusiqueClient extends MusiqueCommon {
             if (entry.instance.duration > Deadline.now) {
               Minecraft.getMinecraft.getSoundHandler.stopSound(entry.instance.sound)
               if (player == Minecraft.getMinecraft.thePlayer) {
-                PacketSender.sendToServer(new MusiqueUpdatePacket(entry.player, true))
+                // PacketSender.sendToServer(new MusiqueUpdatePacket(entry.player, true)) // Update directional sounds
               }
             }
         }
@@ -244,7 +245,7 @@ class MusiqueClient extends MusiqueCommon {
             if (entry.instance.duration > Deadline.now) {
               Minecraft.getMinecraft.getSoundHandler.stopSound(entry.instance.sound)
               if (player == Minecraft.getMinecraft.thePlayer) {
-                PacketSender.sendToServer(new MusiqueUpdatePacket(entry.player, true))
+                // PacketSender.sendToServer(new MusiqueUpdatePacket(entry.player, true)) // Update directional sounds
               }
             }
         }
@@ -260,7 +261,7 @@ class MusiqueClient extends MusiqueCommon {
         if (entry.instance.duration > Deadline.now) {
           Minecraft.getMinecraft.getSoundHandler.stopSound(entry.instance.sound)
           if (entry.player.player == Minecraft.getMinecraft.thePlayer) {
-            PacketSender.sendToServer(new MusiqueUpdatePacket(entry.player, true))
+            // PacketSender.sendToServer(new MusiqueUpdatePacket(entry.player, true)) // Update directional sounds
           }
         }
       }
