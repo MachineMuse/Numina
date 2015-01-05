@@ -192,10 +192,13 @@ class MusiqueClient extends MusiqueCommon {
             sound = new MuseSound(resource, volume, pitch)
             PacketSender.sendToServer(new MusiqueUpdatePacket(new MusiqueCommonPlayer(player, resource, volume, pitch), false))
           } else {
-            sound = new MuseSound(resource, volume, pitch, player.posX.asInstanceOf[Float], player.posY.asInstanceOf[Float], player.posZ.asInstanceOf[Float], AttenuationType.NONE)
+            // Directional sounds broken? Hmm... Need to determine how to achive this... -- Korynkai
+            //sound = new MuseSound(resource, volume, pitch, player.posX.asInstanceOf[Float], player.posY.asInstanceOf[Float], player.posZ.asInstanceOf[Float], AttenuationType.NONE)
           }
 
-          Minecraft.getMinecraft.getSoundHandler.playSound(sound)
+          if (sound != null) {
+            Minecraft.getMinecraft.getSoundHandler.playSound(sound)
+          }
 
           // Show me a better way of getting this value or comparable and I'll implement it. -- Korynkai
           val duration: Deadline = OggAudioData.getSeconds(
