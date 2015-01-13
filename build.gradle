@@ -50,17 +50,6 @@ dependencies {
 }
 
 new File(config.libs_dir).mkdirs()
-def getLibrary(filename) {
-    def f = new File(config.libs_dir + filename)
-    if (!f.exists()) {
-        new URL(config.apisource_url + filename).withInputStream{ i -> f.withOutputStream{ it << i }}
-    }
-    dependencies {
-        compile files(config.libs_dir + filename)
-    }
-}
-
-getLibrary("OggAudioData.jar")
 
 jar {
     manifest {
