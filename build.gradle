@@ -55,8 +55,6 @@ dependencies {
     compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0:pom'
 }
 
-new File(config.libs_dir).mkdirs()
-
 jar {
     manifest {
         attributes 'FMLAT': 'numina_at.cfg'
