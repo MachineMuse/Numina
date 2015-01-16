@@ -42,11 +42,17 @@ repositories {
         name = "ChickenBones"
         url = "http://chickenbones.net/maven"
     }
+
+    maven {
+        name = "QMXTech"
+        url = "https://artifactory.qmxtech.com/artifactory/libs-release/"
+    }
 }
 
 dependencies {
     compile 'codechicken:CodeChickenCore:1.7.10-1.0.2.9:dev'
     compile 'codechicken:NotEnoughItems:1.7.10-1.0.2.15:dev'
+    compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0:pom'
 }
 
 new File(config.libs_dir).mkdirs()
