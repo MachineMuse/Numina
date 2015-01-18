@@ -40,13 +40,8 @@ minecraft {
 
 repositories {
     maven {
-        name = "ChickenBones"
-        url = "http://chickenbones.net/maven"
-    }
-
-    maven {
         name = "QMXTech"
-        url = "https://artifactory.qmxtech.com/artifactory/libs-release/"
+        url = "https://artifactory.qmxtech.com/artifactory/minecraft-release/"
     }
 }
 
