@@ -63,12 +63,12 @@ public class JSONRecipeList {
 
     public static void loadRecipesFromString(String json) {
         System.out.println("Loading recipe from: " + json);
-        JSONRecipe recipe = gson.fromJson(json, JSONRecipe.class);
-        recipesList.addAll(Arrays.asList(recipe));
-//        for (JSONRecipe recipe : newrecipes) {
+        JSONRecipe[] newrecipes = gson.fromJson(json, JSONRecipe[].class);
+        recipesList.addAll(Arrays.asList(newrecipes));
+        for (JSONRecipe recipe : newrecipes) {
             if (recipe != null)
                 getCraftingRecipeList().add(recipe);
-//        }
+        }
     }
 
     public static List<IRecipe> getCraftingRecipeList() {
