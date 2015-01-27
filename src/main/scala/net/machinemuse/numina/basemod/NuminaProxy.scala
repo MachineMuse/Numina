@@ -12,6 +12,8 @@ import net.machinemuse.numina.render.{FOVUpdateEventHandler, RenderGameOverlayEv
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraftforge.common.MinecraftForge
 
+import java.io.{ByteArrayInputStream, InputStream, InputStreamReader}
+
 /**
  * Author: MachineMuse (Claire Semple)
  * Created: 11:57 AM, 9/3/13
@@ -50,8 +52,8 @@ object NuminaPlayerTracker {
     if (!FMLCommonHandler.instance().getMinecraftServerInstance.isSinglePlayer) {
       for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
         val recipeArray = Array(recipe)
-        val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)
-        PacketSender.sendTo(new MusePacketRecipeUpdate(event.player, recipeAsString), event.player.asInstanceOf[EntityPlayerMP])
+        InputStream is = new ByteArrayInputStream(JSONRecipeList.gson.toJson(recipeArray).getBytes;
+        PacketSender.sendTo(new MusePacketRecipeUpdate(event.player, new InputStreamReader(is)), event.player.asInstanceOf[EntityPlayerMP])
       }
     }
   }
