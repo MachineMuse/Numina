@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import net.machinemuse.numina.general.MuseLogger;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumTypeAdapterFactory;
 
 import java.io.*;
 import java.net.URL;
@@ -63,6 +64,7 @@ public class JSONRecipeList {
     }
 
     public static void loadRecipesFromStream(InputStream stream) {
+    	  EnumTypeAdapterFactory ta = new EnumTypeAdapterFactory(gson, JSONRecipe[].class);
         InputStreamReader reader = new InputStreamReader(stream);
         JSONRecipe[] newrecipes = gson.fromJson(reader, JSONRecipe[].class);
         recipesList.addAll(Arrays.asList(newrecipes));

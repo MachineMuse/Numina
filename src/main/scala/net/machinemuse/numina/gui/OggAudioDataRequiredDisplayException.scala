@@ -14,7 +14,7 @@ class OggAudioDataRequiredDisplayException extends CustomModLoadingErrorDisplayE
     offset += 25
     errorScreen.drawCenteredString(fontRenderer, "The mod: \"Numina\"", errorScreen.width / 2, offset, 0xEEEEEE)
     offset += 15
-    errorScreen.drawCenteredString(fontRenderer, "requires an additional library: \"OggAudioData\"", errorScreen.width / 2, offset, 0xEEEEEE)
+    errorScreen.drawCenteredString(fontRenderer, "requires an additional library: \"OggAudioData\".", errorScreen.width / 2, offset, 0xEEEEEE)
     offset += 25
     errorScreen.drawCenteredString(fontRenderer, "Please install \"OggAudioData\" to continue.", errorScreen.width / 2, offset, 0xFFFFFF)
   }
