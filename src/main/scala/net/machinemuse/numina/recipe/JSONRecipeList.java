@@ -22,6 +22,7 @@ import java.util.List;
  */
 public class JSONRecipeList {
     static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
+    public static final Gson gson = new GsonBuilder().create();
 
     private static FilenameFilter filter = new FilenameFilter() {
         @Override
@@ -66,7 +67,6 @@ public class JSONRecipeList {
 
 //    public static void loadRecipesFromString(String json) {
     public static void loadRecipesFromReader(Reader json) {
-        Gson gson = new GsonBuilder().create();
         JSONRecipe[] newrecipes = gson.fromJson(json, JSONRecipe[].class);
         recipesList.addAll(Arrays.asList(newrecipes));
         for (JSONRecipe recipe : newrecipes) {
