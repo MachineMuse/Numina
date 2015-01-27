@@ -57,8 +57,9 @@ object NuminaPlayerTracker {
         
         JSONRecipeList.gson.toJson(recipeArray, writer)
         // Kept to Debug
-        // val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)
-        // System.out.println(recipeAsString)
+        val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)
+        System.out.println("At NuminaPlayerTracker")
+        System.out.println(recipeAsString)
         
         PacketSender.sendTo(new MusePacketRecipeUpdate(event.player, new ByteArrayInputStream(os.toByteArray)), event.player.asInstanceOf[EntityPlayerMP])
       }
