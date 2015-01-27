@@ -124,6 +124,16 @@ abstract class MusePacket {
       case e: IOException => e.printStackTrace()
     }
   }
+  
+  def writeStream(input: InputStream) {
+      try {
+          val reader: InputStreamReader = new InputStreamReader(input)
+          val out: String = reader.toString
+          dataout.writeBytes(out.getBytes)
+      } catch {
+        case e: IOException => e.printStackTrace()
+      }
+  }
 }
 
 trait MusePackager {

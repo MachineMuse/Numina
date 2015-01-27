@@ -3,7 +3,7 @@ package net.machinemuse.numina.recipe;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+// import com.google.gson.GsonBuilder;
 import net.machinemuse.numina.general.MuseLogger;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class JSONRecipeList {
     static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
-    public static Gson gson = new GsonBuilder().create();
+    public static final Gson gson = new Gson();
 
     private static FilenameFilter filter = new FilenameFilter() {
         @Override
@@ -38,14 +38,14 @@ public class JSONRecipeList {
                 if(file.isDirectory()) {
                     String[] filenames = file.list(filter);
                     for(String filename:filenames) {
-                        String json = readFile(dir + "/" + filename, Charsets.UTF_8);
+                        //String json = readFile(dir + "/" + filename, Charsets.UTF_8);
                         MuseLogger.logDebug("Loading recipes from " + filename);
-                        loadRecipesFromString(json);
+                        loadRecipesFromStream(new FileInputStream(dir + "/" + filename));
                     }
                 } else {
-                    String json = readFile(dir, Charsets.UTF_8);
+                    // String json = readFile(dir, Charsets.UTF_8);
                     MuseLogger.logDebug("Loading recipes from " + dir);
-                    loadRecipesFromString(json);
+                    loadRecipesFromStream(new FileInputStream(file));
                 }
             }
         } catch (IOException e) {
@@ -55,15 +55,16 @@ public class JSONRecipeList {
 
     public static void loadRecipesFromResource(URL resource) {
         try {
-            String json = Resources.toString(resource, Charsets.UTF_8);
-            loadRecipesFromString(json);
+            //String json = Resources.toString(resource, Charsets.UTF_8);
+            loadRecipesFromString(new FileInputStream(resource));
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void loadRecipesFromString(String json) {
-        JSONRecipe[] newrecipes = gson.fromJson(json, JSONRecipe[].class);
+    public static void loadRecipesFromStream(InputStream stream) {
+        InputStreamReader reader = new InputStreamReader(stream)
+        JSONRecipe[] newrecipes = gson.fromJson(reader, JSONRecipe[].class);
         recipesList.addAll(Arrays.asList(newrecipes));
         for (JSONRecipe recipe : newrecipes) {
             if (recipe != null)
@@ -79,12 +80,11 @@ public class JSONRecipeList {
         return recipesList;
     }
 
-    static String readFile(String path, Charset encoding)
-            throws IOException {
-        File file = new File(path);
-        DataInputStream is = new DataInputStream(new FileInputStream(file));
-        byte[] bytes = new byte[(int) file.length()];
-        is.readFully(bytes);
-        return encoding.decode(ByteBuffer.wrap(bytes)).toString();
-    }
+    // static String readFile(String path, Charset encoding) throws IOException {
+    //     File file = new File(path);
+    //     DataInputStream is = new DataInputStream(new FileInputStream(file));
+    //     byte[] bytes = new byte[(int) file.length()];
+    //     is.readFully(bytes);
+    //     return encoding.decode(ByteBuffer.wrap(bytes)).toString();
+    // }
 }
