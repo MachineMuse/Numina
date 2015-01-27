@@ -63,7 +63,7 @@ public class JSONRecipeList {
     }
 
     public static void loadRecipesFromStream(InputStream stream) {
-        InputStreamReader reader = new InputStreamReader(stream)
+        InputStreamReader reader = new InputStreamReader(stream);
         JSONRecipe[] newrecipes = gson.fromJson(reader, JSONRecipe[].class);
         recipesList.addAll(Arrays.asList(newrecipes));
         for (JSONRecipe recipe : newrecipes) {
