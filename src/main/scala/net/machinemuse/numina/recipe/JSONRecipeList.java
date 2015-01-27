@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class JSONRecipeList {
     static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
-    public static final Gson gson = new GsonBuilder().create();
+    public static Gson gson = new Gson();
 
     private static FilenameFilter filter = new FilenameFilter() {
         @Override
