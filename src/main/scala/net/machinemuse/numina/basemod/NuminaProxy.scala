@@ -39,7 +39,7 @@ trait NuminaProxy {
 
 class NuminaProxyClient extends NuminaProxy {
 	override def PreInit() = {
-		if (!Loader.isModLoaded["OggAudioData"]) {
+		if (!Loader.isModLoaded("OggAudioData")) {
         throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
     }
 	}
