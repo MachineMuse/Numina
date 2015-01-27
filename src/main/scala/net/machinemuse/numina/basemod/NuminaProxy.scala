@@ -49,21 +49,17 @@ class NuminaProxyServer extends NuminaProxy
 
 object NuminaPlayerTracker {
   @SubscribeEvent def onPlayerLogin(event: PlayerLoggedInEvent) {
-    if (!FMLCommonHandler.instance().getMinecraftServerInstance.isSinglePlayer) {
+//    if (!FMLCommonHandler.instance().getMinecraftServerInstance.isSinglePlayer) {
       for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
         val os: ByteArrayOutputStream = new ByteArrayOutputStream()
         val writer: OutputStreamWriter = new OutputStreamWriter(os)
         val recipeArray = Array(recipe)
         
         JSONRecipeList.gson.toJson(recipeArray, writer)
-        // Kept to Debug
-        val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)
-        System.out.println("At NuminaPlayerTracker")
-        System.out.println(recipeAsString)
-        
+
         PacketSender.sendTo(new MusePacketRecipeUpdate(event.player, new ByteArrayInputStream(os.toByteArray)), event.player.asInstanceOf[EntityPlayerMP])
       }
-    }
+//    }
   }
 }
 
