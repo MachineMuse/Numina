@@ -1,6 +1,6 @@
 package net.machinemuse.numina.network
 
-import java.io.{InputStreamReader, InputStream, IOException}
+import java.io.{DataOutputStream, DataInputStream, InputStreamReader, InputStream, IOException}
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket
 import cpw.mods.fml.common.network.simpleimpl.IMessage
