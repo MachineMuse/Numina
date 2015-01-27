@@ -1,6 +1,6 @@
 package net.machinemuse.numina.network
 
-import java.io.{DataInputStream, ByteArrayOutputStream, DataOutputStream, IOException}
+import java.io.{InputStreamReader, InputStream, IOException}
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket
 import cpw.mods.fml.common.network.simpleimpl.IMessage
@@ -129,7 +129,7 @@ abstract class MusePacket {
       try {
           val reader: InputStreamReader = new InputStreamReader(input)
           val out: String = reader.toString
-          dataout.writeBytes(out.getBytes)
+          dataout.writeBytes(out)
       } catch {
         case e: IOException => e.printStackTrace()
       }
