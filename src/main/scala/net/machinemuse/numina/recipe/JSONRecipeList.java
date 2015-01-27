@@ -56,7 +56,7 @@ public class JSONRecipeList {
     public static void loadRecipesFromResource(URL resource) {
         try {
             //String json = Resources.toString(resource, Charsets.UTF_8);
-            loadRecipesFromString(new FileInputStream(resource.toString));
+            loadRecipesFromStream(new FileInputStream(resource.toString()));
         } catch(IOException e) {
             e.printStackTrace();
         }
