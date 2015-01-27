@@ -38,16 +38,14 @@ public class JSONRecipeList {
                 if(file.isDirectory()) {
                     String[] filenames = file.list(filter);
                     for(String filename:filenames) {
-                        Reader json = new InputStreamReader(JSONRecipeList.class.getResourceAsStream(dir + "/" + filename), "UTF-8");
-                        //String json = readFile(dir + "/" + filename, Charsets.UTF_8);
+                        String json = readFile(dir + "/" + filename, Charsets.UTF_8);
                         MuseLogger.logDebug("Loading recipes from " + filename);
-                        loadRecipesFromReader(json);
+                        loadRecipesFromString(json);
                     }
                 } else {
-                    Reader json = new InputStreamReader(JSONRecipeList.class.getResourceAsStream(dir), "UTF-8");
-                    //String json = readFile(dir, Charsets.UTF_8);
+                    String json = readFile(dir, Charsets.UTF_8);
                     MuseLogger.logDebug("Loading recipes from " + dir);
-                    loadRecipesFromReader(json);
+                    loadRecipesFromString(json);
                 }
             }
         } catch (IOException e) {
@@ -57,16 +55,14 @@ public class JSONRecipeList {
 
     public static void loadRecipesFromResource(URL resource) {
         try {
-            Reader json = new InputStreamReader(JSONRecipeList.class.getResourceAsStream(resource.toString()), "UTF-8");
-            //String json = Resources.toString(resource, Charsets.UTF_8);
+            String json = Resources.toString(resource, Charsets.UTF_8);
             loadRecipesFromReader(json);
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
 
-//    public static void loadRecipesFromString(String json) {
-    public static void loadRecipesFromReader(Reader json) {
+    public static void loadRecipesFromString(String json) {
         JSONRecipe[] newrecipes = gson.fromJson(json, JSONRecipe[].class);
         recipesList.addAll(Arrays.asList(newrecipes));
         for (JSONRecipe recipe : newrecipes) {
