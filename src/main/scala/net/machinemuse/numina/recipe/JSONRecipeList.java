@@ -64,7 +64,7 @@ public class JSONRecipeList {
     }
 
     public static void loadRecipesFromStream(InputStream stream) {
-    	  EnumTypeAdapterFactory ta = new EnumTypeAdapterFactory().create(gson, JSONRecipe[].class);
+    	  EnumTypeAdapterFactory ta = new EnumTypeAdapterFactory().create(gson, JSONRecipe.class);
         InputStreamReader reader = new InputStreamReader(stream);
         JSONRecipe[] newrecipes = gson.fromJson(reader, JSONRecipe[].class);
         recipesList.addAll(Arrays.asList(newrecipes));
