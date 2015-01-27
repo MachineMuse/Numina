@@ -4,6 +4,7 @@ import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
 import cpw.mods.fml.common.network.simpleimpl.IMessage
+import cpw.mods.fml.common.Loader;
 import net.machinemuse.numina.general.MuseLogger
 import net.machinemuse.numina.mouse.MouseEventHandler
 import net.machinemuse.numina.network.{MusePacketRecipeUpdate, MusePacket, PacketSender}
@@ -37,6 +38,11 @@ trait NuminaProxy {
 }
 
 class NuminaProxyClient extends NuminaProxy {
+	override def PreInit() = {
+		if (!Loader.isModLoaded["OggAudioData"]) {
+        throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
+    }
+	}
   override def Init() = {
     MuseLogger.logDebug("Client Proxy Started")
     MinecraftForge.EVENT_BUS.register(MouseEventHandler)
@@ -49,7 +55,7 @@ class NuminaProxyServer extends NuminaProxy
 
 object NuminaPlayerTracker {
   @SubscribeEvent def onPlayerLogin(event: PlayerLoggedInEvent) {
-//    if (!FMLCommonHandler.instance().getMinecraftServerInstance.isSinglePlayer) {
+    if (!FMLCommonHandler.instance().getMinecraftServerInstance.isSinglePlayer) {
       for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
         val os: ByteArrayOutputStream = new ByteArrayOutputStream()
         val writer: OutputStreamWriter = new OutputStreamWriter(os)
@@ -59,7 +65,7 @@ object NuminaPlayerTracker {
 
         PacketSender.sendTo(new MusePacketRecipeUpdate(event.player, new ByteArrayInputStream(os.toByteArray)), event.player.asInstanceOf[EntityPlayerMP])
       }
-//    }
+    }
   }
 }
 
