@@ -14,7 +14,7 @@ public class SimpleItemMatcher implements IItemMatcher {
     public Integer meta;
     public String unlocalizedName;
     public String oredictName;
-    public NBTTagCompound nbt;
+//    public NBTTagCompound nbt;
 
     public SimpleItemMatcher() {
     }
@@ -58,9 +58,9 @@ public class SimpleItemMatcher implements IItemMatcher {
             }
             if (!found) return false;
         }
-        if (nbt != null && !nbt.equals(stack.getTagCompound())) {
-            return false;
-        }
+//        if (nbt != null && !nbt.equals(stack.getTagCompound())) {
+//            return false;
+//        }
 
         return true;
     }
@@ -71,7 +71,7 @@ public class SimpleItemMatcher implements IItemMatcher {
         copy.meta = this.meta;
         copy.unlocalizedName = this.unlocalizedName;
         copy.oredictName = this.unlocalizedName;
-        copy.nbt = this.nbt;
+//        copy.nbt = this.nbt;
         return copy;
     }
 }

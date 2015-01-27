@@ -17,7 +17,7 @@ public class SimpleItemMaker implements IItemMaker {
     public Integer quantity;
     public String unlocalizedName;
     public String oredictName;
-    public NBTTagCompound nbt;
+//    public NBTTagCompound nbt;
 
     @Override
     public ItemStack makeItem(InventoryCrafting i) {
@@ -37,7 +37,7 @@ public class SimpleItemMaker implements IItemMaker {
         int newquantity = getOrElse(this.quantity, 1);
         if (item != null) {
             ItemStack stack = new ItemStack(item, newquantity, newmeta);
-            if (nbt != null) stack.stackTagCompound = (NBTTagCompound) nbt.copy();
+//            if (nbt != null) stack.stackTagCompound = (NBTTagCompound) nbt.copy();
             return stack;
         } else if (oredictName != null) {
             try {

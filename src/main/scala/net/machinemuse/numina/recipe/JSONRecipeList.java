@@ -3,6 +3,7 @@ package net.machinemuse.numina.recipe;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.machinemuse.numina.general.MuseLogger;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -21,7 +22,6 @@ import java.util.List;
  */
 public class JSONRecipeList {
     static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
-    public static final Gson gson = new Gson();
 
     private static FilenameFilter filter = new FilenameFilter() {
         @Override
@@ -32,19 +32,21 @@ public class JSONRecipeList {
 
     public static void loadRecipesFromDir(String dir) {
         try {
-            File file= new File(dir);
+            File file = new File(dir);
             if(file.exists()) {
                 if(file.isDirectory()) {
                     String[] filenames = file.list(filter);
                     for(String filename:filenames) {
-                        String json = readFile(dir + "/" + filename, Charsets.UTF_8);
+                        Reader json = new InputStreamReader(JSONRecipeList.class.getResourceAsStream(dir + "/" + filename), "UTF-8");
+                        //String json = readFile(dir + "/" + filename, Charsets.UTF_8);
                         MuseLogger.logDebug("Loading recipes from " + filename);
-                        loadRecipesFromString(json);
+                        loadRecipesFromReader(json);
                     }
                 } else {
-                    String json = readFile(dir, Charsets.UTF_8);
+                    Reader json = new InputStreamReader(JSONRecipeList.class.getResourceAsStream(dir), "UTF-8");
+                    //String json = readFile(dir, Charsets.UTF_8);
                     MuseLogger.logDebug("Loading recipes from " + dir);
-                    loadRecipesFromString(json);
+                    loadRecipesFromReader(json);
                 }
             }
         } catch (IOException e) {
@@ -54,15 +56,17 @@ public class JSONRecipeList {
 
     public static void loadRecipesFromResource(URL resource) {
         try {
-            String json = Resources.toString(resource, Charsets.UTF_8);
-            loadRecipesFromString(json);
+            Reader json = new InputStreamReader(JSONRecipeList.class.getResourceAsStream(resource.toString()), "UTF-8");
+            //String json = Resources.toString(resource, Charsets.UTF_8);
+            loadRecipesFromReader(json);
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void loadRecipesFromString(String json) {
-        System.out.println("Loading recipe from: " + json);
+//    public static void loadRecipesFromString(String json) {
+    public static void loadRecipesFromReader(Reader json) {
+        Gson gson = new GsonBuilder().create();
         JSONRecipe[] newrecipes = gson.fromJson(json, JSONRecipe[].class);
         recipesList.addAll(Arrays.asList(newrecipes));
         for (JSONRecipe recipe : newrecipes) {
