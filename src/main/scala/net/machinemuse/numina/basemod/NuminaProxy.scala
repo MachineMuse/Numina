@@ -52,8 +52,8 @@ object NuminaPlayerTracker {
     if (!FMLCommonHandler.instance().getMinecraftServerInstance.isSinglePlayer) {
       for (recipe <- JSONRecipeList.getJSONRecipesList.toArray) {
         val recipeArray = Array(recipe)
-        val is: InputStream = new ByteArrayInputStream(JSONRecipeList.gson.toJson(recipeArray).getBytes)
-        PacketSender.sendTo(new MusePacketRecipeUpdate(event.player, new InputStreamReader(is)), event.player.asInstanceOf[EntityPlayerMP])
+        val recipeAsString: String = JSONRecipeList.gson.toJson(recipeArray)
+        PacketSender.sendTo(new MusePacketRecipeUpdate(event.player, recipeAsString), event.player.asInstanceOf[EntityPlayerMP])
       }
     }
   }
