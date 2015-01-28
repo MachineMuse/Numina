@@ -50,11 +50,11 @@ class NuminaProxyClient extends NuminaProxy {
     	
     	if ( !iter.hasNext ) throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
     }*/
-    val m: java.lang.reflect.Method = classOf[ClassLoader].getDeclaredMethod("findLoadedClass", classOf[String] )
+   /* val m: java.lang.reflect.Method = classOf[ClassLoader].getDeclaredMethod("findLoadedClass", classOf[String] )
     m.setAccessible(true)
 	  if (m.invoke(cpw.mods.fml.common.Loader.instance.getModClassLoader, "com.qmxtech.oggaudiodata.OggAudioData") == null) {
         throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
-    }
+    }*/
   }
   override def Init() = {
     MuseLogger.logDebug("Client Proxy Started")
