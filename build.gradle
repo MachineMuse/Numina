@@ -46,21 +46,43 @@ repositories {
 }
 
 configurations {
-    includeInJar
+    copylibs
 }
 
 dependencies {
+    copylibs 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
     compile 'codechicken:CodeChickenCore:1.7.10-1.0.2.9:dev'
     compile 'codechicken:NotEnoughItems:1.7.10-1.0.2.15:dev'
     compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
-    includeInJar group: 'com.qmxtech.oggaudiodata', name: 'OggAudioData', version: '0.1.0'
-    configurations.compile.extendsFrom(configurations.includeInJar)
 }
 
+task copyLibs(type: Copy) {
+    def outputDir = file('build/tmp/repackage')
+    outputDir.mkdirs()
+    from configurations.copylibs
+    into outputDir
+}
+
+task unzip(type: Copy) {
+  def zipFile = file('build/tmp/repackage/*.jar')
+  def outputDir = file("build/tmp/repackage/classes")
+  outputDir.mkdirs()
+  from zipTree(zipFile)
+  into outputDir
+}
+
+task copySymbols(type: Copy) {
+    def inputDir = file('build/tmp/repackage/classes')
+    def outputDir = file('build/classes/main')
+    from fileTree(inputDir)
+    into outputDir
+}
+
+copyLibs
+unzip
+copySymbols
+
 jar {
-    into('lib') {
-        from configurations.includeInJar
-    }
     manifest {
         attributes 'FMLAT': 'numina_at.cfg'
     }
