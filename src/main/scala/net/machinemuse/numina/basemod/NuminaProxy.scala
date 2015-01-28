@@ -38,11 +38,12 @@ trait NuminaProxy {
 }
 
 class NuminaProxyClient extends NuminaProxy {
-	override def PreInit() = {
-		if (!Loader.isModLoaded("OggAudioData")) {
+  override def PreInit() = {
+    import scala.collection.JavaConversions._
+	if (! (Class.forName("OggAudioData").getName() == "OggAudioData") ) {
         throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
     }
-	}
+  }
   override def Init() = {
     MuseLogger.logDebug("Client Proxy Started")
     MinecraftForge.EVENT_BUS.register(MouseEventHandler)
