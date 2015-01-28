@@ -68,7 +68,7 @@ task unzip(type: Copy, dependsOn: copyLibs) {
   def outputDir = file("${buildDir}/tmp/repackage/classes")
   outputDir.mkdirs()
   zipFileTree.include('*.jar')
-  zipFileTree.each {
+  zipFileTree.each { zipFile ->
   	from zipTree(zipFile)
   	into outputDir
   }
