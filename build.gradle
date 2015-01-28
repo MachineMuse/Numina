@@ -53,7 +53,7 @@ dependencies {
     compile 'codechicken:CodeChickenCore:1.7.10-1.0.2.9:dev'
     compile 'codechicken:NotEnoughItems:1.7.10-1.0.2.15:dev'
     compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
-    includeInJar 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
+    includeInJar group: 'com.qmxtech.oggaudiodata', name: 'OggAudioData', version: '0.1.0'
     configurations.compile.extendsFrom(configurations.includeInJar)
 }
 
