@@ -80,7 +80,7 @@ task copySymbols(type: Copy, dependsOn: unzip) {
 
 jar {
     doFirst {
-        copySymbols.execute()
+        copySymbols()
     }
     manifest {
         attributes 'FMLAT': 'numina_at.cfg'
