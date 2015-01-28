@@ -41,6 +41,7 @@ class NuminaProxyClient extends NuminaProxy {
   override def PreInit() = {
     import scala.collection.JavaConversions._
     import java.lang.reflect.Method
+    import java.lang.ClassLoader
     val m: Method = ClassLoader.class.getDeclaredMethod("findLoadedClass", new Class[] { String.class })
 	if (m.invoke(ClassLoader.getSystemClassLoader, "com.qmxtech.oggaudiodata.OggAudioData") == null) {
         throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
