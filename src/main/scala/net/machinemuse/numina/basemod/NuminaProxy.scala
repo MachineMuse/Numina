@@ -39,13 +39,22 @@ trait NuminaProxy {
 
 class NuminaProxyClient extends NuminaProxy {
   override def PreInit() = {
+  	import scala.util.control.Breaks._
     import scala.collection.JavaConversions._
-    System.out.println(com.google.common.reflect.Reflection.getPackageName("com.qmxtech.oggaudiodata.OggAudioData"))
+    
+    val iter = com.google.common.reflect.ClassPath.from(ClassLoader.getSystemClassLoader).getAllClasses
+    while (iter.hasNext) {
+    	val c = iter.next
+    	if ( c.getName == "OggAudioData") break
+    	
+    	if ( !iter.hasNext ) throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
+    }
+    /*System.out.println(com.google.common.reflect.Reflection.getPackageName("com.qmxtech.oggaudiodata.OggAudioData"))
     val m: java.lang.reflect.Method = classOf[ClassLoader].getDeclaredMethod("findLoadedClass", classOf[String] )
     m.setAccessible(true)
 	  if (m.invoke(ClassLoader.getSystemClassLoader, "com.qmxtech.oggaudiodata.OggAudioData") == null) {
         throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
-    }
+    }*/
   }
   override def Init() = {
     MuseLogger.logDebug("Client Proxy Started")
