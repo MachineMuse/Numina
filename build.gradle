@@ -77,7 +77,7 @@ task unzip(type: Copy, dependsOn: copyLibs) {
 task copySymbols(type: Copy, dependsOn: unzip) {
     def inputDir = file("${buildDir}/tmp/repackage/classes")
     def outputDir = file("${buildDir}/classes/main")
-    from fileTree(inputDir).include('**/*.class')
+    from fileTree(inputDir).include('**/*.class').exclude('META-INF')
     into outputDir
 }
 
