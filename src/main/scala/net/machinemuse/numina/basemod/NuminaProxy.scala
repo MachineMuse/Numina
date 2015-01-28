@@ -42,7 +42,7 @@ class NuminaProxyClient extends NuminaProxy {
     import scala.collection.JavaConversions._
     val m: java.lang.reflect.Method = classOf[java.lang.ClassLoader].getDeclaredMethod("findLoadedClass", classOf[String] )
     m.setAccessible(true)
-	  if (m.invoke(java.lang.ClassLoader.getSystemClassLoader, "com.qmxtech.oggaudiodata.OggAudioData") == null) {
+	  if (m.invoke(java.lang.ClassLoader.getSystemClassLoader, "OggAudioData") == null) {
         throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
     }
   }
