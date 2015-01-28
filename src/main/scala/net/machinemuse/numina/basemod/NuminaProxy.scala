@@ -42,7 +42,7 @@ class NuminaProxyClient extends NuminaProxy {
   	import scala.util.control.Breaks._
     import scala.collection.JavaConversions._
     
-    val iter = com.google.common.reflect.ClassPath.from(ClassLoader.getSystemClassLoader).getAllClasses
+    val iter = com.google.common.reflect.ClassPath.from(ClassLoader.getSystemClassLoader).getAllClasses.iterator
     while (iter.hasNext) {
     	val c = iter.next
     	if ( c.getName == "OggAudioData") break
