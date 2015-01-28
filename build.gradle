@@ -78,10 +78,9 @@ task copySymbols(type: Copy, dependsOn: unzip) {
     into outputDir
 }
 
+copySymbols()
+
 jar {
-    doFirst {
-        copySymbols()
-    }
     manifest {
         attributes 'FMLAT': 'numina_at.cfg'
     }
