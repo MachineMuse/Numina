@@ -45,15 +45,24 @@ repositories {
     }
 }
 
+configurations {
+    includeInJar
+}
+
 dependencies {
     compile 'codechicken:CodeChickenCore:1.7.10-1.0.2.9:dev'
     compile 'codechicken:NotEnoughItems:1.7.10-1.0.2.15:dev'
     compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
+    includeInJar 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
+    configurations.compile.extendsFrom(configurations.includeInJar)
 }
 
 jar {
     manifest {
         attributes 'FMLAT': 'numina_at.cfg'
+    }
+    into('lib') {
+        from configurations.includeInJar
     }
 }
 
