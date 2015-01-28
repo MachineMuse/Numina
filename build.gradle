@@ -57,30 +57,26 @@ dependencies {
 }
 
 task copyLibs(type: Copy) {
-    def outputDir = file("${buildDir}/tmp/repackage")
+    def outputDir = new File("${buildDir}/tmp/repackage")
     outputDir.mkdirs()
     from configurations.copylibs
     into outputDir
 }
 
-task unzip(type: Copy) {
-  def zipFile = file("${buildDir}/tmp/repackage/*.jar")
-  def outputDir = file("${buildDir}/tmp/repackage/classes")
+task unzip(type: Copy, dependsOn: copyLibs) {
+  def zipFile = new File("${buildDir}/tmp/repackage/*.jar")
+  def outputDir = new File("${buildDir}/tmp/repackage/classes")
   outputDir.mkdirs()
   from zipTree(zipFile)
   into outputDir
 }
 
-task copySymbols(type: Copy) {
-    def inputDir = file("${buildDir}/tmp/repackage/classes")
-    def outputDir = file("${buildDir}/classes/main")
-    from fileTree(inputDir)
+task copySymbols(type: Copy, dependsOn: unzip) {
+    def inputDir = new File("${buildDir}/tmp/repackage/classes")
+    def outputDir = new File("${buildDir}/classes/main")
+    from fileTree(inputDir).include('**/*.class')
     into outputDir
 }
-
-copyLibs
-unzip
-copySymbols
 
 jar {
     manifest {
@@ -88,7 +84,7 @@ jar {
     }
 }
 
-processResources
+processResources(dependsOn: copySymbols)
 {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
