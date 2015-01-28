@@ -45,6 +45,7 @@ class NuminaProxyClient extends NuminaProxy {
     val iter = com.google.common.reflect.ClassPath.from(ClassLoader.getSystemClassLoader).getAllClasses.iterator
     while (iter.hasNext) {
     	val c = iter.next
+    	System.out.println(c.getName)
     	if ( c.getName == "OggAudioData") break
     	
     	if ( !iter.hasNext ) throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
