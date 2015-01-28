@@ -58,11 +58,11 @@ dependencies {
 }
 
 jar {
-    manifest {
-        attributes 'FMLAT': 'numina_at.cfg'
-    }
     into('lib') {
         from configurations.includeInJar
+    }
+    manifest {
+        attributes 'FMLAT': 'numina_at.cfg'
     }
 }
 
