@@ -57,26 +57,30 @@ dependencies {
 }
 
 task copyLibs(type: Copy) {
-    def outputDir = file('build/tmp/repackage')
+    def outputDir = file("${buildDir}/tmp/repackage")
     outputDir.mkdirs()
     from configurations.copylibs
     into outputDir
 }
 
 task unzip(type: Copy) {
-  def zipFile = file('build/tmp/repackage/*.jar')
-  def outputDir = file("build/tmp/repackage/classes")
+  def zipFile = file("${buildDir}/tmp/repackage/*.jar")
+  def outputDir = file("${buildDir}/tmp/repackage/classes")
   outputDir.mkdirs()
   from zipTree(zipFile)
   into outputDir
 }
 
 task copySymbols(type: Copy) {
-    def inputDir = file('build/tmp/repackage/classes')
-    def outputDir = file('build/classes/main')
+    def inputDir = file("${buildDir}/tmp/repackage/classes")
+    def outputDir = file("${buildDir}/classes/main")
     from fileTree(inputDir)
     into outputDir
 }
+
+copyLibs
+unzip
+copySymbols
 
 jar {
     manifest {
@@ -86,9 +90,6 @@ jar {
 
 processResources
 {
-    copyLibs
-    unzip
-    copySymbols
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
