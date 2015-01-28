@@ -14,6 +14,8 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraftforge.common.MinecraftForge
 
 import java.io.{ByteArrayOutputStream, ByteArrayInputStream, OutputStreamWriter}
+import java.lang.reflect.Method
+import java.lang.ClassLoader
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -40,10 +42,8 @@ trait NuminaProxy {
 class NuminaProxyClient extends NuminaProxy {
   override def PreInit() = {
     import scala.collection.JavaConversions._
-    import java.lang.reflect.Method
-    import java.lang.ClassLoader
     val m: Method = ClassLoader.class.getDeclaredMethod("findLoadedClass", new Class[] { String.class })
-	if (m.invoke(ClassLoader.getSystemClassLoader, "com.qmxtech.oggaudiodata.OggAudioData") == null) {
+	  if (m.invoke(ClassLoader.getSystemClassLoader, "com.qmxtech.oggaudiodata.OggAudioData") == null) {
         throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
     }
   }
