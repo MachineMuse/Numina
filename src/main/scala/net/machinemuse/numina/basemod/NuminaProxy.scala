@@ -42,7 +42,7 @@ class NuminaProxyClient extends NuminaProxy {
   	import scala.util.control.Breaks._
     import scala.collection.JavaConversions._
     
-    val iter = com.google.common.reflect.ClassPath.from(cpw.mods.fml.common.Loader.getModClassLoader).getAllClasses.iterator
+    val iter = com.google.common.reflect.ClassPath.from(cpw.mods.fml.common.Loader.instance.getModClassLoader).getAllClasses.iterator
     while (iter.hasNext) {
     	val c = iter.next
     	System.out.println(c.getName)
