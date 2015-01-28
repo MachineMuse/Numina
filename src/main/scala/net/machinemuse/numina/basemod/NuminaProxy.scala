@@ -40,7 +40,7 @@ trait NuminaProxy {
 class NuminaProxyClient extends NuminaProxy {
   override def PreInit() = {
     import scala.collection.JavaConversions._
-    val m: java.lang.reflect.Method = java.lang.ClassLoader.class.getDeclaredMethod("findLoadedClass", new java.lang.Class[] { java.lang.String.class })
+    val m: java.lang.reflect.Method = classOf[java.lang.ClassLoader].getDeclaredMethod("findLoadedClass", new java.lang.Class[] { classOf[java.lang.String] })
 	  if (m.invoke(java.lang.ClassLoader.getSystemClassLoader, "com.qmxtech.oggaudiodata.OggAudioData") == null) {
         throw new net.machinemuse.numina.gui.OggAudioDataRequiredDisplayException
     }
