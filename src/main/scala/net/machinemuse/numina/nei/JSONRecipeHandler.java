@@ -198,11 +198,14 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                     List<ItemStack> item;
                     if(recipe.ingredients[y].length > x) {
                         item = getIngredient(recipe.ingredients[y][x]);
+                        
+                        if (item.isEmpty())
+                            item = null;
                     } else {
                         item = null;
                     }
-                    if (item != null && item.isEmpty())
-                        return null;
+                    // if (item != null && item.isEmpty())
+                    //     return null;
                     items[y * width + x] = item;
                 }
             }
