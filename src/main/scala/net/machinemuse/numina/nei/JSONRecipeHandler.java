@@ -82,16 +82,18 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                 if(irecipe instanceof JSONRecipe)
                     recipe = JSONShapedRecipe((JSONRecipe) irecipe);
     
-                if(recipe == null || !recipe.contains(recipe.ingredients, (ItemStack)ingredients[0]))
+                if(recipe == null || !irecipe.getKey().containsType((ItemStack)ingredients[0]))
                     continue;
     
                 recipe.computeVisuals();
-                if(recipe.contains(recipe.ingredients, (ItemStack)ingredients[0]))
+                if(recipe.getKey().containsType((ItemStack)ingredients[0]))
                 {
-                    recipe.setIngredientPermutation(recipe.ingredients, (ItemStack)ingredients[0]);
+                    // recipe.setIngredientPermutation(recipe.ingredients, (ItemStack)ingredients[0]);
                     arecipes.add(recipe);
                 }
             }
+        } else {
+            super.loadUsageRecipes(inputId, ingredients);
         }
     }
 
@@ -105,13 +107,13 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             if(irecipe instanceof JSONRecipe)
                 recipe = JSONShapedRecipe((JSONRecipe) irecipe);
 
-            if(recipe == null || !recipe.contains(recipe.ingredients, ingredient))
+            if(recipe == null || !irecipe.getKey().containsType(ingredient))
                 continue;
 
             recipe.computeVisuals();
-            if(recipe.contains(recipe.ingredients, ingredient))
+            if(recipe.getKey().containsType(ingredient))
             {
-                recipe.setIngredientPermutation(recipe.ingredients, ingredient);
+                // recipe.setIngredientPermutation(recipe.ingredients, ingredient);
                 arecipes.add(recipe);
             }
         }
