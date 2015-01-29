@@ -7,6 +7,7 @@ public class NEINuminaConfig implements IConfigureNEI {
     @Override
     public void loadConfig()
     {
+        System.out.println("In NEI loadConfig");
         API.registerRecipeHandler(new JSONRecipeHandler());
         API.registerUsageHandler(new JSONRecipeHandler());
     }
