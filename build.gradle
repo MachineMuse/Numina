@@ -56,14 +56,14 @@ dependencies {
     compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
 }
 
-task copyLibs(type: Copy) {
+task copyExternalLibs(type: Copy) {
     def outputDir = file("${buildDir}/tmp/repackage")
     outputDir.mkdirs()
     from configurations.copylibs
     into outputDir
 }
 
-task unzip(type: Copy, dependsOn: copyLibs) {
+task unzipExternalLibs(type: Copy, dependsOn: copyExternalLibs) {
   def zipFileTree = fileTree("${buildDir}/tmp/repackage")
   def outputDir = file("${buildDir}/tmp/repackage/classes")
   outputDir.mkdirs()
@@ -74,7 +74,7 @@ task unzip(type: Copy, dependsOn: copyLibs) {
   }
 }
 
-task copySymbols(type: Copy, dependsOn: unzip) {
+task copyExternalLibsToClassPath(type: Copy, dependsOn: unzipExternalLibs) {
     def inputDir = file("${buildDir}/tmp/repackage/classes")
     def outputDir = file("${buildDir}/classes/main")
     from fileTree(inputDir).include('**/*.class').exclude('META-INF')
@@ -89,7 +89,7 @@ jar {
 
 processResources
 {
-    dependsOn copySymbols
+    dependsOn copyExternalLibsToClassPath
 	
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
