@@ -73,7 +73,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     @Override
     public void loadUsageRecipes(String inputId, Object... ingredients)
     {
-        if(outputId.equals("crafting") && getClass() == JSONRecipeHandler.class)
+        if(inputId.equals("crafting") && ingredients.length == 1 && getClass() == JSONRecipeHandler.class)
         {
             List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
             for(IRecipe irecipe : allrecipes)
@@ -82,13 +82,13 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                 if(irecipe instanceof JSONRecipe)
                     recipe = JSONShapedRecipe((JSONRecipe) irecipe);
     
-                if(recipe == null || !recipe.contains(recipe.ingredients, ingredient))
+                if(recipe == null || !recipe.contains(recipe.ingredients, (JSONRecipe)ingredients[0]))
                     continue;
     
                 recipe.computeVisuals();
-                if(recipe.contains(recipe.ingredients, ingredient))
+                if(recipe.contains(recipe.ingredients, (JSONRecipe)ingredients[0]))
                 {
-                    recipe.setIngredientPermutation(recipe.ingredients, ingredient);
+                    recipe.setIngredientPermutation(recipe.ingredients, (JSONRecipe)ingredients[0]);
                     arecipes.add(recipe);
                 }
             }
