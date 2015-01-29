@@ -100,11 +100,11 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     @Override
     public void loadUsageRecipes(ItemStack ingredient)
     {
-        System.out.println("In loadUsageRecipes")
+        System.out.println("In loadUsageRecipes");
         List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
         for(IRecipe irecipe : allrecipes)
         {
-            System.out.println("In loadUsageRecipes loop")
+            System.out.println("In loadUsageRecipes loop");
             CachedShapedRecipe recipe = null;
             if(irecipe instanceof JSONRecipe)
                 recipe = JSONShapedRecipe((JSONRecipe) irecipe);
@@ -115,7 +115,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             recipe.computeVisuals();
             if(recipe.contains(recipe.ingredients, ingredient))
             {
-                System.out.println("Pushing to NEI")
+                System.out.println("Pushing to NEI");
                 recipe.setIngredientPermutation(recipe.ingredients, ingredient);
                 arecipes.add(recipe);
             }
