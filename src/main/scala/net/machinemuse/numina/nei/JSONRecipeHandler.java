@@ -69,6 +69,31 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             }
         }
     }
+    
+    @Override
+    public void loadUsageRecipes(String inputId, Object... ingredients)
+    {
+        if(outputId.equals("crafting") && getClass() == JSONRecipeHandler.class)
+        {
+            List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
+            for(IRecipe irecipe : allrecipes)
+            {
+                CachedShapedRecipe recipe = null;
+                if(irecipe instanceof JSONRecipe)
+                    recipe = JSONShapedRecipe((JSONRecipe) irecipe);
+    
+                if(recipe == null || !recipe.contains(recipe.ingredients, ingredient))
+                    continue;
+    
+                recipe.computeVisuals();
+                if(recipe.contains(recipe.ingredients, ingredient))
+                {
+                    recipe.setIngredientPermutation(recipe.ingredients, ingredient);
+                    arecipes.add(recipe);
+                }
+            }
+        }
+    }
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient)
