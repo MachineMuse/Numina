@@ -75,7 +75,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                 }
             }
         } else {
-            super.loadUsageRecipes(inputId, results);
+            super.loadUsageRecipes(inputId, ingredients);
         }
     }
 
