@@ -32,15 +32,12 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
             for(IRecipe irecipe : allrecipes)
             {
-                CachedShapedRecipe recipe = null;
-                if(irecipe instanceof JSONRecipe)
-                    recipe = JSONShapedRecipe((JSONRecipe) irecipe);
+                if(irecipe instanceof JSONRecipe) {
+                    CachedShapedRecipe recipe = JSONShapedRecipe((JSONRecipe) irecipe);
 
-                if(recipe == null)
-                    continue;
-
-                recipe.computeVisuals();
-                arecipes.add(recipe);
+                    recipe.computeVisuals();
+                    arecipes.add(recipe);
+                }
             }
         }
         else
@@ -57,15 +54,12 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         {
             if(NEIServerUtils.areStacksSameTypeCrafting(irecipe.getRecipeOutput(), result))
             {
-                CachedShapedRecipe recipe = null;
-                if(irecipe instanceof JSONRecipe)
-                    recipe = JSONShapedRecipe((JSONRecipe) irecipe);
+                if(irecipe instanceof JSONRecipe) {
+                    CachedShapedRecipe recipe = JSONShapedRecipe((JSONRecipe) irecipe);
 
-                if(recipe == null)
-                    continue;
-
-                recipe.computeVisuals();
-                arecipes.add(recipe);
+                    recipe.computeVisuals();
+                    arecipes.add(recipe);
+                }
             }
         }
     }
@@ -73,30 +67,22 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     @Override
     public void loadUsageRecipes(String inputId, Object... ingredients)
     {
-        System.out.println("In loadUsageRecipes");
         if(inputId.equals("crafting") && ingredients.length == 1 && getClass() == JSONRecipeHandler.class)
         {
             List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
             for(IRecipe irecipe : allrecipes)
             {
-                System.out.println("In loadUsageRecipes loop");
-                CachedShapedRecipe recipe = null;
                 if(irecipe instanceof JSONRecipe)
-                    recipe = JSONShapedRecipe((JSONRecipe) irecipe);
+                    CachedShapedRecipe recipe = JSONShapedRecipe((JSONRecipe) irecipe);
     
-                if(recipe == null || !recipe.contains(recipe.ingredients, (ItemStack)ingredients[0]))
-                    continue;
-    
-                recipe.computeVisuals();
-                if(recipe.contains(recipe.ingredients, (ItemStack)ingredients[0]))
-                {
-                    System.out.println("Pushing to NEI");
-                    recipe.setIngredientPermutation(recipe.ingredients, (ItemStack)ingredients[0]);
-                    arecipes.add(recipe);
-                }
+                    if (recipe.contains(recipe.ingredients, (ItemStack)ingredients[0])) {
+                        // recipe.computeVisuals();
+                        recipe.setIngredientPermutation(recipe.ingredients, (ItemStack)ingredients[0]);
+                        arecipes.add(recipe);
+                    }
             }
         } else {
-            super.loadUsageRecipes(inputId, ingredients);
+            super.loadUsageRecipes(inputId, results);
         }
     }
 
@@ -106,18 +92,14 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
         for(IRecipe irecipe : allrecipes)
         {
-            CachedShapedRecipe recipe = null;
-            if(irecipe instanceof JSONRecipe)
-                recipe = JSONShapedRecipe((JSONRecipe) irecipe);
+            if(irecipe instanceof JSONRecipe) {
+                CachedShapedRecipe recipe = JSONShapedRecipe((JSONRecipe) irecipe);
 
-            if(recipe == null || !recipe.contains(recipe.ingredients, ingredient))
-                continue;
-
-            recipe.computeVisuals();
-            if(recipe.contains(recipe.ingredients, ingredient))
-            {
-                recipe.setIngredientPermutation(recipe.ingredients, ingredient);
-                arecipes.add(recipe);
+                if(recipe.contains(recipe.ingredients, ingredient)) {
+                    //recipe.computeVisuals();
+                    recipe.setIngredientPermutation(recipe.ingredients, ingredient);
+                    arecipes.add(recipe);
+                }
             }
         }
     }
@@ -141,6 +123,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                     String key = stack.getItem().getUnlocalizedName(stack);
                     if (!itemMap.containsKey(key))
                         itemMap.put(key, new ArrayList<ItemStack>());
+                        
                     itemMap.get(key).add(stack);
                 }
             }
