@@ -215,8 +215,8 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                         item = null;
                     }
                     
-                    if (item != null && item.isEmpty())
-                        return null;
+                    // if (item != null && item.isEmpty())
+                    //     return null;
                         
                     items[y * width + x] = item;
                 }
