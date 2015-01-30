@@ -7,7 +7,7 @@ public class NEINuminaConfig implements IConfigureNEI {
     @Override
     public void loadConfig()
     {
-        System.out.println("In NEI loadConfig");
+        // System.out.println("In NEI loadConfig");
         API.registerRecipeHandler(new JSONRecipeHandler());
         API.registerUsageHandler(new JSONRecipeHandler());
     }
@@ -15,14 +15,14 @@ public class NEINuminaConfig implements IConfigureNEI {
     @Override
     public String getName()
     {
-        System.out.println("In NEI getName");
+        // System.out.println("In NEI getName");
         return "Numina";
     }
 
     @Override
     public String getVersion()
     {
-        System.out.println("In NEI getVersion");
-        return "1.3";
+        // System.out.println("In NEI getVersion");
+        return "1.0";
     }
 }
