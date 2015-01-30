@@ -14,23 +14,22 @@ import net.minecraft.entity.player.EntityPlayer
  */
 object MusePacketRecipeUpdate extends MusePackager {
   def read(d: DataInputStream, p: EntityPlayer) = {
-    val recipe = readString(d)
-    new MusePacketRecipeUpdate(p, recipe)
+    new MusePacketRecipeUpdate(p, d)
   }
 }
 
-class MusePacketRecipeUpdate(player: EntityPlayer, recipe: String) extends MusePacket {
+class MusePacketRecipeUpdate(player: EntityPlayer, recipe: InputStream) extends MusePacket {
   override val packager = MusePacketRecipeUpdate
 
   override def write() {
-    writeString(recipe)
+    writeStream(recipe)
   }
 
 
   @SideOnly(Side.CLIENT)
   override def handleClient(player: EntityClientPlayerMP) {
     try {
-      JSONRecipeList.loadRecipesFromString(recipe)
+      JSONRecipeList.loadRecipesFromStream(recipe)
     } catch {
       case e: Exception =>
     }
