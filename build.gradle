@@ -51,8 +51,9 @@ configurations {
 
 dependencies {
     copylibs 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
-    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev'
-    compile 'codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev'
+    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev"
+    compile "codechicken:ForgeMultipart:1.7.10-1.1.1.320:dev"
+    compile "codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev"
     compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
 }
 
