@@ -124,9 +124,9 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                     itemMap.get(key).add(stack);
                 }
             }
-        }
-        if (itemMap != null && itemMap.containsKey(unlocalizedName)){
-            result.addAll(itemMap.get(unlocalizedName));
+        } else {
+            if (itemMap.containsKey(unlocalizedName))
+                result.addAll(itemMap.get(unlocalizedName));
         }
         return result;
     }

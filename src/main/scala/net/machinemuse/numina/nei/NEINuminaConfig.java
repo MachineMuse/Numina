@@ -15,12 +15,14 @@ public class NEINuminaConfig implements IConfigureNEI {
     @Override
     public String getName()
     {
+        System.out.println("In NEI getName");
         return "Numina";
     }
 
     @Override
     public String getVersion()
     {
-        return "1.0";
+        System.out.println("In NEI getVersion");
+        return "1.3";
     }
 }
