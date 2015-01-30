@@ -135,62 +135,64 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     {
         System.out.println("In getIngredient");
         List<ItemStack> result = null;
-        if (cell == null)
-            return null;
+        if (cell != null) {
 
-        if (cell.oredictName != null)
-            result = OreDictionary.getOres(cell.oredictName);
-
-        if (cell.unlocalizedName != null)
-        {
-            if (result == null) {
-                result = getItemByUnlocalizedName(cell.unlocalizedName);
-            } else {
-                ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-                for (ItemStack stack : result) {
-                    if (cell.unlocalizedName.equals(stack.getItem().getUnlocalizedName(stack)))
-                        t.add(stack);
+            if (cell.oredictName != null) {
+                result = OreDictionary.getOres(cell.oredictName);
+    
+            } else if (cell.unlocalizedName != null) {
+                if (result == null) {
+                    result = getItemByUnlocalizedName(cell.unlocalizedName);
+                } else {
+                    ArrayList<ItemStack> t = new ArrayList<ItemStack>();
+                    for (ItemStack stack : result) {
+                        if (cell.unlocalizedName.equals(stack.getItem().getUnlocalizedName(stack)))
+                            t.add(stack);
+                    }
+                            
+                    result = t;
                 }
-                        
-                result = t;
             }
-        }
-
-        if (cell.item != null) {
-            int meta = OreDictionary.WILDCARD_VALUE;
-            if (cell.meta != null)
-                meta = cell.meta.intValue();
-            if (result == null) {
-                result = new ArrayList<ItemStack>();
-                result.add(new ItemStack(cell.item, 1, meta));
-            } else {
-                ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-                for (ItemStack stack : result) {
-                    if (stack.getItem() == cell.item && (meta == OreDictionary.WILDCARD_VALUE || meta == stack.getItemDamage()))
-                        t.add(stack);
-                }
-                        
-                result = t;
-            }
-        } else if (cell.meta != null && result != null && cell.meta.intValue() != OreDictionary.WILDCARD_VALUE) {
-            ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-            for (ItemStack stack : result) {
-                if (cell.meta.intValue() == stack.getItemDamage())
-                    t.add(stack);
-            }
+    
+            if (cell.item != null) {
+                int meta = OreDictionary.WILDCARD_VALUE;
+                
+                if (cell.meta != null)
+                    meta = cell.meta.intValue();
                     
-            result = t;
+                if (result == null) {
+                    result = new ArrayList<ItemStack>();
+                    result.add(new ItemStack(cell.item, 1, meta));
+                } else {
+                    ArrayList<ItemStack> t = new ArrayList<ItemStack>();
+                    for (ItemStack stack : result) {
+                        if (stack.getItem() == cell.item && (meta == OreDictionary.WILDCARD_VALUE || meta == stack.getItemDamage()))
+                            t.add(stack);
+                    }
+                            
+                    result = t;
+                }
+            } else if (cell.meta != null && result != null && cell.meta.intValue() != OreDictionary.WILDCARD_VALUE) {
+                ArrayList<ItemStack> t = new ArrayList<ItemStack>();
+                for (ItemStack stack : result) {
+                    if (cell.meta.intValue() == stack.getItemDamage())
+                        t.add(stack);
+                }
+                        
+                result = t;
+            }
+            if (cell.nbt != null && result != null) {
+                ArrayList<ItemStack> t = new ArrayList<ItemStack>();
+                for (ItemStack stack : result) {
+                    ItemStack stack2 = stack.copy();
+                    stack2.setTagCompound(cell.nbt);
+                    t.add(stack2);
+                }
+                result = t;
+            }
+        } else {
+            result = null;
         }
-
-//        if (cell.nbt != null && result != null) {
-//            ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-//            for (ItemStack stack : result) {
-//                ItemStack stack2 = stack.copy();
-//                stack2.setTagCompound(cell.nbt);
-//                t.add(stack2);
-//            }
-//            result = t;
-//        }
 
         return result;
     }
