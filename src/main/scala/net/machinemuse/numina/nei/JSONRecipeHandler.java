@@ -147,9 +147,11 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                 result = getItemByUnlocalizedName(cell.unlocalizedName);
             } else {
                 ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-                for (ItemStack stack : result)
+                for (ItemStack stack : result) {
                     if (cell.unlocalizedName.equals(stack.getItem().getUnlocalizedName(stack)))
                         t.add(stack);
+                }
+                        
                 result = t;
             }
         }
@@ -163,16 +165,19 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                 result.add(new ItemStack(cell.item, 1, meta));
             } else {
                 ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-                for (ItemStack stack : result)
+                for (ItemStack stack : result) {
                     if (stack.getItem() == cell.item && (meta == OreDictionary.WILDCARD_VALUE || meta == stack.getItemDamage()))
                         t.add(stack);
+                }
+                        
                 result = t;
             }
         } else if (cell.meta != null && result != null && cell.meta.intValue() != OreDictionary.WILDCARD_VALUE) {
             ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-            for (ItemStack stack : result)
+            for (ItemStack stack : result) {
                 if (cell.meta.intValue() == stack.getItemDamage())
                     t.add(stack);
+            }
                     
             result = t;
         }
@@ -206,14 +211,13 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                     List<ItemStack> item;
                     if(recipe.ingredients[y].length > x) {
                         item = getIngredient(recipe.ingredients[y][x]);
-                        
-                        if (item.isEmpty())
-                            item = null;
                     } else {
                         item = null;
                     }
-                    // if (item != null && item.isEmpty())
-                    //     return null;
+                    
+                    if (item != null && item.isEmpty())
+                        return null;
+                        
                     items[y * width + x] = item;
                 }
             }
