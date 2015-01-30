@@ -181,15 +181,15 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                         
                 result = t;
             }
-            if (cell.nbt != null && result != null) {
-                ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-                for (ItemStack stack : result) {
-                    ItemStack stack2 = stack.copy();
-                    stack2.setTagCompound(cell.nbt);
-                    t.add(stack2);
-                }
-                result = t;
-            }
+            // if (cell.nbt != null && result != null) {
+            //     ArrayList<ItemStack> t = new ArrayList<ItemStack>();
+            //     for (ItemStack stack : result) {
+            //         ItemStack stack2 = stack.copy();
+            //         stack2.setTagCompound(cell.nbt);
+            //         t.add(stack2);
+            //     }
+            //     result = t;
+            // }
         } else {
             result = null;
         }
