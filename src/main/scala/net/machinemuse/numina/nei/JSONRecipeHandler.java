@@ -70,7 +70,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                 if(irecipe instanceof JSONRecipe) {
                     CachedShapedRecipe recipe = JSONShapedRecipe((JSONRecipe) irecipe);
     
-                    if (recipe.inputs != null && recipe.contains(recipe.ingredients, (ItemStack)ingredients[0])) {
+                    if (recipe.contains(recipe.ingredients, (ItemStack)ingredients[0])) {
                         recipe.computeVisuals();
                         recipe.setIngredientPermutation(recipe.ingredients, (ItemStack)ingredients[0]);
                         arecipes.add(recipe);
