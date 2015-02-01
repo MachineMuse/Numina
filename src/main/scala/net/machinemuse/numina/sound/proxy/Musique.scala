@@ -113,7 +113,7 @@ class MusiqueClient extends MusiqueCommon {
     currentClientSounds = new ListBuffer[MusiqueClientSound]
   }
   
-  private def getDuration(sound: MuseSound): Duration {
+  private def getDuration(sound: MuseSound): Duration = {
       val opr: OggPacketReader = new OggPacketReader(
                                     Minecraft.getMinecraft.getResourceManager.getResource(
                                         new SoundPoolEntry(
