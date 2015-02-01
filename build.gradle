@@ -48,12 +48,12 @@ repositories {
 configurations {
     copylibs
 }
-
+// 20150201.161816-1
 dependencies {
-    copylibs 'org.gagravarr:vorbis-java-core:0.8-20150201.161816-1'
+    copylibs 'org.gagravarr:vorbis-java-core:0.8-SNAPSHOT'
     compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev'
     compile 'codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev'
-    compile 'org.gagravarr:vorbis-java-core:0.8-20150201.161816-1'
+    compile 'org.gagravarr:vorbis-java-core:0.8-SNAPSHOT'
     //compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
 }
 
