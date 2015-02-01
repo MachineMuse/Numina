@@ -115,23 +115,23 @@ class MusiqueClient extends MusiqueCommon {
   }
   
   private def getDeadline(sound: MuseSound): Deadline = {
-      val vf: VorbisFile = new VorbisFile(
-                                new OggPacketReader(
-                                    Minecraft.getMinecraft.getResourceManager.getResource(
-                                        new SoundPoolEntry(
-                                            Minecraft.getMinecraft.getSoundHandler.getSound(
-                                                sound.getPositionedSoundLocation
-                                            ).func_148720_g
-                                        ).getSoundPoolEntryLocation
-                                    ).getInputStream
-                                )
-                            )
-
-        val oas: OggAudioStatistics = new OggAudioStatistics(vf.asInstanceOf[OggAudioHeaders], vf.asInstanceOf[OggAudioStream])
+    val vf: VorbisFile = new VorbisFile(
+                           new OggPacketReader(
+                             Minecraft.getMinecraft.getResourceManager.getResource(
+                               new SoundPoolEntry(
+                                 Minecraft.getMinecraft.getSoundHandler.getSound(
+                                   sound.getPositionedSoundLocation
+                                 ).func_148720_g
+                               ).getSoundPoolEntryLocation
+                             ).getInputStream
+                           )
+                         )
+                         
+    val oas: OggAudioStatistics = new OggAudioStatistics(vf.asInstanceOf[OggAudioHeaders], vf.asInstanceOf[OggAudioStream])
         
-        oas.calculate
+    oas.calculate
         
-        return oas.getDurationSeconds.seconds.fromNow
+    return oas.getDurationSeconds.seconds.fromNow
   }
 
   override def clientSound(resource: String, volume: Float) {
