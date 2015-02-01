@@ -14,6 +14,7 @@ import java.io.InputStream
 import org.gagravarr.ogg.OggPacketReader
 import org.gagravarr.ogg.audio.OggAudioStatistics
 import org.gagravarr.vorbis.VorbisFile
+import org.gagravarr.ogg.audio.{OggAudioHeaders, OggAudioStream}
 //import com.qmxtech.oggaudiodata._
 import scala.concurrent.duration._
 import scala.collection.mutable.ListBuffer
@@ -113,7 +114,7 @@ class MusiqueClient extends MusiqueCommon {
     currentClientSounds = new ListBuffer[MusiqueClientSound]
   }
   
-  private def getDuration(sound: MuseSound): Duration = {
+  private def getDeadline(sound: MuseSound): Deadline = {
       val opr: OggPacketReader = new OggPacketReader(
                                     Minecraft.getMinecraft.getResourceManager.getResource(
                                         new SoundPoolEntry(
@@ -124,7 +125,7 @@ class MusiqueClient extends MusiqueCommon {
                                     ).getInputStream
                                 )
 
-        val oas: OggAudioStatistics = new OggAudioStatistics(opr, opr)
+        val oas: OggAudioStatistics = new OggAudioStatistics(opr.asInstanceOf[OggAudioHeaders], opr.asInstanceOf[OggAudioStream])
         
         oas.calculate
         
@@ -161,7 +162,7 @@ class MusiqueClient extends MusiqueCommon {
         //                           ).getInputStream
         //                          ) seconds fromNow
 
-        currentClientSounds += new MusiqueClientSound(resource, new MusiqueTimedInstance(sound, getDuration(sound)))
+        currentClientSounds += new MusiqueClientSound(resource, new MusiqueTimedInstance(sound, getDeadline(sound)))
       }
     }
   }
@@ -232,7 +233,7 @@ class MusiqueClient extends MusiqueCommon {
         //                             ).getInputStream
         //                           ) seconds fromNow
 
-          currentPlayerSounds += new MusiquePlayerSound(new MusiqueCommonPlayer(player, resource, volume, pitch), new MusiqueTimedInstance(sound, getDuration(sound)))
+          currentPlayerSounds += new MusiquePlayerSound(new MusiqueCommonPlayer(player, resource, volume, pitch), new MusiqueTimedInstance(sound, getDeadline(sound)))
           } // End of temporary null check
         }
       }
