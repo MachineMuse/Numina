@@ -50,10 +50,10 @@ configurations {
 }
 
 dependencies {
-    copylibs 'org.gagravarr:vorbis-java-core:0.7'
+    copylibs 'org.gagravarr:vorbis-java-core:0.8-20150201.161816-1'
     compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev'
     compile 'codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev'
-    compile 'org.gagravarr:vorbis-java-core:0.7'
+    compile 'org.gagravarr:vorbis-java-core:0.8-20150201.161816-1'
     //compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
 }
 
