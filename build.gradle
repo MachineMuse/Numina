@@ -45,9 +45,9 @@ repositories {
     }
 }
 
-// configurations {
-//     copylibs
-// }
+configurations {
+    copylibs
+}
 
 dependencies {
     copylibs 'org.gagravarr:vorbis-java-core:0.7'
