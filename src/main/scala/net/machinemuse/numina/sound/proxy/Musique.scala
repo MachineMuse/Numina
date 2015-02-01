@@ -11,7 +11,10 @@ import net.minecraft.util.ResourceLocation
 import net.machinemuse.numina.sound.MuseSound
 
 import java.io.InputStream
-import com.qmxtech.oggaudiodata._
+import org.gagravarr.ogg.OggPacketReader
+import org.gagravarr.ogg.audio.OggAudioStatistics
+import org.gagravarr.vorbis.VorbisFile
+//import com.qmxtech.oggaudiodata._
 import scala.concurrent.duration._
 import scala.collection.mutable.ListBuffer
 
@@ -109,6 +112,24 @@ class MusiqueClient extends MusiqueCommon {
     currentPlayerSounds = new ListBuffer[MusiquePlayerSound]
     currentClientSounds = new ListBuffer[MusiqueClientSound]
   }
+  
+  private def getDuration(sound: MuseSound): Duration {
+      val opr: OggPacketReader = new OggPacketReader(
+                                    Minecraft.getMinecraft.getResourceManager.getResource(
+                                        new SoundPoolEntry(
+                                            Minecraft.getMinecraft.getSoundHandler.getSound(
+                                                sound.getPositionedSoundLocation
+                                            ).func_148720_g
+                                        ).getSoundPoolEntryLocation
+                                    ).getInputStream
+                                )
+
+        val oas: OggAudioStatistics = new OggAudioStatistics(opr, opr)
+        
+        oas.calculate
+        
+        return oas.getDurationSeconds.seconds.fromNow
+  }
 
   override def clientSound(resource: String, volume: Float) {
     if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
@@ -126,21 +147,21 @@ class MusiqueClient extends MusiqueCommon {
       }
 
       if (registered == false) {
-        var sound: MuseSound = new MuseSound(resource, volume, 1.0f)
+        val sound: MuseSound = new MuseSound(resource, volume, 1.0f)
         Minecraft.getMinecraft.getSoundHandler.playSound(sound)
 
         // Show me a better way of getting this value or comparable and I'll implement it. -- Korynkai
-        val duration: Deadline = OggAudioData.getSeconds(
-                                  Minecraft.getMinecraft.getResourceManager.getResource(
-                                    new SoundPoolEntry(
-                                      Minecraft.getMinecraft.getSoundHandler.getSound(
-                                        sound.getPositionedSoundLocation
-                                      ).func_148720_g
-                                    ).getSoundPoolEntryLocation
-                                  ).getInputStream
-                                 ) seconds fromNow
+        // val duration: Deadline = OggAudioData.getSeconds(
+        //                           Minecraft.getMinecraft.getResourceManager.getResource(
+        //                             new SoundPoolEntry(
+        //                               Minecraft.getMinecraft.getSoundHandler.getSound(
+        //                                 sound.getPositionedSoundLocation
+        //                               ).func_148720_g
+        //                             ).getSoundPoolEntryLocation
+        //                           ).getInputStream
+        //                          ) seconds fromNow
 
-        currentClientSounds += new MusiqueClientSound(resource, new MusiqueTimedInstance(sound, duration))
+        currentClientSounds += new MusiqueClientSound(resource, new MusiqueTimedInstance(sound, getDuration(sound)))
       }
     }
   }
@@ -201,17 +222,17 @@ class MusiqueClient extends MusiqueCommon {
           Minecraft.getMinecraft.getSoundHandler.playSound(sound)
 
           // Show me a better way of getting this value or comparable and I'll implement it. -- Korynkai
-          val duration: Deadline = OggAudioData.getSeconds(
-                                    Minecraft.getMinecraft.getResourceManager.getResource(
-                                      new SoundPoolEntry(
-                                        Minecraft.getMinecraft.getSoundHandler.getSound(
-                                          sound.getPositionedSoundLocation // NPE occurs here when not working directionally... See above conditional.
-                                        ).func_148720_g
-                                      ).getSoundPoolEntryLocation
-                                    ).getInputStream
-                                   ) seconds fromNow
+        //   val duration: Deadline = OggAudioData.getSeconds(
+        //                             Minecraft.getMinecraft.getResourceManager.getResource(
+        //                               new SoundPoolEntry(
+        //                                 Minecraft.getMinecraft.getSoundHandler.getSound(
+        //                                   sound.getPositionedSoundLocation // NPE occurs here when not working directionally... See above conditional.
+        //                                 ).func_148720_g
+        //                               ).getSoundPoolEntryLocation
+        //                             ).getInputStream
+        //                           ) seconds fromNow
 
-          currentPlayerSounds += new MusiquePlayerSound(new MusiqueCommonPlayer(player, resource, volume, pitch), new MusiqueTimedInstance(sound, duration))
+          currentPlayerSounds += new MusiquePlayerSound(new MusiqueCommonPlayer(player, resource, volume, pitch), new MusiqueTimedInstance(sound, getDuration(sound)))
           } // End of temporary null check
         }
       }

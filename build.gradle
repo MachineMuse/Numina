@@ -45,15 +45,16 @@ repositories {
     }
 }
 
-configurations {
-    copylibs
-}
+// configurations {
+//     copylibs
+// }
 
 dependencies {
-    copylibs 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
+    copylibs 'org.gagravarr:vorbis-java-core:0.7'
     compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev'
     compile 'codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev'
-    compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
+    compile 'org.gagravarr:vorbis-java-core:0.7'
+    //compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
 }
 
 task copyExternalLibs(type: Copy) {
