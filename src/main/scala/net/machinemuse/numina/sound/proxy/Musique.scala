@@ -115,7 +115,8 @@ class MusiqueClient extends MusiqueCommon {
   }
   
   private def getDeadline(sound: MuseSound): Deadline = {
-      val opr: OggPacketReader = new OggPacketReader(
+      val vf: VorbisFile = new VorbisFile(
+                                new OggPacketReader(
                                     Minecraft.getMinecraft.getResourceManager.getResource(
                                         new SoundPoolEntry(
                                             Minecraft.getMinecraft.getSoundHandler.getSound(
@@ -124,8 +125,9 @@ class MusiqueClient extends MusiqueCommon {
                                         ).getSoundPoolEntryLocation
                                     ).getInputStream
                                 )
+                            )
 
-        val oas: OggAudioStatistics = new OggAudioStatistics(opr.asInstanceOf[OggAudioHeaders], opr.asInstanceOf[OggAudioStream])
+        val oas: OggAudioStatistics = new OggAudioStatistics(vf.asInstanceOf[OggAudioHeaders], vf.asInstanceOf[OggAudioStream])
         
         oas.calculate
         
