@@ -205,22 +205,12 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         if (height == 0 || width == 0)
             return null;
 
-        List<ItemStack>[] items = new List<ItemStack>[height*width];
+        Object[] items = new Object[height*width];
 
         for (int y=0; y < height; y++) {
             if (recipe.ingredients[y] != null) {
                 for (int x=0; x < width; x++) {
-                    List<ItemStack> item;
-            
-                    if(recipe.ingredients[y].length > x) {
-                        item = getIngredient(recipe.ingredients[y][x]);
-                    } else {
-                        item = null;
-                    }
-                    if (item != null && item.isEmpty())
-                        return null;
-                    
-                    items[y * width + x] = item;
+                    items[y * width + x] = getIngredient(recipe.ingredients[y][x]);
                 }
             }
         }
@@ -228,3 +218,4 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         return new CachedShapedRecipe(width, height, items, recipe.getRecipeOutput());
     }
 }
+
