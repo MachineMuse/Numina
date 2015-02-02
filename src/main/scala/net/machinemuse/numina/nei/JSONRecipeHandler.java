@@ -205,7 +205,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         if (height == 0 || width == 0)
             return null;
 
-        Object[] items = new Object[height*width];
+        List<ItemStack>[] items = new List<ItemStack>[height*width];
 
         for (int y=0; y < height; y++) {
             if (recipe.ingredients[y] != null) {
