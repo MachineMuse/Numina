@@ -210,7 +210,17 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         for (int y=0; y < height; y++) {
             if (recipe.ingredients[y] != null) {
                 for (int x=0; x < width; x++) {
-                    items[y * width + x] = getIngredient(recipe.ingredients[y][x]);
+                    List<ItemStack> item;
+            
+                    if(recipe.ingredients[y].length > x) {
+                        item = getIngredient(recipe.ingredients[y][x]);
+                    } else {
+                        item = null;
+                    }
+                    if (item != null && item.isEmpty())
+                        return null;
+                    
+                    items[y * width + x] = item;
                 }
             }
         }
