@@ -27,18 +27,24 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     @Override
     public void loadCraftingRecipes(String outputId, Object... results)
     {
-        // System.out.println("In loadCraftingRecipes(String, Object...)");
-        if(outputId.equals("crafting") && getClass() == JSONRecipeHandler.class) {
+        if(outputId.equals("crafting") && getClass() == JSONRecipeHandler.class)
+        {
             List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
-            for(IRecipe irecipe : allrecipes) {
-                if(irecipe instanceof JSONRecipe) {
-                    CachedShapedRecipe recipe = JSONShapedRecipe((JSONRecipe) irecipe);
+            for(IRecipe irecipe : allrecipes)
+            {
+                CachedShapedRecipe recipe = null;
+                if(irecipe instanceof JSONRecipe)
+                    recipe = JSONShapedRecipe((JSONRecipe) irecipe);
 
-                    recipe.computeVisuals();
-                    arecipes.add(recipe);
-                }
+                if(recipe == null)
+                    continue;
+
+                recipe.computeVisuals();
+                arecipes.add(recipe);
             }
-        } else {
+        }
+        else
+        {
             super.loadCraftingRecipes(outputId, results);
         }
     }
@@ -46,56 +52,42 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     @Override
     public void loadCraftingRecipes(ItemStack result)
     {
-        // System.out.println("In loadCraftingRecipes(ItemStack)");
         List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
-        for(IRecipe irecipe : allrecipes) {
-            if(NEIServerUtils.areStacksSameTypeCrafting(irecipe.getRecipeOutput(), result)) {
-                if(irecipe instanceof JSONRecipe) {
-                    CachedShapedRecipe recipe = JSONShapedRecipe((JSONRecipe) irecipe);
+        for(IRecipe irecipe : allrecipes)
+        {
+            if(NEIServerUtils.areStacksSameTypeCrafting(irecipe.getRecipeOutput(), result))
+            {
+                CachedShapedRecipe recipe = null;
+                if(irecipe instanceof JSONRecipe)
+                    recipe = JSONShapedRecipe((JSONRecipe) irecipe);
 
-                    recipe.computeVisuals();
-                    arecipes.add(recipe);
-                }
+                if(recipe == null)
+                    continue;
+
+                recipe.computeVisuals();
+                arecipes.add(recipe);
             }
-        }
-    }
-    
-    @Override
-    public void loadUsageRecipes(String inputId, Object... ingredients)
-    {
-        // System.out.println("In loadUsageRecipes(String, Object...)");
-        if(inputId.equals("crafting") && ingredients.length == 1 && getClass() == JSONRecipeHandler.class) {
-            List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
-            for(IRecipe irecipe : allrecipes) {
-                if(irecipe instanceof JSONRecipe) {
-                    CachedShapedRecipe recipe = JSONShapedRecipe((JSONRecipe) irecipe);
-    
-                    if (recipe.contains(recipe.ingredients, (ItemStack)ingredients[0])) {
-                        recipe.computeVisuals();
-                        recipe.setIngredientPermutation(recipe.ingredients, (ItemStack)ingredients[0]);
-                        arecipes.add(recipe);
-                    }
-                }
-            }
-        } else {
-            super.loadUsageRecipes(inputId, ingredients);
         }
     }
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient)
     {
-        // System.out.println("In loadUsageRecipes(ItemStack)");
         List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
-        for(IRecipe irecipe : allrecipes) {
-            if(irecipe instanceof JSONRecipe) {
-                CachedShapedRecipe recipe = JSONShapedRecipe((JSONRecipe) irecipe);
+        for(IRecipe irecipe : allrecipes)
+        {
+            CachedShapedRecipe recipe = null;
+            if(irecipe instanceof JSONRecipe)
+                recipe = JSONShapedRecipe((JSONRecipe) irecipe);
 
-                if(recipe.contains(recipe.ingredients, ingredient)) {
-                    recipe.computeVisuals();
-                    recipe.setIngredientPermutation(recipe.ingredients, ingredient);
-                    arecipes.add(recipe);
-                }
+            if(recipe == null || !recipe.contains(recipe.ingredients, ingredient))
+                continue;
+
+            recipe.computeVisuals();
+            if(recipe.contains(recipe.ingredients, ingredient))
+            {
+                recipe.setIngredientPermutation(recipe.ingredients, ingredient);
+                arecipes.add(recipe);
             }
         }
     }
@@ -104,7 +96,6 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
 
     public static ArrayList<ItemStack> getItemByUnlocalizedName(String unlocalizedName)
     {
-        // System.out.println("In getItemByUnlocalizedName");
         ArrayList<ItemStack> result = new ArrayList<ItemStack>();
         if (itemMap == null)
         {
@@ -120,86 +111,75 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                     String key = stack.getItem().getUnlocalizedName(stack);
                     if (!itemMap.containsKey(key))
                         itemMap.put(key, new ArrayList<ItemStack>());
-                        
                     itemMap.get(key).add(stack);
                 }
             }
-        } else {
-            if (itemMap.containsKey(unlocalizedName))
-                result.addAll(itemMap.get(unlocalizedName));
+        }
+        if (itemMap != null && itemMap.containsKey(unlocalizedName)){
+            result.addAll(itemMap.get(unlocalizedName));
         }
         return result;
     }
 
     public static List<ItemStack> getIngredient(SimpleItemMatcher cell)
     {
-
         List<ItemStack> result = null;
-        if (cell != null) {
+        if (cell == null)
+            return null;
 
-            if (cell.oredictName != null) {
-                result = OreDictionary.getOres(cell.oredictName);
-    
-            } else if (cell.unlocalizedName != null) {
-                if (result == null) {
-                    result = getItemByUnlocalizedName(cell.unlocalizedName);
-                } else {
-                    ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-                    for (ItemStack stack : result) {
-                        if (cell.unlocalizedName.equals(stack.getItem().getUnlocalizedName(stack)))
-                            t.add(stack);
-                    }
-                            
-                    result = t;
-                }
-            }
-    
-            if (cell.item != null) {
-                int meta = OreDictionary.WILDCARD_VALUE;
-                
-                if (cell.meta != null)
-                    meta = cell.meta.intValue();
-                    
-                if (result == null) {
-                    result = new ArrayList<ItemStack>();
-                    result.add(new ItemStack(cell.item, 1, meta));
-                } else {
-                    ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-                    for (ItemStack stack : result) {
-                        if (stack.getItem() == cell.item && (meta == OreDictionary.WILDCARD_VALUE || meta == stack.getItemDamage()))
-                            t.add(stack);
-                    }
-                            
-                    result = t;
-                }
-            } else if (cell.meta != null && result != null && cell.meta.intValue() != OreDictionary.WILDCARD_VALUE) {
+        if (cell.oredictName != null)
+            result = OreDictionary.getOres(cell.oredictName);
+
+        if (cell.unlocalizedName != null)
+        {
+            if (result == null) {
+                result = getItemByUnlocalizedName(cell.unlocalizedName);
+            } else {
                 ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-                for (ItemStack stack : result) {
-                    if (cell.meta.intValue() == stack.getItemDamage())
+                for (ItemStack stack : result)
+                    if (cell.unlocalizedName.equals(stack.getItem().getUnlocalizedName(stack)))
                         t.add(stack);
-                }
-                        
                 result = t;
             }
-            // if (cell.nbt != null && result != null) {
-            //     ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-            //     for (ItemStack stack : result) {
-            //         ItemStack stack2 = stack.copy();
-            //         stack2.setTagCompound(cell.nbt);
-            //         t.add(stack2);
-            //     }
-            //     result = t;
-            // }
-        } else {
-            result = null;
         }
+
+        if (cell.item != null) {
+            int meta = OreDictionary.WILDCARD_VALUE;
+            if (cell.meta != null)
+                meta = cell.meta.intValue();
+            if (result == null) {
+                result = new ArrayList<ItemStack>();
+                result.add(new ItemStack(cell.item, 1, meta));
+            } else {
+                ArrayList<ItemStack> t = new ArrayList<ItemStack>();
+                for (ItemStack stack : result)
+                    if (stack.getItem() == cell.item && (meta == OreDictionary.WILDCARD_VALUE || meta == stack.getItemDamage()))
+                        t.add(stack);
+                result = t;
+            }
+        } else if (cell.meta != null && result != null && cell.meta.intValue() != OreDictionary.WILDCARD_VALUE) {
+            ArrayList<ItemStack> t = new ArrayList<ItemStack>();
+            for (ItemStack stack : result)
+                if (cell.meta.intValue() == stack.getItemDamage())
+                    t.add(stack);
+            result = t;
+        }
+
+//        if (cell.nbt != null && result != null) {
+//            ArrayList<ItemStack> t = new ArrayList<ItemStack>();
+//            for (ItemStack stack : result) {
+//                ItemStack stack2 = stack.copy();
+//                stack2.setTagCompound(cell.nbt);
+//                t.add(stack2);
+//            }
+//            result = t;
+//        }
 
         return result;
     }
 
     public CachedShapedRecipe JSONShapedRecipe(JSONRecipe recipe)
     {
-        // System.out.println("In JSONShapedRecipe");
         int height = recipe.ingredients.length;
         int width = recipe.getWidth();
         if (height == 0 || width == 0)
@@ -210,7 +190,15 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         for (int y=0; y < height; y++) {
             if (recipe.ingredients[y] != null) {
                 for (int x=0; x < width; x++) {
-                    items[y * width + x] = getIngredient(recipe.ingredients[y][x]);
+                    List<ItemStack> item;
+                    if(recipe.ingredients[y].length > x) {
+                        item = getIngredient(recipe.ingredients[y][x]);
+                    } else {
+                        item = null;
+                    }
+                    if (item != null && item.isEmpty())
+                        return null;
+                    items[y * width + x] = item;
                 }
             }
         }
