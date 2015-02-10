@@ -20,6 +20,8 @@ import java.util.List;
 /**
  * Author: MachineMuse (Claire Semple)
  * Created: 5:54 PM, 11/4/13
+ * Modified by: Korynkai 
+ *          at: 2:43 PM, 2/4/15
  */
 public class JSONRecipeList {
     static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
@@ -39,12 +41,10 @@ public class JSONRecipeList {
                 if(file.isDirectory()) {
                     String[] filenames = file.list(filter);
                     for(String filename:filenames) {
-                        //String json = readFile(dir + "/" + filename, Charsets.UTF_8);
                         MuseLogger.logDebug("Loading recipes from " + filename);
                         loadRecipesFromStream(new FileInputStream(dir + "/" + filename));
                     }
                 } else {
-                    // String json = readFile(dir, Charsets.UTF_8);
                     MuseLogger.logDebug("Loading recipes from " + dir);
                     loadRecipesFromStream(new FileInputStream(file));
                 }
@@ -56,8 +56,15 @@ public class JSONRecipeList {
 
     public static void loadRecipesFromResource(URL resource) {
         try {
-            //String json = Resources.toString(resource, Charsets.UTF_8);
             loadRecipesFromStream(new FileInputStream(resource.toString()));
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void loadRecipesFromFile(File resource) {
+        try {
+            loadRecipesFromStream(new FileInputStream(resource));
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -81,11 +88,4 @@ public class JSONRecipeList {
         return recipesList;
     }
 
-    // static String readFile(String path, Charset encoding) throws IOException {
-    //     File file = new File(path);
-    //     DataInputStream is = new DataInputStream(new FileInputStream(file));
-    //     byte[] bytes = new byte[(int) file.length()];
-    //     is.readFully(bytes);
-    //     return encoding.decode(ByteBuffer.wrap(bytes)).toString();
-    // }
 }

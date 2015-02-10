@@ -9,6 +9,7 @@ import net.machinemuse.numina.recipe.SimpleItemMatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     @Override
     public String getRecipeName()
     {
-        return "JSON Shaped";
+        return StatCollector.translateToLocal("numina.recipe.shaped");
     }
 
     @Override

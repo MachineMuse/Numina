@@ -25,7 +25,6 @@ object Numina {
   @Mod.EventHandler def preinit(e: FMLPreInitializationEvent) {
     NuminaConfig.init(e)
     configDir = e.getModConfigurationDirectory
-
     val recipesFolder = new File(configDir, "machinemuse/recipes")
     recipesFolder.mkdirs()
     recipesFolder.mkdir()
@@ -46,7 +45,7 @@ object Numina {
   }
 
   @Mod.EventHandler def serverstart(e: FMLServerStartedEvent) {
-    JSONRecipeList.loadRecipesFromDir(Numina.configDir.toString + "/machinemuse/recipes/")
     FMLCommonHandler.instance().bus().register(NuminaPlayerTracker)
+    JSONRecipeList.loadRecipesFromDir(event.getModConfigurationDirectory + "/machinemuse/recipes")
   }
 }
