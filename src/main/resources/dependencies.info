@@ -1,5 +1,5 @@
 {
-    "repo": "https://artifactory.qmxtech.com/artifactory/simple/libs-release-local/org/gagravarr/vorbis-java-core/0.8-SNAPSHOT",
+    "repo": "http://files.qmxtech.com/libs",
     "file": "vorbis-java-core-0.8-20150201.161816-1.jar",
     "class": "org.gagravarr.ogg.audio.OggAudioStream",
     "coreLib": "true"
