@@ -46,6 +46,6 @@ object Numina {
 
   @Mod.EventHandler def serverstart(e: FMLServerStartedEvent) {
     FMLCommonHandler.instance().bus().register(NuminaPlayerTracker)
-    JSONRecipeList.loadRecipesFromDir(e.getModConfigurationDirectory + "/machinemuse/recipes")
+    JSONRecipeList.loadRecipesFromDir(configDir + "/machinemuse/recipes")
   }
 }
