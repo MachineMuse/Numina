@@ -8,7 +8,7 @@
   "url": "http://machinemuse.net/",
   "updateUrl": "",
   "authorList": ["MachineMuse"],
-  "credits": "Written by MachineMuse.",
+  "credits": "Written by MachineMuse. Rewrites, continued bugfixes and new features by Korynkai (Matt Schultz) of QMXTech.",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
