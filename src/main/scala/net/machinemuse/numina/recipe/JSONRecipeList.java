@@ -42,12 +42,16 @@ public class JSONRecipeList {
                 if(file.isDirectory()) {
                     String[] filenames = file.list(filter);
                     for(String filename:filenames) {
+                    		String json = readFile(dir + "/" + filename, Charsets.UTF_8);
                         MuseLogger.logDebug("Loading recipes from " + filename);
-                        loadRecipesFromStream(new FileInputStream(dir + "/" + filename));
+                        //loadRecipesFromStream(new FileInputStream(dir + "/" + filename));
+                        loadRecipesFromString(json);
                     }
                 } else {
+                		String json = readFile(dir, Charsets.UTF_8);
                     MuseLogger.logDebug("Loading recipes from " + dir);
-                    loadRecipesFromStream(new FileInputStream(file));
+                    //loadRecipesFromStream(new FileInputStream(file));
+                    loadRecipesFromString(json);
                 }
             }
         } catch (IOException e) {
@@ -57,7 +61,9 @@ public class JSONRecipeList {
 
     public static void loadRecipesFromResource(URL resource) {
         try {
-            loadRecipesFromStream(new FileInputStream(resource.toString()));
+            //loadRecipesFromStream(new FileInputStream(resource.toString()));
+            String json = Resources.toString(resource, Charsets.UTF_8);
+						loadRecipesFromString(json);
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -71,15 +77,25 @@ public class JSONRecipeList {
         }
     }
 
-    public static void loadRecipesFromStream(InputStream stream) {
-        InputStreamReader reader = new InputStreamReader(stream);
-        JSONRecipe[] newrecipes = gson.fromJson(reader, JSONRecipe[].class);
+    // public static void loadRecipesFromStream(InputStream stream) {
+    //     InputStreamReader reader = new InputStreamReader(stream);
+    //     JSONRecipe[] newrecipes = gson.fromJson(reader, JSONRecipe[].class);
+    public static void loadRecipesFromString(String json) {
+				JSONRecipe[] newrecipes = gson.fromJson(json, JSONRecipe[].class);
         recipesList.addAll(Arrays.asList(newrecipes));
         for (JSONRecipe recipe : newrecipes) {
             if (recipe != null)
                 getCraftingRecipeList().add(recipe);
         }
     }
+    
+		static String readFile(String path, Charset encoding) throws IOException {
+				File file = new File(path);
+				DataInputStream is = new DataInputStream(new FileInputStream(file));
+				byte[] bytes = new byte[(int) file.length()];
+				is.readFully(bytes);
+				return encoding.decode(ByteBuffer.wrap(bytes)).toString();
+		}
 
     public static List<IRecipe> getCraftingRecipeList() {
         return CraftingManager.getInstance().getRecipeList();
