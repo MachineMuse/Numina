@@ -72,7 +72,7 @@ public class JSONRecipeList {
     public static void loadRecipesFromFile(File resource) {
         try {
             //loadRecipesFromStream(new FileInputStream(resource));
-            loadRecipesFromString(readFile(resource, Charsets.UTF_8))
+            loadRecipesFromString(readFile(resource, Charsets.UTF_8));
         } catch(IOException e) {
             e.printStackTrace();
         }
