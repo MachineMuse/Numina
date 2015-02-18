@@ -56,7 +56,7 @@ object NuminaPlayerTracker {
         //val writer: OutputStreamWriter = new OutputStreamWriter(os)
         val recipeArray = Array(recipe)
         
-        JSONRecipeList.gson.toJson(recipeArray, writer)
+        //JSONRecipeList.gson.toJson(recipeArray, writer)
 
         //PacketSender.sendTo(new MusePacketRecipeUpdate(event.player, new ByteArrayInputStream(os.toByteArray)), event.player.asInstanceOf[EntityPlayerMP])
         
