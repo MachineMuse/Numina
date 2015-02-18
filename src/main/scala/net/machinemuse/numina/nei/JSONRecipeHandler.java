@@ -32,7 +32,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         if(outputId.equals("crafting") && getClass() == JSONRecipeHandler.class)
         {
             //List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
-            List<IRecipe> allrecipes = (List<IRecipe>)JSONRecipeList.recipesList;
+            List<? extends IRecipe> allrecipes = JSONRecipeList.recipesList;
             for(IRecipe irecipe : allrecipes)
             {
                 CachedShapedRecipe recipe = null;
@@ -56,7 +56,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     public void loadCraftingRecipes(ItemStack result)
     {
         //List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
-        List<IRecipe> allrecipes = (List<IRecipe>)JSONRecipeList.recipesList;
+        List<? extends IRecipe> allrecipes = JSONRecipeList.recipesList;
         for(IRecipe irecipe : allrecipes)
         {
             if(NEIServerUtils.areStacksSameTypeCrafting(irecipe.getRecipeOutput(), result))
@@ -78,7 +78,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     public void loadUsageRecipes(ItemStack ingredient)
     {
         //List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
-        List<IRecipe> allrecipes = (List<IRecipe>)JSONRecipeList.recipesList;
+        List<? extends IRecipe> allrecipes = JSONRecipeList.recipesList;
         for(IRecipe irecipe : allrecipes)
         {
             CachedShapedRecipe recipe = null;
