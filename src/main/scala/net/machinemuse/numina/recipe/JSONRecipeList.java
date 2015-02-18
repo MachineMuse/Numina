@@ -25,7 +25,7 @@ import java.util.List;
  * TODO: Refactor to also handle Shapeless and Smelting
  */
 public class JSONRecipeList {
-    public static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
+    static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
     public static Gson gson = new GsonBuilder().registerTypeAdapterFactory(new EnumTypeAdapterFactory()).setPrettyPrinting().create();
 
     private static FilenameFilter filter = new FilenameFilter() {

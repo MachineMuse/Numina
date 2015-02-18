@@ -33,7 +33,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         {
             //List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
             //for(IRecipe irecipe : allrecipes)
-            for (JSONRecipe irecipe : JSONRecipeList.recipesList)
+            for (JSONRecipe irecipe : JSONRecipeList.getJSONRecipesList())
             {
                 CachedShapedRecipe recipe = null;
             //    if(irecipe instanceof JSONRecipe)
@@ -57,7 +57,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     {
         //List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
         //for(IRecipe irecipe : allrecipes)
-        for (JSONRecipe irecipe : JSONRecipeList.recipesList)
+        for (JSONRecipe irecipe : JSONRecipeList.getJSONRecipesList())
         {
             if(NEIServerUtils.areStacksSameTypeCrafting(irecipe.getRecipeOutput(), result))
             {
@@ -79,7 +79,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     {
         //List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
         //for(IRecipe irecipe : allrecipes)
-        for (JSONRecipe irecipe : JSONRecipeList.recipesList)
+        for (JSONRecipe irecipe : JSONRecipeList.getJSONRecipesList())
         {
             CachedShapedRecipe recipe = null;
             //if(irecipe instanceof JSONRecipe)
