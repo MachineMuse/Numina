@@ -43,9 +43,12 @@ object Numina {
   @Mod.EventHandler def postinit(e: FMLPostInitializationEvent) {
     proxy.PostInit()
   }
+  
+  @Mod.EventHandler def serverstarting(e FMLServerStartingEvent) {
+    JSONRecipeList.loadRecipesFromDir(configDir.getAbsolutePath + "/machinemuse/recipes")
+  }
 
   @Mod.EventHandler def serverstart(e: FMLServerStartedEvent) {
     FMLCommonHandler.instance().bus().register(NuminaPlayerTracker)
-    JSONRecipeList.loadRecipesFromDir(configDir.getAbsolutePath + "/machinemuse/recipes")
   }
 }

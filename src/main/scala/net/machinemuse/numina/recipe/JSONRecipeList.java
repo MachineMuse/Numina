@@ -22,6 +22,7 @@ import java.util.List;
  * Created: 5:54 PM, 11/4/13
  * Modified by: Korynkai 
  *          at: 2:43 PM, 2/4/15
+ * TODO: Refactor to also handle Shapeless and Smelting
  */
 public class JSONRecipeList {
     static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
