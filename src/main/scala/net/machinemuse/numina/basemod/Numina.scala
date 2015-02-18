@@ -44,7 +44,7 @@ object Numina {
     proxy.PostInit()
   }
   
-  @Mod.EventHandler def servertsrtaing(e: FMLSererSvtartingEvent) {
+  @Mod.EventHandler def serverstarting(e: FMLServerStartingEvent) {
     JSONRecipeList.loadRecipesFromDir(configDir.getAbsolutePath + "/machinemuse/recipes")
   }
 
