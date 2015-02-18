@@ -5,6 +5,7 @@ import codechicken.nei.NEIServerUtils;
 import codechicken.nei.recipe.ShapedRecipeHandler;
 import net.machinemuse.numina.recipe.ItemNameMappings;
 import net.machinemuse.numina.recipe.JSONRecipe;
+import net.machinemuse.numina.recipe.JSONRecipeList;
 import net.machinemuse.numina.recipe.SimpleItemMatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -30,7 +31,8 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     {
         if(outputId.equals("crafting") && getClass() == JSONRecipeHandler.class)
         {
-            List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
+            //List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
+            List<IRecipe> allrecipes = ((List<IRecipe>) (JSONRecipeList.recipeList));
             for(IRecipe irecipe : allrecipes)
             {
                 CachedShapedRecipe recipe = null;
@@ -53,7 +55,8 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     @Override
     public void loadCraftingRecipes(ItemStack result)
     {
-        List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
+        //List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
+        List<IRecipe> allrecipes = ((List<IRecipe>) (JSONRecipeList.recipeList));
         for(IRecipe irecipe : allrecipes)
         {
             if(NEIServerUtils.areStacksSameTypeCrafting(irecipe.getRecipeOutput(), result))
@@ -74,7 +77,8 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     @Override
     public void loadUsageRecipes(ItemStack ingredient)
     {
-        List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
+        //List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
+        List<IRecipe> allrecipes = ((List<IRecipe>) (JSONRecipeList.recipeList));
         for(IRecipe irecipe : allrecipes)
         {
             CachedShapedRecipe recipe = null;
