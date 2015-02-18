@@ -71,7 +71,8 @@ public class JSONRecipeList {
     
     public static void loadRecipesFromFile(File resource) {
         try {
-            loadRecipesFromStream(new FileInputStream(resource));
+            //loadRecipesFromStream(new FileInputStream(resource));
+            loadRecipesFromString(readFile(resource, Charsets.UTF_8))
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -91,6 +92,13 @@ public class JSONRecipeList {
     
 		static String readFile(String path, Charset encoding) throws IOException {
 				File file = new File(path);
+				DataInputStream is = new DataInputStream(new FileInputStream(file));
+				byte[] bytes = new byte[(int) file.length()];
+				is.readFully(bytes);
+				return encoding.decode(ByteBuffer.wrap(bytes)).toString();
+		}
+		
+		static String readFile(File file, Charset encoding) throws IOException {
 				DataInputStream is = new DataInputStream(new FileInputStream(file));
 				byte[] bytes = new byte[(int) file.length()];
 				is.readFully(bytes);
