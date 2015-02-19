@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.io.FileUtils;
 import net.machinemuse.numina.general.MuseLogger;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -16,71 +17,61 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Author: MachineMuse (Claire Semple)
  * Created: 5:54 PM, 11/4/13
  * Modified by: Korynkai 
- *          at: 2:43 PM, 2/4/15
+ *          at: 2:57 AM, 2/19/15
  * TODO: Refactor to also handle Shapeless and Smelting
  */
 public class JSONRecipeList {
     static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
     public static Gson gson = new GsonBuilder().registerTypeAdapterFactory(new EnumTypeAdapterFactory()).setPrettyPrinting().create();
-
-    private static FilenameFilter filter = new FilenameFilter() {
-        @Override
-        public boolean accept(File dir, String name) {
-            return name.endsWith(".recipe") || name.endsWith(".recipes");
-        }
-    };
+    
+    private static String[] extensions = { "recipe", "recipes" };
 
     public static void loadRecipesFromDir(String dir) {
         try {
             File file = new File(dir);
             if(file.exists()) {
                 if(file.isDirectory()) {
-                    String[] filenames = file.list(filter);
-                    for(String filename:filenames) {
-                    		String json = readFile(dir + "/" + filename, Charsets.UTF_8);
-                        MuseLogger.logDebug("Loading recipes from " + filename);
-                        //loadRecipesFromStream(new FileInputStream(dir + "/" + filename));
-                        loadRecipesFromString(json);
-                    }
+										Collection files = FileUtils.listFiles(file, extensions, false);
+										for (Iterator iterator = files.iterator(); iterator.hasNext();) {
+												File recipeFile = (File) iterator.next();
+										    loadRecipesFromFile(recipeFile);
+										}
                 } else {
-                		String json = readFile(dir, Charsets.UTF_8);
-                    MuseLogger.logDebug("Loading recipes from " + dir);
-                    //loadRecipesFromStream(new FileInputStream(file));
-                    loadRecipesFromString(json);
+                	  MuseLogger.logDebugPrintStack("net.machinemuse.numina.recipe.JSONRecipeList has detected a deprecated call to loadRecipesFromDir", new Throwable());
+                	  MuseLogger.logDebug("This is non-fatal and will still work, but loadRecipesFromDir should be avoided if the target is a file and not a directory.");
+                	  MuseLogger.logDebug("Use loadRecipesFromFile(java.io.File) or loadRecipesFromResource(java.net.URL) instead.");
+                    loadRecipesFromFile(file);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public static void loadRecipesFromResource(URL resource) {
+    
+    public static void loadRecipesFromFile(File resource) {
         try {
-            //loadRecipesFromStream(new FileInputStream(resource.toString()));
-            String json = Resources.toString(resource, Charsets.UTF_8);
-						loadRecipesFromString(json);
+            loadRecipesFromResource(resource.toURI().toURL());
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
     
-    public static void loadRecipesFromFile(File resource) {
+    public static void loadRecipesFromResource(URL resource) {
         try {
-            //loadRecipesFromStream(new FileInputStream(resource));
-            loadRecipesFromString(readFile(resource, Charsets.UTF_8));
+            MuseLogger.logDebug("Loading recipes from " + resource.toString());
+            loadRecipesFromString(Resources.toString(resource, Charsets.UTF_8));
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
-
-    // public static void loadRecipesFromStream(InputStream stream) {
-    //     InputStreamReader reader = new InputStreamReader(stream);
-    //     JSONRecipe[] newrecipes = gson.fromJson(reader, JSONRecipe[].class);
+    
     public static void loadRecipesFromString(String json) {
 				JSONRecipe[] newrecipes = gson.fromJson(json, JSONRecipe[].class);
         recipesList.addAll(Arrays.asList(newrecipes));
@@ -89,21 +80,6 @@ public class JSONRecipeList {
                 getCraftingRecipeList().add(recipe);
         }
     }
-    
-		static String readFile(String path, Charset encoding) throws IOException {
-				File file = new File(path);
-				DataInputStream is = new DataInputStream(new FileInputStream(file));
-				byte[] bytes = new byte[(int) file.length()];
-				is.readFully(bytes);
-				return encoding.decode(ByteBuffer.wrap(bytes)).toString();
-		}
-		
-		static String readFile(File file, Charset encoding) throws IOException {
-				DataInputStream is = new DataInputStream(new FileInputStream(file));
-				byte[] bytes = new byte[(int) file.length()];
-				is.readFully(bytes);
-				return encoding.decode(ByteBuffer.wrap(bytes)).toString();
-		}
 
     public static List<IRecipe> getCraftingRecipeList() {
         return CraftingManager.getInstance().getRecipeList();

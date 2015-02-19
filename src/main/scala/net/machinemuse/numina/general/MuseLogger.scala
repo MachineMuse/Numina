@@ -24,6 +24,20 @@ object MuseLogger {
     if (debugging) logger.info(string)
     None
   }
+  
+  def logDebugPrintStack(string: String, throwable: Throwable) = {
+    var debugging = true
+    try {
+      if (!NuminaConfig.isDebugging) debugging = false
+    } catch {
+      case _: Exception =>
+    }
+    if (debugging) {
+    	logger.info(string)
+    	throwable.printStackTrace()
+    }
+    None
+  }
 
   def logError(string: String) = {
     logger.warn(string)
