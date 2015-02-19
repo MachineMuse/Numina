@@ -34,24 +34,20 @@ public class JSONRecipeList {
     private static String[] extensions = { "recipe", "recipes" };
 
     public static void loadRecipesFromDir(String dir) {
-        try {
-            File file = new File(dir);
-            if(file.exists()) {
-                if(file.isDirectory()) {
-										Collection files = FileUtils.listFiles(file, extensions, false);
-										for (Iterator iterator = files.iterator(); iterator.hasNext();) {
-												File recipeFile = (File) iterator.next();
-										    loadRecipesFromFile(recipeFile);
-										}
-                } else {
-                	  MuseLogger.logDebugPrintStack("net.machinemuse.numina.recipe.JSONRecipeList has detected a deprecated call to loadRecipesFromDir", new Throwable());
-                	  MuseLogger.logDebug("This is non-fatal and will still work, but loadRecipesFromDir should be avoided if the target is a file and not a directory.");
-                	  MuseLogger.logDebug("Use loadRecipesFromFile(java.io.File) or loadRecipesFromResource(java.net.URL) instead.");
-                    loadRecipesFromFile(file);
-                }
+        File file = new File(dir);
+        if(file.exists()) {
+            if(file.isDirectory()) {
+								Collection files = FileUtils.listFiles(file, extensions, false);
+								for (Iterator iterator = files.iterator(); iterator.hasNext();) {
+										File recipeFile = (File) iterator.next();
+								    loadRecipesFromFile(recipeFile);
+								}
+            } else {
+								MuseLogger.logDebugPrintStack("net.machinemuse.numina.recipe.JSONRecipeList has detected a deprecated call to loadRecipesFromDir", new Throwable());
+								MuseLogger.logDebug("This is non-fatal and will still work, but loadRecipesFromDir should be avoided if the target is a file and not a directory.");
+								MuseLogger.logDebug("Use loadRecipesFromFile(java.io.File) or loadRecipesFromResource(java.net.URL) instead.");
+								loadRecipesFromFile(file);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
