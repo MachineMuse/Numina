@@ -43,9 +43,11 @@ public class JSONRecipeList {
 								    loadRecipesFromFile(recipeFile);
 								}
             } else {
-								MuseLogger.logDebugPrintStack("net.machinemuse.numina.recipe.JSONRecipeList has detected a deprecated call to loadRecipesFromDir", new Throwable());
-								MuseLogger.logDebug("This is non-fatal and will still work, but loadRecipesFromDir should be avoided if the target is a file and not a directory.");
+								MuseLogger.logDebugPrintStack("Numina has detected a deprecated call to net.machinemuse.numina.recipe.JSONRecipeList.loadRecipesFromDir(java.lang.String)", new Throwable());
+								MuseLogger.logDebug("This is non-fatal and will still work, but loadRecipesFromDir(java.lang.String) should be avoided if the target is a file and not a directory.");
 								MuseLogger.logDebug("Use loadRecipesFromFile(java.io.File) or loadRecipesFromResource(java.net.URL) instead.");
+								MuseLogger.logDebug("If you are seeing this message as a normal player, please report this message to the developer of the mod making the call to loadRecipesFromDir(java.lang.String).");
+								MuseLogger.logDebug("You can hide this message by disabling debugging in the numina.cfg file.");
 								loadRecipesFromFile(file);
             }
         }

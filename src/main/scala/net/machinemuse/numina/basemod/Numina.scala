@@ -45,7 +45,8 @@ object Numina {
   }
   
   @Mod.EventHandler def serverstarting(e: FMLServerStartingEvent) {
-    JSONRecipeList.loadRecipesFromDir(configDir.getAbsolutePath + "/machinemuse/recipes")
+    //JSONRecipeList.loadRecipesFromDir(configDir.getAbsolutePath + "/machinemuse/recipes")
+    JSONRecipeList.loadRecipesFromDir(configDir.getAbsolutePath + "/machinemuse/recipes/test.recipes")
   }
 
   @Mod.EventHandler def serverstart(e: FMLServerStartedEvent) {
