@@ -45,42 +45,11 @@ repositories {
     }
 }
 
-// configurations {
-//     copylibs
-// }
-// 20150201.161816-1
 dependencies {
-    // copylibs 'org.gagravarr:vorbis-java-core:0.8-SNAPSHOT'
-    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev'
-    compile 'codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev'
+    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev'
+    compile 'codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev'
     compile 'org.gagravarr:vorbis-java-core:0.8-SNAPSHOT'
-    //compile 'com.qmxtech.oggaudiodata:OggAudioData:0.1.0'
 }
-
-// task copyExternalLibs(type: Copy) {
-//     def outputDir = file("${buildDir}/tmp/repackage")
-//     outputDir.mkdirs()
-//     from configurations.copylibs
-//     into outputDir
-// }
-
-// task unzipExternalLibs(type: Copy, dependsOn: copyExternalLibs) {
-//   def zipFileTree = fileTree("${buildDir}/tmp/repackage")
-//   def outputDir = file("${buildDir}/tmp/repackage/classes")
-//   outputDir.mkdirs()
-//   zipFileTree.include('*.jar')
-//   zipFileTree.each { zipFile ->
-//   	from zipTree(zipFile)
-//   	into outputDir
-//   }
-// }
-
-// task copyExternalLibsToClassPath(type: Copy, dependsOn: unzipExternalLibs) {
-//     def inputDir = file("${buildDir}/tmp/repackage/classes")
-//     def outputDir = file("${buildDir}/classes/main")
-//     from fileTree(inputDir).include('**/*.class').exclude('META-INF')
-//     into outputDir
-// }
 
 jar {
     manifest {
