@@ -46,8 +46,8 @@ repositories {
 }
 
 dependencies {
-    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev'
-    compile 'codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev'
+    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev'
+    compile 'codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev'
     compile 'org.gagravarr:vorbis-java-core:0.8-SNAPSHOT'
 }
 
