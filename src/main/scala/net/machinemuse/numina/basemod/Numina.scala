@@ -10,7 +10,7 @@ import net.machinemuse.numina.recipe.JSONRecipeList
  * Author: MachineMuse (Claire Semple)
  * Created: 6:06 AM, 6/18/13
  */
-@Mod(modid = "numina", modLanguage = "scala", dependencies = "after:numina")
+@Mod(modid = "numina", modLanguage = "scala")
 object Numina {
   @SidedProxy(clientSide = "net.machinemuse.numina.basemod.NuminaProxyClient", serverSide = "net.machinemuse.numina.basemod.NuminaProxyServer")
   var proxy: NuminaProxy = null
