@@ -39,16 +39,17 @@ minecraft {
 }
 
 repositories {
+
     maven {
-        name = "QMXTech"
-        url = "https://artifactory.qmxtech.com/artifactory/minecraft-release/"
+        name = "ChickenBones"
+        url = "http://chickenbones.net/maven"
     }
+
 }
 
 dependencies {
     compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev'
     compile 'codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev'
-    compile 'org.gagravarr:vorbis-java-core:0.8-SNAPSHOT'
 }
 
 jar {
