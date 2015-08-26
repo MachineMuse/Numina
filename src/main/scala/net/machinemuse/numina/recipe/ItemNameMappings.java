@@ -1,13 +1,10 @@
 package net.machinemuse.numina.recipe;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,18 +25,8 @@ public class ItemNameMappings {
             }
             for (Object obj : Item.itemRegistry) {
                 Item item = (Item)obj;
-                if (item != null) {
-                    if(item.getHasSubtypes()) {
-                        List<ItemStack> stacklist = new ArrayList<ItemStack>();
-                        for(CreativeTabs tab : item.getCreativeTabs()) {
-                            item.getSubItems(item, tab, stacklist);
-                        }
-                        for(ItemStack stack : stacklist) {
-                            itemMap.put(stack.getUnlocalizedName(), stack.copy());
-                        }
-                    } else {
-                        itemMap.put(item.getUnlocalizedName(), new ItemStack(item));
-                    }
+                if (item != null && item.getUnlocalizedName() != null) {
+                    itemMap.put(item.getUnlocalizedName(), new ItemStack(item));
                 }
             }
         }
