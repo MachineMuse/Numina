@@ -143,21 +143,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             }
         }
 
-        if (cell.item != null) {
-            int meta = OreDictionary.WILDCARD_VALUE;
-            if (cell.meta != null)
-                meta = cell.meta.intValue();
-            if (result == null) {
-                result = new ArrayList<ItemStack>();
-                result.add(new ItemStack(cell.item, 1, meta));
-            } else {
-                ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-                for (ItemStack stack : result)
-                    if (stack.getItem() == cell.item && (meta == OreDictionary.WILDCARD_VALUE || meta == stack.getItemDamage()))
-                        t.add(stack);
-                result = t;
-            }
-        } else if (cell.meta != null && result != null && cell.meta.intValue() != OreDictionary.WILDCARD_VALUE) {
+        if (cell.meta != null && result != null && cell.meta.intValue() != OreDictionary.WILDCARD_VALUE) {
             ArrayList<ItemStack> t = new ArrayList<ItemStack>();
             for (ItemStack stack : result)
                 if (cell.meta.intValue() == stack.getItemDamage())

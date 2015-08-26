@@ -12,7 +12,6 @@ import net.minecraftforge.oredict.OreDictionary;
  * Created: 2:55 PM, 11/4/13
  */
 public class SimpleItemMaker implements IItemMaker {
-    public Item item;
     public Integer meta;
     public Integer quantity;
     public String unlocalizedName;
@@ -35,11 +34,7 @@ public class SimpleItemMaker implements IItemMaker {
     public ItemStack getRecipeOutput() {
         int newmeta = getOrElse(this.meta, 0);
         int newquantity = getOrElse(this.quantity, 1);
-        if (item != null) {
-            ItemStack stack = new ItemStack(item, newquantity, newmeta);
-//            if (nbt != null) stack.stackTagCompound = (NBTTagCompound) nbt.copy();
-            return stack;
-        } else if (oredictName != null) {
+        if (oredictName != null) {
             try {
                 ItemStack stack = OreDictionary.getOres(oredictName).get(0).copy();
                 stack.stackSize = newquantity;
