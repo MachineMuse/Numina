@@ -71,6 +71,7 @@ public class JSONRecipeList {
     }
 
     public static List<IRecipe> getCraftingRecipeList() {
+        //noinspection unchecked
         return CraftingManager.getInstance().getRecipeList();
     }
 

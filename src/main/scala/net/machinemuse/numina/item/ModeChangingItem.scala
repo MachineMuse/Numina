@@ -20,8 +20,8 @@ trait ModeChangingItem {
       modeFromNBT
     } else {
       val validModes = getValidModes(stack, player)
-      if (!validModes.isEmpty) {
-        validModes(0)
+      if (validModes.nonEmpty) {
+        validModes.head
       } else {
         ""
       }
@@ -30,7 +30,7 @@ trait ModeChangingItem {
 
   def cycleMode(stack: ItemStack, player: EntityPlayer, dMode: Int) {
     val modes = getValidModes(stack, player)
-    if (modes.size > 0) {
+    if (modes.nonEmpty) {
       val newindex = clampMode(modes.indexOf(getActiveMode(stack, player)) + dMode, modes.size)
       val newmode = modes(newindex)
       setActiveMode(stack, newmode)
@@ -40,7 +40,7 @@ trait ModeChangingItem {
 
   def nextMode(stack: ItemStack, player: EntityPlayer) = {
     val modes = getValidModes(stack, player)
-    if (modes.size > 0) {
+    if (modes.nonEmpty) {
       val newindex = clampMode(modes.indexOf(getActiveMode(stack, player)) + 1, modes.size)
       modes(newindex)
     } else {
@@ -50,7 +50,7 @@ trait ModeChangingItem {
 
   def prevMode(stack: ItemStack, player: EntityPlayer) = {
     val modes = getValidModes(stack, player)
-    if (modes.size > 0) {
+    if (modes.nonEmpty) {
       val newindex = clampMode(modes.indexOf(getActiveMode(stack, player)) - 1, modes.size)
       modes(newindex)
     } else {

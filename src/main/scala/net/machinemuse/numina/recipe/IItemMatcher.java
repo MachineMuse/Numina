@@ -7,5 +7,5 @@ import net.minecraft.item.ItemStack;
  * Created: 2:51 PM, 11/4/13
  */
 public interface IItemMatcher {
-    public boolean matchesItem(ItemStack stack);
+    boolean matchesItem(ItemStack stack);
 }

@@ -56,7 +56,7 @@ abstract class MusePacket {
   def writeIntArray(data: Array[Int]) {
     try {
       dataout.writeInt(data.length)
-      for (k <- 0 until data.length) {
+      for (k <- data.indices) {
         dataout.writeInt(data(k))
       }
     } catch {
