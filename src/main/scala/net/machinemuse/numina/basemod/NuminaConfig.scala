@@ -20,12 +20,15 @@ object NuminaConfig {
     // Initialize config file
     isDebugging
     useFOVFix
+    useSounds
     config.save()
   }
 
   def useFOVFix = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Ignore speed boosts for field of view", default = true)
 
   def isDebugging = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Debugging info", default = false)
+
+  def useSounds = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Use sounds", default = true)
 
   def getConfigBoolean(category: String, name: String, default: Boolean) = {
     val ret = config.get(category, name, default)
