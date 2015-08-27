@@ -82,3 +82,9 @@ task devJar(type: Jar) {
 artifacts {
     archives devJar
 }
+
+curse {
+    projectId = '235440'
+    apiKey = project.hasProperty('curseForgeApiKey') ? project.curseForgeApiKey : ''
+    releaseType = 'release'
+}
