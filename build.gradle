@@ -17,6 +17,7 @@ buildscript {
 
 apply plugin: 'scala'
 apply plugin: 'forge'
+apply plugin: 'curseforge'
 
 // define the properties file
 ext.configFile = file "project.properties"
