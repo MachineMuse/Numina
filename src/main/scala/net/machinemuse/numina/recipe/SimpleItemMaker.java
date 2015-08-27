@@ -82,6 +82,7 @@ public class SimpleItemMaker implements IItemMaker {
                 return null;
             }
         } else if (unlocalizedName != null) {
+            MuseLogger.logError("WARNING: unlocalizedName is deprecated; please use registryName or itemStackName instead!");
             try {
                 ItemStack stack = ItemNameMappings.getItem(unlocalizedName).copy();
                 newmeta = getOrElse(this.meta, stack.getItemDamage());

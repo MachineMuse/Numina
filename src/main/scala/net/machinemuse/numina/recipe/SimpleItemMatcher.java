@@ -35,8 +35,9 @@ public class SimpleItemMatcher implements IItemMatcher {
         if (meta != null && meta != stack.getItemDamage()) {
             return false;
         }
-        if (unlocalizedName != null && !unlocalizedName.equals(stack.getItem().getUnlocalizedName(stack))) {
-            return false;
+        if (unlocalizedName != null) {
+            MuseLogger.logError("WARNING: unlocalizedName is deprecated; please use registryName or itemStackName instead!");
+            if (!unlocalizedName.equals(stack.getItem().getUnlocalizedName(stack))) return false;
         }
         if (oredictName != null) {
             boolean found = false;
@@ -59,13 +60,13 @@ public class SimpleItemMatcher implements IItemMatcher {
         if (itemStackName != null) {
             String[] names = itemStackName.split(":");
             ItemStack compareStack = GameRegistry.findItemStack(names[0], names[1], 1);
-            if(compareStack == null) {
+            if (compareStack == null) {
                 MuseLogger.logError("ItemStack " + itemStackName + " not found in registry for recipe.");
                 return false;
             }
-            if(stack.getItemDamage() != compareStack.getItemDamage()) return false;
-            if(stack.getItem() != compareStack.getItem()) return false;
-            if(!stack.getTagCompound().equals(compareStack.getTagCompound())) return false;
+            if (stack.getItemDamage() != compareStack.getItemDamage()) return false;
+            if (stack.getItem() != compareStack.getItem()) return false;
+            if (!stack.getTagCompound().equals(compareStack.getTagCompound())) return false;
 
         }
         if (nbtString != null) {
