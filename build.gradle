@@ -86,6 +86,6 @@ artifacts {
 
 curse {
     projectId = '235440'
-    apiKey = System.getenv(CURSE_API_KEY)
+    apiKey = System.getenv('CURSE_API_KEY')
     releaseType = 'release'
 }
