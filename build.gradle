@@ -29,8 +29,8 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-buildnumber = System.getenv("BUILD_NUMBER")
-travisbuildnumber = (System.getenv("TRAVIS_BUILD_NUMBER") ?: -202).toInteger() + 202
+def buildnumber = System.getenv("BUILD_NUMBER")
+def travisbuildnumber = (System.getenv("TRAVIS_BUILD_NUMBER") ?: -111).toInteger() + 111
 version = "${config.mod_version}." + (buildnumber ?: travisbuildnumber)
 group= "${config.group_id}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "${config.mod_id}"
