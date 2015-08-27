@@ -52,13 +52,13 @@ public class SimpleItemMaker implements IItemMaker {
 
         if (itemStackName != null) {
             try {
-                String[] names = registryName.split(":");
+                String[] names = itemStackName.split(":");
                 ItemStack stack = GameRegistry.findItemStack(names[0], names[1], newquantity);
                 if(this.meta != null) stack.setItemDamage(meta);
                 if(nbt != null) stack.setTagCompound(nbt);
                 return stack;
             } catch (Exception e) {
-                MuseLogger.logError("Unable to load " + registryName + " from Item Registry");
+                MuseLogger.logError("Unable to load " + itemStackName + " from Item Registry");
                 return null;
             }
         } else if (registryName != null) {
