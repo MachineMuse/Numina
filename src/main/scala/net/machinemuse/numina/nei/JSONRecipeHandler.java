@@ -3,12 +3,16 @@ package net.machinemuse.numina.nei;
 import codechicken.nei.ItemList;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.recipe.ShapedRecipeHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.machinemuse.numina.recipe.ItemNameMappings;
 import net.machinemuse.numina.recipe.JSONRecipe;
 import net.machinemuse.numina.recipe.SimpleItemMatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTException;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -130,6 +134,18 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         if (cell.oredictName != null)
             result = OreDictionary.getOres(cell.oredictName);
 
+        if (cell.itemStackName != null) {
+            String[] names = cell.itemStackName.split(":");
+            result = new ArrayList<ItemStack>();
+            result.add(GameRegistry.findItemStack(names[0], names[1], 1));
+        }
+
+        if(cell.registryName != null) {
+            String[] names = cell.registryName.split(":");
+            result = new ArrayList<ItemStack>();
+            result.add(new ItemStack(GameRegistry.findItem(names[0], names[1])));
+        }
+
         if (cell.unlocalizedName != null)
         {
             if (result == null) {
@@ -151,15 +167,19 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             result = t;
         }
 
-//        if (cell.nbt != null && result != null) {
-//            ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-//            for (ItemStack stack : result) {
-//                ItemStack stack2 = stack.copy();
-//                stack2.setTagCompound(cell.nbt);
-//                t.add(stack2);
-//            }
-//            result = t;
-//        }
+        if (cell.nbtString != null && result != null) {
+            ArrayList<ItemStack> t = new ArrayList<ItemStack>();
+            for (ItemStack stack : result) {
+                ItemStack stack2 = stack.copy();
+                try {
+                    stack2.setTagCompound((NBTTagCompound) JsonToNBT.func_150315_a(cell.nbtString));
+                } catch (NBTException e) {
+                    e.printStackTrace();
+                }
+                t.add(stack2);
+            }
+            result = t;
+        }
 
         return result;
     }
