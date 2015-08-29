@@ -19,7 +19,7 @@ class MovingSoundPlayer(val player:EntityPlayer, resourceLocation:ResourceLocati
   }
 
   def updateVolume (newvolume:Float) = {
-    volume = newvolume
+    volume = (4.0f*volume + newvolume)/5.0f
     this
   }
 
