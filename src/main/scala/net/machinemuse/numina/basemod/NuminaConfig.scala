@@ -1,5 +1,6 @@
 package net.machinemuse.numina.basemod
 
+import net.machinemuse.numina.general.MuseLogger
 import net.minecraftforge.common.config.Configuration
 import java.io.File
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
@@ -22,6 +23,15 @@ object NuminaConfig {
     useFOVFix
     useSounds
     config.save()
+  }
+
+  var hasWarned = false
+
+  def warnOnce(s:String) = {
+    if(!hasWarned) {
+      MuseLogger.logError("WARNING: unlocalizedName is deprecated; please use registryName or itemStackName instead!")
+      hasWarned=true
+    }
   }
 
   def useFOVFix = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Ignore speed boosts for field of view", default = true)

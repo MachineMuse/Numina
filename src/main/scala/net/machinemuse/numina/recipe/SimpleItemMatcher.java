@@ -1,8 +1,8 @@
 package net.machinemuse.numina.recipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.machinemuse.numina.basemod.NuminaConfig;
 import net.machinemuse.numina.general.MuseLogger;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
@@ -36,7 +36,7 @@ public class SimpleItemMatcher implements IItemMatcher {
             return false;
         }
         if (unlocalizedName != null) {
-            MuseLogger.logError("WARNING: unlocalizedName is deprecated; please use registryName or itemStackName instead!");
+            NuminaConfig.warnOnce("WARNING: unlocalizedName is deprecated; please use registryName or itemStackName instead!");
             if (!unlocalizedName.equals(stack.getItem().getUnlocalizedName(stack))) return false;
         }
         if (oredictName != null) {
