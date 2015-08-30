@@ -7,6 +7,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.machinemuse.numina.recipe.ItemNameMappings;
 import net.machinemuse.numina.recipe.JSONRecipe;
 import net.machinemuse.numina.recipe.SimpleItemMatcher;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -131,19 +132,40 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
         if (cell == null)
             return null;
 
-        if (cell.oredictName != null)
+        if (cell.oredictName != null) {
             result = OreDictionary.getOres(cell.oredictName);
+
+            if (cell.meta != null && result != null && cell.meta != OreDictionary.WILDCARD_VALUE) {
+                ArrayList<ItemStack> t = new ArrayList<ItemStack>();
+                for (ItemStack stack : result)
+                    if (cell.meta == stack.getItemDamage())
+                        t.add(stack);
+                result = t;
+            }
+        }
 
         if (cell.itemStackName != null) {
             String[] names = cell.itemStackName.split(":");
             result = new ArrayList<ItemStack>();
-            result.add(GameRegistry.findItemStack(names[0], names[1], 1));
+            ItemStack stack = GameRegistry.findItemStack(names[0], names[1], 1);
+            if(stack != null) {
+                stack = stack.copy();
+                if(cell.meta != null) {
+                    stack.setItemDamage(cell.meta);
+                }
+                result.add(stack);
+            }
         }
 
         if(cell.registryName != null) {
             String[] names = cell.registryName.split(":");
             result = new ArrayList<ItemStack>();
-            result.add(new ItemStack(GameRegistry.findItem(names[0], names[1])));
+            Item item = GameRegistry.findItem(names[0], names[1]);
+            if(item != null) {
+                int newMeta = cell.meta == null ? 0 : cell.meta;
+                ItemStack stack = new ItemStack(item, 1, newMeta);
+                result.add(stack);
+            }
         }
 
         if (cell.unlocalizedName != null)
@@ -159,13 +181,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             }
         }
 
-        if (cell.meta != null && result != null && cell.meta.intValue() != OreDictionary.WILDCARD_VALUE) {
-            ArrayList<ItemStack> t = new ArrayList<ItemStack>();
-            for (ItemStack stack : result)
-                if (cell.meta.intValue() == stack.getItemDamage())
-                    t.add(stack);
-            result = t;
-        }
+
 
         if (cell.nbtString != null && result != null) {
             ArrayList<ItemStack> t = new ArrayList<ItemStack>();
