@@ -14,6 +14,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
     @Override
     public String getRecipeName()
     {
-        return "JSON Shaped";
+        return StatCollector.translateToLocal("nei.jsonShaped");
     }
 
     @Override
