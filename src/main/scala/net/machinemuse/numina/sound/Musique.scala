@@ -17,8 +17,10 @@ import scala.collection.parallel.mutable
  * Created by Claire on 8/27/2015.
  */
 object Musique {
+  @SideOnly(Side.CLIENT)
   val soundMap = new collection.mutable.HashMap[String, MovingSoundPlayer]
 
+  @SideOnly(Side.CLIENT)
   def mcsound = Minecraft.getMinecraft.getSoundHandler
 
   def options = Minecraft.getMinecraft.gameSettings
