@@ -12,7 +12,6 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,11 +31,11 @@ public class JSONRecipeList {
 
     public static void loadRecipesFromDir(String dir) {
         try {
-            File file= new File(dir);
-            if(file.exists()) {
-                if(file.isDirectory()) {
+            File file = new File(dir);
+            if (file.exists()) {
+                if (file.isDirectory()) {
                     String[] filenames = file.list(filter);
-                    for(String filename:filenames) {
+                    for (String filename : filenames) {
                         String json = readFile(dir + "/" + filename, Charsets.UTF_8);
                         MuseLogger.logDebug("Loading recipes from " + filename);
                         loadRecipesFromString(json);
@@ -56,17 +55,21 @@ public class JSONRecipeList {
         try {
             String json = Resources.toString(resource, Charsets.UTF_8);
             loadRecipesFromString(json);
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void loadRecipesFromString(String json) {
         JSONRecipe[] newrecipes = gson.fromJson(json, JSONRecipe[].class);
-        recipesList.addAll(Arrays.asList(newrecipes));
         for (JSONRecipe recipe : newrecipes) {
-            if (recipe != null)
+            if (recipe != null && !recipesList.contains(recipe)) {
+                recipesList.add(recipe);
                 getCraftingRecipeList().add(recipe);
+                MuseLogger.logDebug("Recipe received:" + recipe.result.oredictName + " / " + recipe.result.registryName);
+            } else {
+                MuseLogger.logDebug("Recipe duplicate, not added:" + recipe.result.oredictName + " / " + recipe.result.registryName);
+            }
         }
     }
 

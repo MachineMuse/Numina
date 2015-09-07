@@ -108,4 +108,48 @@ public class JSONRecipe implements IRecipe {
         }
         return size;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof JSONRecipe)) {
+            return false;
+        }
+        JSONRecipe other = (JSONRecipe) obj;
+        if(ingredients.length != other.ingredients.length) return false;
+        for(int i = 0; i<ingredients.length;i++) {
+            if(ingredients[i].length != other.ingredients[i].length) return false;
+            for(int j=0; j<ingredients[i].length;j++) {
+
+                if(!compareIngredients(ingredients[i][j], other.ingredients[i][j])) {
+                    return false;
+                }
+            }
+        }
+        if(!compareResult(result, other.result)) return false;
+        if(!compareBoolean(mirror, other.mirror)) return false;
+        return true;
+    }
+
+    private boolean compareResult(SimpleItemMaker a, SimpleItemMaker b) {
+        if(a == null && b == null) return true;
+        if(a != null && b != null) {
+            if(a.equals(b)) return true;
+        }
+        return false;
+    }
+    private boolean compareIngredients(SimpleItemMatcher a, SimpleItemMatcher b) {
+        if(a == null && b == null) return true;
+        if(a != null && b != null) {
+            if(a.equals(b)) return true;
+        }
+        return false;
+    }
+
+    private boolean compareBoolean(Boolean a, Boolean b) {
+        if(a == null && b == null) return true;
+        if(a != null && b != null) {
+            if(a.booleanValue() == b.booleanValue()) return true;
+        }
+        return false;
+    }
 }

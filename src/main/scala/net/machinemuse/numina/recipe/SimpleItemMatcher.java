@@ -92,4 +92,35 @@ public class SimpleItemMatcher implements IItemMatcher {
 //        copy.nbt = this.nbt;
         return copy;
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if(! (obj instanceof SimpleItemMatcher) ) return false;
+        SimpleItemMatcher other = (SimpleItemMatcher)obj;
+        if(!compareInteger(meta, other.meta)) return false;
+        if(!compareString(unlocalizedName, other.unlocalizedName)) return false;
+        if(!compareString(oredictName, other.oredictName)) return false;
+        if(!compareString(registryName, other.registryName)) return false;
+        if(!compareString(itemStackName, other.itemStackName)) return false;
+        if(!compareString(nbtString, other.nbtString)) return false;
+        return true;
+    }
+
+    private boolean compareInteger(Integer a, Integer b) {
+        if(a == null && b == null) return true;
+        if(a != null && b != null) {
+            if(a.intValue() == b.intValue()) return true;
+        }
+        return false;
+    }
+
+    private boolean compareString(String a, String b) {
+        if(a == null && b == null) return true;
+        if(a != null && b != null) {
+            if(a.equals(b)) return true;
+        }
+        return false;
+    }
+
 }
