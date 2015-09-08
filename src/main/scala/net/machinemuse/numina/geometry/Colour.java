@@ -17,6 +17,7 @@ public class Colour {
     public static final Colour YELLOW = new Colour(0.0, 0.0, 0.5, 1.0);
     public static final Colour WHITE = new Colour(1.0, 1.0, 1.0, 1.0);
     public static final Colour BLACK = new Colour(0.0, 0.0, 0.0, 1.0);
+    public static final Colour DARKGREY = new Colour(0.4, 0.4, 0.4, 1.0);
     public static final Colour RED = new Colour(1.0, 0.2, 0.2, 1.0);
     public static final Colour DARKGREEN = new Colour(0.0, 0.8, 0.2, 1.0);
     public static final Colour GREEN = new Colour(0.0, 1.0, 0.0, 1.0);
