@@ -21,7 +21,7 @@ object GradientAndArcCalculator {
    * @return
    */
   def getArcPoints(startangle: Double, endangle: Double, radius: Double, xoffset: Double, yoffset: Double, zoffset: Double): DoubleBuffer = {
-    val numVertices: Int = Math.ceil(Math.abs((endangle - startangle) * 16 * Math.PI)).asInstanceOf[Int]
+    val numVertices: Int = Math.ceil(Math.abs((endangle - startangle) * 2 * Math.PI)).asInstanceOf[Int]
     val theta: Double = (endangle - startangle) / numVertices
     val buffer: DoubleBuffer = BufferUtils.createDoubleBuffer(numVertices * 3)
     var x: Double = radius * Math.sin(startangle)
