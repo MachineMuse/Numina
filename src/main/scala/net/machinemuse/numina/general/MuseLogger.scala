@@ -1,7 +1,5 @@
 package net.machinemuse.numina.general
 
-import cpw.mods.fml.common.FMLCommonHandler
-import cpw.mods.fml.common.FMLLog
 import net.machinemuse.numina.basemod.NuminaConfig
 import org.apache.logging.log4j.LogManager
 

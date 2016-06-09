@@ -1,13 +1,12 @@
 package net.machinemuse.numina.death
 
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiMainMenu
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.multiplayer.WorldClient
 import net.minecraft.client.resources.I18n
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.util.text.TextFormatting
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 import org.lwjgl.opengl.GL11
 
 @SideOnly(Side.CLIENT) class GuiGameOverPlus extends GuiScreen {
@@ -79,7 +78,7 @@ import org.lwjgl.opengl.GL11
     if (flag) {
       this.drawCenteredString(this.fontRendererObj, I18n.format("deathScreen.hardcoreInfo"), this.width / 2, 144, 16777215)
     }
-    this.drawCenteredString(this.fontRendererObj, I18n.format("deathScreen.score") + ": " + EnumChatFormatting.YELLOW + this.mc.thePlayer.getScore, this.width / 2, 100, 16777215)
+    this.drawCenteredString(this.fontRendererObj, I18n.format("deathScreen.score") + ": " + TextFormatting.YELLOW + this.mc.thePlayer.getScore, this.width / 2, 100, 16777215)
     super.drawScreen(par1, par2, par3)
   }
 

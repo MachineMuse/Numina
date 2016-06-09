@@ -1,12 +1,12 @@
 package net.machinemuse.numina.recipe;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.machinemuse.numina.basemod.NuminaConfig;
 import net.machinemuse.numina.general.MuseLogger;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -59,7 +59,8 @@ public class SimpleItemMatcher implements IItemMatcher {
         }
         if (itemStackName != null) {
             String[] names = itemStackName.split(":");
-            ItemStack compareStack = GameRegistry.findItemStack(names[0], names[1], 1);
+            //ItemStack compareStack = GameRegistry.findItemStack(names[0], names[1], 1);
+            ItemStack compareStack = new ItemStack(GameRegistry.findItem(names[0], names[1]), 1);
             if (compareStack == null) {
                 MuseLogger.logError("ItemStack " + itemStackName + " not found in registry for recipe.");
                 return false;
@@ -71,7 +72,7 @@ public class SimpleItemMatcher implements IItemMatcher {
         }
         if (nbtString != null) {
             try {
-                NBTTagCompound nbt = (NBTTagCompound) JsonToNBT.func_150315_a(nbtString);
+                NBTTagCompound nbt = (NBTTagCompound) JsonToNBT.getTagFromJson(nbtString);
                 if (!nbt.equals(stack.getTagCompound())) {
                     return false;
                 }

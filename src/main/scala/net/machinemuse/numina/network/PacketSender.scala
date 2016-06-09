@@ -1,14 +1,5 @@
 package net.machinemuse.numina.network
 
-import cpw.mods.fml.common.network.FMLEmbeddedChannel
-import cpw.mods.fml.common.network.FMLOutboundHandler
-import cpw.mods.fml.common.network.NetworkRegistry
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler
-import cpw.mods.fml.common.network.simpleimpl.SimpleChannelHandlerWrapper
-import cpw.mods.fml.common.network.simpleimpl.SimpleIndexedCodec
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
-import cpw.mods.fml.relauncher.Side
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.network.{Packet, INetHandler}
@@ -17,8 +8,11 @@ import net.minecraft.tileentity.TileEntity
 import java.io.IOException
 import java.util.EnumMap
 
+import net.minecraftforge.fml.common.network.{NetworkRegistry, FMLEmbeddedChannel, FMLOutboundHandler}
+import net.minecraftforge.fml.relauncher.Side
+
 object PacketSender {
-  def getPacketFrom(message: MusePacket): Packet = {
+  def getPacketFrom(message: MusePacket): Packet[_] = {
     channels.get(Side.SERVER).generatePacketFrom(message)
   }
 
@@ -51,7 +45,7 @@ object PacketSender {
   }
 
   def sendToAllAround(packet: MusePacket, entity: TileEntity, d: Double) {
-    this.sendToAllAround(packet, new NetworkRegistry.TargetPoint(entity.getWorldObj.provider.dimensionId, entity.xCoord, entity.yCoord, entity.zCoord, d))
+    this.sendToAllAround(packet, new NetworkRegistry.TargetPoint(entity.getWorld.provider.getDimension, entity.getPos.getX, entity.getPos.getY, entity.getPos.getZ, d))
   }
 
   def sendToAllAround(packet: MusePacket, entity: Entity, d: Double) {

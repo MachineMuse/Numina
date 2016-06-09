@@ -2,10 +2,10 @@ package net.machinemuse.numina.network
 
 import java.io.DataInputStream
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.machinemuse.numina.scala.OptionCast
-import net.minecraft.client.entity.EntityClientPlayerMP
+import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -28,7 +28,7 @@ class MusePacketNameChangeRequest(player: EntityPlayer, username: String, newnic
   }
 
   @SideOnly(Side.CLIENT)
-  override def handleClient(player: EntityClientPlayerMP) {
+  override def handleClient(player: EntityPlayerSP) {
 //    NicknameMap.removeName(username)
 //    NicknameMap.putName(username, newnick)
 

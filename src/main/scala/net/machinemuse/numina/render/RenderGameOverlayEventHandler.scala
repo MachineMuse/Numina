@@ -1,56 +1,57 @@
 package net.machinemuse.numina.render
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import net.machinemuse.numina.item.ModeChangingItem
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.ScaledResolution
+import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
-import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.client.Minecraft
-import net.machinemuse.numina.item.ModeChangingItem
-import net.minecraft.util.IIcon
-import net.minecraftforge.common.ForgeHooks
-import net.machinemuse.numina.scala.OptionCast
+//import net.minecraft.util.IIcon
 import net.machinemuse.numina.geometry.Colour
+import net.machinemuse.numina.scala.OptionCast
+import net.minecraftforge.common.ForgeHooks
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 /**
- * Author: MachineMuse (Claire Semple)
- * Created: 2:17 PM, 9/6/13
- */
+  * Author: MachineMuse (Claire Semple)
+  * Created: 2:17 PM, 9/6/13
+  */
 object RenderGameOverlayEventHandler {
   @SubscribeEvent def onPreRenderGameOverlayEvent(e: RenderGameOverlayEvent.Pre) {
-    e.`type` match {
-//      case ElementType.ALL =>
-//      case ElementType.HELMET =>
-//      case ElementType.PORTAL =>
-//      case ElementType.CROSSHAIRS =>
-//      case ElementType.BOSSHEALTH =>
-//      case ElementType.ARMOR =>
-//      case ElementType.HEALTH =>
-//      case ElementType.FOOD =>
-//      case ElementType.AIR =>
-//      case ElementType.HOTBAR =>
-//      case ElementType.EXPERIENCE =>
-//      case ElementType.TEXT =>
-//      case ElementType.HEALTHMOUNT =>
-//      case ElementType.JUMPBAR =>
+    e.`getType` match {
+      //      case ElementType.ALL =>
+      //      case ElementType.HELMET =>
+      //      case ElementType.PORTAL =>
+      //      case ElementType.CROSSHAIRS =>
+      //      case ElementType.BOSSHEALTH =>
+      //      case ElementType.ARMOR =>
+      //      case ElementType.HEALTH =>
+      //      case ElementType.FOOD =>
+      //      case ElementType.AIR =>
+      //      case ElementType.HOTBAR =>
+      //      case ElementType.EXPERIENCE =>
+      //      case ElementType.TEXT =>
+      //      case ElementType.HEALTHMOUNT =>
+      //      case ElementType.JUMPBAR =>
       case _ =>
     }
   }
 
   @SubscribeEvent def onPostRenderGameOverlayEvent(e: RenderGameOverlayEvent.Post) {
-    e.`type` match {
-//      case ElementType.ALL =>
-//      case ElementType.HELMET =>
-//      case ElementType.PORTAL =>
-//      case ElementType.CROSSHAIRS =>
-//      case ElementType.BOSSHEALTH =>
-//      case ElementType.ARMOR =>
-//      case ElementType.HEALTH =>
-//      case ElementType.FOOD =>
-//      case ElementType.AIR =>
+    e.`getType` match {
+      //      case ElementType.ALL =>
+      //      case ElementType.HELMET =>
+      //      case ElementType.PORTAL =>
+      //      case ElementType.CROSSHAIRS =>
+      //      case ElementType.BOSSHEALTH =>
+      //      case ElementType.ARMOR =>
+      //      case ElementType.HEALTH =>
+      //      case ElementType.FOOD =>
+      //      case ElementType.AIR =>
       case ElementType.HOTBAR => drawModeChangeIcons()
-//      case ElementType.EXPERIENCE =>
-//      case ElementType.TEXT =>
-//      case ElementType.HEALTHMOUNT =>
+      //      case ElementType.EXPERIENCE =>
+      //      case ElementType.TEXT =>
+      //      case ElementType.HEALTHMOUNT =>
       case ElementType.JUMPBAR =>
       case _ =>
     }
@@ -68,14 +69,14 @@ object RenderGameOverlayEventHandler {
       stack <- Option(player.inventory.getCurrentItem)
       item <- OptionCast[ModeChangingItem](stack.getItem)
     } {
-      val screen = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight)
+      val screen = new ScaledResolution(mc)
 
-      MuseTextureUtils.pushTexture(MuseTextureUtils.ITEM_TEXTURE_QUILT)
+      MuseTextureUtils.pushTexture(MuseTextureUtils.TEXTURE_QUILT)
       RenderState.blendingOn()
       val swapTime = Math.min(System.currentTimeMillis - lastSwapTime, SWAPTIME)
-      val currentMode: Option[IIcon] = item.getModeIcon(item.getActiveMode(stack, player), stack, player)
-      val nextMode: Option[IIcon] = item.getModeIcon(item.nextMode(stack, player), stack, player)
-      val prevMode: Option[IIcon] = item.getModeIcon(item.prevMode(stack, player), stack, player)
+      val currentMode: Option[TextureAtlasSprite] = item.getModeIcon(item.getActiveMode(stack, player), stack, player)
+      val nextMode: Option[TextureAtlasSprite] = item.getModeIcon(item.nextMode(stack, player), stack, player)
+      val prevMode: Option[TextureAtlasSprite] = item.getModeIcon(item.prevMode(stack, player), stack, player)
       var prevX: Double = .0
       var prevY: Double = .0
       var currX: Double = .0
@@ -132,7 +133,7 @@ object RenderGameOverlayEventHandler {
     }
   }
 
-  private def drawIcon(x: Double, y: Double, icon: Option[IIcon], alpha: Double) {
+  private def drawIcon(x: Double, y: Double, icon: Option[TextureAtlasSprite], alpha: Double) {
     icon.map(i => MuseIconUtils.drawIconAt(x, y, i, Colour.WHITE.withAlpha(alpha)))
   }
 

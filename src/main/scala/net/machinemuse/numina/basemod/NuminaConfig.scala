@@ -3,7 +3,8 @@ package net.machinemuse.numina.basemod
 import net.machinemuse.numina.general.MuseLogger
 import net.minecraftforge.common.config.Configuration
 import java.io.File
-import cpw.mods.fml.common.event.FMLPreInitializationEvent
+
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
 /**
  * Author: MachineMuse (Claire Semple)

@@ -1,13 +1,13 @@
 package net.machinemuse.numina.gui
 
-import cpw.mods.fml.common.network.IGuiHandler
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.minecraft.client.Minecraft
 import net.minecraft.stats.AchievementList
 import net.machinemuse.numina.death.GuiGameOverPlus
 import net.minecraft.inventory.ContainerPlayer
+import net.minecraftforge.fml.common.network.IGuiHandler
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -22,7 +22,7 @@ object NuminaGuiHandler extends IGuiHandler {
 
   @SideOnly(Side.CLIENT)
   override def getClientGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef = {
-    Minecraft.getMinecraft.thePlayer.addStat(AchievementList.openInventory, 1)
+    Minecraft.getMinecraft.thePlayer.addStat(AchievementList.OPEN_INVENTORY, 1)
     ID match {
       case 0 => new GuiGameOverPlus()
       case _ => null

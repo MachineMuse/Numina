@@ -8,7 +8,7 @@ import net.minecraft.entity.player.{EntityPlayerMP, EntityPlayer}
 object NuminaPlayerUtils {
   def resetFloatKickTicks(player: EntityPlayer) {
     player match {
-      case p: EntityPlayerMP => p.playerNetServerHandler.floatingTickCount = 0
+      case p: EntityPlayerMP => p.connection.floatingTickCount = 0
       case _ =>
     }
   }

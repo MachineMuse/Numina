@@ -2,10 +2,10 @@ package net.machinemuse.numina.network
 
 import java.io.DataInputStream
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.machinemuse.numina.recipe.JSONRecipeList
-import net.minecraft.client.entity.EntityClientPlayerMP
+import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -27,7 +27,7 @@ class MusePacketRecipeUpdate(player: EntityPlayer, recipe: String) extends MuseP
 
 
   @SideOnly(Side.CLIENT)
-  override def handleClient(player: EntityClientPlayerMP) {
+  override def handleClient(player: EntityPlayerSP) {
     try {
       JSONRecipeList.loadRecipesFromString(recipe)
     } catch {

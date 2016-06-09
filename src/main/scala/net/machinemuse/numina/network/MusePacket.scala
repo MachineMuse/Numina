@@ -1,35 +1,35 @@
 package net.machinemuse.numina.network
 
-import java.io.{DataInputStream, ByteArrayOutputStream, DataOutputStream, IOException}
+import java.io._
+import java.util.zip.GZIPOutputStream
 
-import cpw.mods.fml.common.network.internal.FMLProxyPacket
-import cpw.mods.fml.common.network.simpleimpl.IMessage
-import cpw.mods.fml.relauncher.{Side, SideOnly}
-import io.netty.buffer.{ByteBufOutputStream, Unpooled, ByteBuf}
-import net.machinemuse.numina.basemod.Numina
+import io.netty.buffer.{ByteBufOutputStream, Unpooled}
 import net.machinemuse.numina.general.MuseLogger
-import net.minecraft.client.entity.EntityClientPlayerMP
+import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{CompressedStreamTools, NBTTagCompound}
+import net.minecraft.network.PacketBuffer
+import net.minecraftforge.fml.common.network.internal.FMLProxyPacket
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 /**
- * Author: MachineMuse (Claire Semple)
- * Created: 12:58 AM, 09/05/13
- */
+  * Author: MachineMuse (Claire Semple)
+  * Created: 12:58 AM, 09/05/13
+  */
 abstract class MusePacket {
   val packager: MusePackager
 
   def write()
 
-  val bytes = Unpooled.buffer()
+  val bytes = new PacketBuffer(Unpooled.buffer())
   val dataout = new DataOutputStream(new ByteBufOutputStream(bytes))
 
   /**
-   * Gets the MC packet associated with this MusePacket
-   *
-   * @return Packet250CustomPayload
-   */
+    * Gets the MC packet associated with this MusePacket
+    *
+    * @return Packet250CustomPayload
+    */
   def getFMLProxyPacket: FMLProxyPacket = {
     dataout.writeInt(MusePacketHandler.packagers.inverse.get(packager).get)
     write()
@@ -39,12 +39,12 @@ abstract class MusePacket {
   def getPacket131 = this
 
   /**
-   * Called by the network manager since it does all the packet mapping
-   *
-   * @param player
-   */
+    * Called by the network manager since it does all the packet mapping
+    *
+    * @param player
+    */
   @SideOnly(Side.CLIENT)
-  def handleClient(player: EntityClientPlayerMP) {}
+  def handleClient(player: EntityPlayerSP) {}
 
   def handleServer(player: EntityPlayerMP) {}
 
@@ -83,8 +83,8 @@ abstract class MusePacket {
   }
 
   /**
-   * Writes the IC2ItemTest's ID (short), then size (byte), then damage. (short)
-   */
+    * Writes the IC2ItemTest's ID (short), then size (byte), then damage. (short)
+    */
   def writeItemStack(stack: ItemStack) {
     try {
       if (stack == null) {
@@ -101,21 +101,21 @@ abstract class MusePacket {
   }
 
   /**
-   * Writes a compressed NBTTagCompound to the OutputStream
-   */
+    * Writes a compressed NBTTagCompound to the OutputStream
+    */
   protected def writeNBTTagCompound(nbt: NBTTagCompound) {
     if (nbt == null) {
       dataout.writeShort(-1)
     } else {
-      val compressednbt: Array[Byte] = CompressedStreamTools.compress(nbt)
+      val compressednbt: Array[Byte] = compress(nbt)
       dataout.writeShort(compressednbt.length.toShort)
       dataout.write(compressednbt)
     }
   }
 
   /**
-   * Writes a String to the DataOutputStream
-   */
+    * Writes a String to the DataOutputStream
+    */
   def writeString(string: String) {
     try {
       dataout.writeShort(string.length)
@@ -123,6 +123,21 @@ abstract class MusePacket {
     } catch {
       case e: IOException => e.printStackTrace()
     }
+  }
+
+  /*
+   * "Borrowed" from 1.7.10
+   */
+  @throws(classOf[IOException])
+  def compress(p_74798_0_ : NBTTagCompound) : Array[Byte] = {
+    val bytearrayoutputstream : ByteArrayOutputStream = new ByteArrayOutputStream
+    val dataoutputstream : DataOutputStream = new DataOutputStream(new GZIPOutputStream(bytearrayoutputstream))
+    try {
+      CompressedStreamTools.write(p_74798_0_, dataoutputstream)
+    } finally {
+      dataoutputstream.close
+    }
+    return bytearrayoutputstream.toByteArray
   }
 }
 

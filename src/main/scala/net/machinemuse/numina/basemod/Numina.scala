@@ -1,10 +1,10 @@
 package net.machinemuse.numina.basemod
 
-import cpw.mods.fml.common.{FMLCommonHandler, SidedProxy, Mod}
-import cpw.mods.fml.common.event._
 import java.io.File
 import net.machinemuse.numina.network.NuminaPackets
 import net.machinemuse.numina.recipe.JSONRecipeList
+import net.minecraftforge.fml.common.{FMLCommonHandler, SidedProxy, Mod}
+import net.minecraftforge.fml.common.event.{FMLServerStartedEvent, FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent}
 
 /**
  * Author: MachineMuse (Claire Semple)
