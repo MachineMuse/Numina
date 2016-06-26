@@ -38,7 +38,7 @@ trait InventoriedItem {
   def getContents(stack: ItemStack): Seq[ItemStack] = {
     val list = getContentsAsNBTTagList(stack)
     for (i <- 0 until list.tagCount()) yield {
-      ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i).asInstanceOf[NBTTagCompound])
+      ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i))
     }
   }
 

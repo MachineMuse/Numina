@@ -13,9 +13,9 @@ import net.minecraft.item.ItemStack
  * Created: 2:46 AM, 11/13/13
  */
 class MuseTileEntity extends TileEntity {
-  // TODO: find out the proper way of syncing TileEntities.
+  // TODO: test and clean up
   // getDescriptionPacket is no longer used available
-/*
+
   override def onDataPacket(net: NetworkManager, pkt: SPacketUpdateTileEntity) {
     readFromNBT(pkt.getNbtCompound())
 
@@ -24,18 +24,18 @@ class MuseTileEntity extends TileEntity {
     // 1.8.9
 //    worldObj.markBlockForUpdate(pos)
 
-    // 1.9.4 ?? TODO: This was just some random replacement done without checking it. Check and fix as needed
-    val state: IBlockState  = worldObj.getBlockState(pos)
-    worldObj.notifyBlockUpdate(getPos(), state, state, 3);
-
+    // 1.9.4 ?? TODO: does this still need markBlockForUpdate??
   }
 
-  override def getDescriptionPacket: Packet[_] = {
+  override def getUpdatePacket: SPacketUpdateTileEntity = {
     val tag = new NBTTagCompound
     writeToNBT(tag)
-    new SPacketUpdateTileEntity(pos, 0, tag)
+    new SPacketUpdateTileEntity(getPos, 0, tag)
   }
-*/
+
+  override def getUpdateTag : NBTTagCompound = writeToNBT(new NBTTagCompound())
+
+
   def getInteger(nbt: NBTTagCompound, name: String) = if (nbt.hasKey(name)) Some(nbt.getInteger(name)) else None
 
   def getDouble(nbt: NBTTagCompound, name: String) = if (nbt.hasKey(name)) Some(nbt.getDouble(name)) else None
