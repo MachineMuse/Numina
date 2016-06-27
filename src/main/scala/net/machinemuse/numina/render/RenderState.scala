@@ -1,11 +1,9 @@
 package net.machinemuse.numina.render
 
-import org.lwjgl.opengl.GL11
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.client.renderer.{RenderHelper, OpenGlHelper}
-import java.nio.FloatBuffer
-import org.lwjgl.BufferUtils
+import net.minecraft.client.renderer.{OpenGlHelper, RenderHelper}
+import org.lwjgl.opengl.GL11
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -88,7 +86,7 @@ object RenderState {
     val mc: Minecraft = Minecraft.getMinecraft
     val dw: Int = mc.displayWidth
     val dh: Int = mc.displayHeight
-    val res: ScaledResolution = new ScaledResolution(mc, dw, dh)
+    val res: ScaledResolution = new ScaledResolution(mc)
     val newx: Double = x * res.getScaleFactor
     val newy: Double = dh - h * res.getScaleFactor - y * res.getScaleFactor
     val neww: Double = w * res.getScaleFactor

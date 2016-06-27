@@ -1,7 +1,8 @@
 package net.machinemuse.numina.scala
 
-import scala.collection.mutable
 import net.machinemuse.numina.general.MuseLogger
+
+import scala.collection.mutable
 
 /**
  * Author: MachineMuse (Claire Semple)

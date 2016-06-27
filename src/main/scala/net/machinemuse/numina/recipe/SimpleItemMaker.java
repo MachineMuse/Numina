@@ -1,11 +1,12 @@
 package net.machinemuse.numina.recipe;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.machinemuse.numina.general.MuseLogger;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -41,7 +42,7 @@ public class SimpleItemMaker implements IItemMaker {
 
         if(nbtString != null) {
             try {
-                nbt = (NBTTagCompound) JsonToNBT.func_150315_a(nbtString);
+                nbt = JsonToNBT.getTagFromJson(nbtString);
             } catch (Exception e) {
                 MuseLogger.logException("Bad NBT string in item! Attempting to create generic item instead.", e);
             }
@@ -49,8 +50,7 @@ public class SimpleItemMaker implements IItemMaker {
 
         if (itemStackName != null) {
             try {
-                String[] names = itemStackName.split(":");
-                ItemStack stack = GameRegistry.findItemStack(names[0], names[1], newquantity);
+                ItemStack stack = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(itemStackName)), newquantity);
                 if(this.meta != null) stack.setItemDamage(meta);
                 if(nbt != null) stack.setTagCompound(nbt);
                 return stack;
@@ -60,8 +60,7 @@ public class SimpleItemMaker implements IItemMaker {
             }
         } else if (registryName != null) {
             try {
-                String[] names = registryName.split(":");
-                ItemStack stack = new ItemStack(GameRegistry.findItem(names[0], names[1]), newquantity, newmeta);
+                ItemStack stack = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(itemStackName)), newquantity, newmeta);
                 if(nbt != null) stack.setTagCompound(nbt);
                 return stack;
             } catch (Exception e) {

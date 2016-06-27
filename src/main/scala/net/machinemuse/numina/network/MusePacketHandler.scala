@@ -6,8 +6,6 @@ package net.machinemuse.numina.network
 import java.io._
 import java.util
 
-import cpw.mods.fml.common.network.NetworkRegistry
-import cpw.mods.fml.common.network.internal.FMLProxyPacket
 import io.netty.buffer.ByteBufInputStream
 import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext
@@ -17,6 +15,8 @@ import net.machinemuse.numina.scala.MuseNumericRegistry
 import net.minecraft.client.Minecraft
 import net.minecraft.client.network.NetHandlerPlayClient
 import net.minecraft.network.NetHandlerPlayServer
+import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.fml.common.network.internal.FMLProxyPacket
 
 /**
  * @author MachineMuse

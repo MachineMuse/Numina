@@ -3,18 +3,25 @@ package net.machinemuse.numina.sound
 import net.minecraft.client.audio.ISound.AttenuationType
 import net.minecraft.client.audio.MovingSound
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.ResourceLocation
+import net.minecraft.util.{ResourceLocation, SoundCategory, SoundEvent}
 
 /**
  * Created by Claire on 8/27/2015.
  */
-class MovingSoundPlayer(val player:EntityPlayer, resourceLocation:ResourceLocation, newvolume:Float, newpitch:Float, newrepeat:Boolean = false) extends MovingSound(resourceLocation) {
-  this.field_147663_c = newpitch
+
+// TODO: fix this the proper way. The last 2 params were added to fix building, but it won't be compatible with MPS
+class MovingSoundPlayer(val player:EntityPlayer,
+                        resourceLocation:ResourceLocation,
+                        newvolume:Float,
+                        newpitch:Float,
+                        newrepeat:Boolean = false, soundIn: SoundEvent, categoryIn: SoundCategory) extends MovingSound(soundIn, categoryIn) {
+
+  this.pitch = newpitch
   this.volume = newvolume
   this.repeat = newrepeat
 
   def updatePitch (newpitch:Float) = {
-    field_147663_c = newpitch
+    pitch = newpitch
     this
   }
 

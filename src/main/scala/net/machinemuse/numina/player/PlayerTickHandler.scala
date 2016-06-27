@@ -1,9 +1,9 @@
 package net.machinemuse.numina.player
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
-import net.minecraft.entity.player.{EntityPlayerMP, EntityPlayer}
 import net.machinemuse.numina.scala.OptionCast
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 /**
  * Author: MachineMuse (Claire Semple)

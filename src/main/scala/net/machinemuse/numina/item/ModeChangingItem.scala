@@ -1,14 +1,14 @@
 package net.machinemuse.numina.item
 
 import net.machinemuse.numina.network.{MusePacketModeChangeRequest, PacketSender}
+import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.IIcon
 
 /**
- * Author: MachineMuse (Claire Semple)
- * Created: 7:11 PM, 9/3/13
- */
+  * Author: MachineMuse (Claire Semple)
+  * Created: 7:11 PM, 9/3/13
+  */
 trait ModeChangingItem {
   def setActiveMode(stack: ItemStack, newMode: String) = {
     NuminaItemUtils.getTagCompound(stack).setString("mode", newMode)
@@ -66,7 +66,7 @@ trait ModeChangingItem {
     }
   }
 
-  def getModeIcon(mode: String, stack: ItemStack, player: EntityPlayer): Option[IIcon]
+  def getModeIcon(mode: String, stack: ItemStack, player: EntityPlayer): Option[TextureAtlasSprite]
 
   def getValidModes(stack: ItemStack, player: EntityPlayer): Seq[String]
 

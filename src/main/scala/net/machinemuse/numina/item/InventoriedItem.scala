@@ -2,7 +2,6 @@ package net.machinemuse.numina.item
 
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
-import scala.Array
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -38,7 +37,7 @@ trait InventoriedItem {
   def getContents(stack: ItemStack): Seq[ItemStack] = {
     val list = getContentsAsNBTTagList(stack)
     for (i <- 0 until list.tagCount()) yield {
-      ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i).asInstanceOf[NBTTagCompound])
+      ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i))
     }
   }
 
