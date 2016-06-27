@@ -2,16 +2,10 @@ package net.machinemuse.numina.sound
 
 import net.machinemuse.numina.basemod.NuminaConfig
 import net.machinemuse.numina.general.MuseLogger
-import net.machinemuse.numina.scala.OptionCast
 import net.minecraft.client.Minecraft
-import net.minecraft.client.audio.{MovingSound, PositionedSoundRecord, ISound}
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
-
-import scala.collection
-import scala.collection.parallel.mutable
 
 /**
  * Created by Claire on 8/27/2015.

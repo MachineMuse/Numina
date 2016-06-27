@@ -10,7 +10,6 @@ import javax.annotation.Nonnull;
  * Created by leon on 3/31/16.
  */
 public class JSONRecipeHandler implements IRecipeHandler<JSONRecipe> {
-
     @Nonnull
     @Override
     public Class<JSONRecipe> getRecipeClass() {
@@ -25,14 +24,14 @@ public class JSONRecipeHandler implements IRecipeHandler<JSONRecipe> {
 
     @Nonnull
     @Override
-    public IRecipeWrapper getRecipeWrapper(@Nonnull JSONRecipe recipe) {
-        return new JEINuminaWrapper(recipe);
+    public String getRecipeCategoryUid(@Nonnull JSONRecipe recipe) {
+        return "minecraft.crafting";
     }
 
     @Nonnull
     @Override
-    public String getRecipeCategoryUid(@Nonnull JSONRecipe recipe) {
-        return "minecraft.crafting";
+    public IRecipeWrapper getRecipeWrapper(@Nonnull JSONRecipe recipe) {
+        return new JEINuminaWrapper(recipe);
     }
 
     @Override

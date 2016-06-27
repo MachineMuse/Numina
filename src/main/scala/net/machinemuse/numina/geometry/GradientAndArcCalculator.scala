@@ -1,8 +1,9 @@
 package net.machinemuse.numina.geometry
 
-import org.lwjgl.BufferUtils
 import java.nio.DoubleBuffer
 import java.util
+
+import org.lwjgl.BufferUtils
 
 /**
  * Author: MachineMuse (Claire Semple)

@@ -4,7 +4,7 @@ import net.machinemuse.numina.general.MuseMathUtils
 import net.machinemuse.numina.geometry.Colour
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
-import net.minecraft.client.renderer.{VertexBuffer, Tessellator}
+import net.minecraft.client.renderer.{Tessellator, VertexBuffer}
 import org.lwjgl.opengl.GL11
 
 /**

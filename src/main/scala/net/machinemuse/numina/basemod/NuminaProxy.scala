@@ -2,14 +2,16 @@ package net.machinemuse.numina.basemod
 
 import net.machinemuse.numina.general.MuseLogger
 import net.machinemuse.numina.mouse.MouseEventHandler
-import net.machinemuse.numina.network.{MusePacketRecipeUpdate, MusePacket, PacketSender}
+import net.machinemuse.numina.network.{MusePacket, MusePacketRecipeUpdate, PacketSender}
 import net.machinemuse.numina.recipe.JSONRecipeList
-import net.machinemuse.numina.render.{FOVUpdateEventHandler, RenderGameOverlayEventHandler}
+import net.machinemuse.numina.render.{FOVUpdateEventHandler, FOVUpdateToggleKeyHandler, RenderGameOverlayEventHandler}
+import net.minecraft.client.settings.KeyBinding
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -38,6 +40,7 @@ class NuminaProxyClient extends NuminaProxy {
     MuseLogger.logDebug("Client Proxy Started")
     MinecraftForge.EVENT_BUS.register(MouseEventHandler)
     MinecraftForge.EVENT_BUS.register(RenderGameOverlayEventHandler)
+    MinecraftForge.EVENT_BUS.register(FOVUpdateToggleKeyHandler)
     MinecraftForge.EVENT_BUS.register(FOVUpdateEventHandler)
   }
 }

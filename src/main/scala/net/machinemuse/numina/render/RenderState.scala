@@ -1,11 +1,9 @@
 package net.machinemuse.numina.render
 
-import org.lwjgl.opengl.GL11
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.client.renderer.{RenderHelper, OpenGlHelper}
-import java.nio.FloatBuffer
-import org.lwjgl.BufferUtils
+import net.minecraft.client.renderer.{OpenGlHelper, RenderHelper}
+import org.lwjgl.opengl.GL11
 
 /**
  * Author: MachineMuse (Claire Semple)

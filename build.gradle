@@ -24,15 +24,15 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.matthewprenger.cursegradle'
 apply plugin: 'idea'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+/*
 tasks.withType(ScalaCompile) {
     // Use incremental compilation
     //scalaCompileOptions.useAnt = false // supposed to be a fix for java 8  
     scalaCompileOptions.additionalParameters = ["-target:jvm-1.7"]
 }
-
+*/
 def buildnumber = System.getenv("BUILD_NUMBER")
 def travisbuildnumber = (System.getenv("TRAVIS_BUILD_NUMBER") ?: -111).toInteger() + 111
 version = mod_version + "-" + (buildnumber ?: travisbuildnumber)
@@ -40,7 +40,7 @@ group= group_id // http://maven.apache.org/guides/mini/guide-naming-conventions.
 archivesBaseName = mod_id
 
 minecraft {
-    version = minecraft_version + "-" + forge_version
+    version = minecraft_version + "-" + forge_version + "-" + minecraft_version + ".0"
     runDir = "run"
     mappings = mcp_mappings
     replace "@numina_version@", project.version

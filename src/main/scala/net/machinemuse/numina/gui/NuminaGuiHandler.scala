@@ -1,11 +1,10 @@
 package net.machinemuse.numina.gui
 
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.world.World
-import net.minecraft.client.Minecraft
-import net.minecraft.stats.AchievementList
 import net.machinemuse.numina.death.GuiGameOverPlus
-import net.minecraft.inventory.ContainerPlayer
+import net.minecraft.client.Minecraft
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.stats.AchievementList
+import net.minecraft.world.World
 import net.minecraftforge.fml.common.network.IGuiHandler
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 

@@ -9,8 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -91,9 +90,9 @@ public class JEINuminaWrapper    extends BlankRecipeWrapper implements ICrafting
 
         if (cell.itemStackName != null) {
             shouldbenull = false;
-            String[] names = cell.itemStackName.split(":");
-            result = new ArrayList<ItemStack>();
-            ItemStack stack = new ItemStack(GameRegistry.findItem(names[0], names[1]), 1);
+            result = new ArrayList<>();
+
+            ItemStack stack = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(cell.itemStackName)), 1);
             if(stack != null) {
                 stack = stack.copy();
                 if(cell.meta != null) {
@@ -105,9 +104,8 @@ public class JEINuminaWrapper    extends BlankRecipeWrapper implements ICrafting
 
         if(cell.registryName != null) {
             shouldbenull = false;
-            String[] names = cell.registryName.split(":");
-            result = new ArrayList<ItemStack>();
-            Item item = GameRegistry.findItem(names[0], names[1]);
+            result = new ArrayList<>();
+            Item item = Item.REGISTRY.getObject(new ResourceLocation(cell.itemStackName));
             if(item != null) {
                 int newMeta = cell.meta == null ? 0 : cell.meta;
                 ItemStack stack = new ItemStack(item, 1, newMeta);
@@ -135,7 +133,7 @@ public class JEINuminaWrapper    extends BlankRecipeWrapper implements ICrafting
             for (ItemStack stack : result) {
                 ItemStack stack2 = stack.copy();
                 try {
-                    stack2.setTagCompound((NBTTagCompound) JsonToNBT.getTagFromJson(cell.nbtString));
+                    stack2.setTagCompound(JsonToNBT.getTagFromJson(cell.nbtString));
                 } catch (NBTException e) {
                     e.printStackTrace();
                 }

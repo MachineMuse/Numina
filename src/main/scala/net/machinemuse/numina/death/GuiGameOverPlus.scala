@@ -1,8 +1,6 @@
 package net.machinemuse.numina.death
 
-import net.minecraft.client.gui.GuiButton
-import net.minecraft.client.gui.GuiMainMenu
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.{GuiButton, GuiMainMenu, GuiScreen}
 import net.minecraft.client.multiplayer.WorldClient
 import net.minecraft.client.resources.I18n
 import net.minecraft.util.text.TextFormatting

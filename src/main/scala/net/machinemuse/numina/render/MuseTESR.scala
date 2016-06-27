@@ -1,8 +1,8 @@
 package net.machinemuse.numina.render
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
-import net.minecraft.util.ResourceLocation
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.ResourceLocation
 
 /**
  * Author: MachineMuse (Claire Semple)

@@ -1,14 +1,12 @@
 package net.machinemuse.numina.network
 
-import net.minecraft.entity.Entity
-import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.network.{Packet, INetHandler}
-import net.minecraft.server.MinecraftServer
-import net.minecraft.tileentity.TileEntity
-import java.io.IOException
 import java.util.EnumMap
 
-import net.minecraftforge.fml.common.network.{NetworkRegistry, FMLEmbeddedChannel, FMLOutboundHandler}
+import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.network.Packet
+import net.minecraft.tileentity.TileEntity
+import net.minecraftforge.fml.common.network.{FMLEmbeddedChannel, FMLOutboundHandler, NetworkRegistry}
 import net.minecraftforge.fml.relauncher.Side
 
 object PacketSender {

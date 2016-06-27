@@ -3,7 +3,7 @@ package net.machinemuse.numina.sound
 import net.minecraft.client.audio.ISound.AttenuationType
 import net.minecraft.client.audio.MovingSound
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.{SoundEvent, SoundCategory, ResourceLocation}
+import net.minecraft.util.{ResourceLocation, SoundCategory, SoundEvent}
 
 /**
  * Created by Claire on 8/27/2015.

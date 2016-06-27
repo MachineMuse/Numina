@@ -1,9 +1,9 @@
 package net.machinemuse.numina.mouse
 
-import net.minecraftforge.client.event.MouseEvent
-import net.minecraft.client.Minecraft
 import net.machinemuse.numina.item.ModeChangingItem
 import net.machinemuse.numina.scala.OptionCast
+import net.minecraft.client.Minecraft
+import net.minecraftforge.client.event.MouseEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 /**

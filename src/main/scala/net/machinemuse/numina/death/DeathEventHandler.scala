@@ -1,13 +1,13 @@
 package net.machinemuse.numina.death
 
-import net.minecraftforge.event.entity.living.LivingDeathEvent
-import net.minecraft.entity.player.EntityPlayer
-import net.machinemuse.numina.scala.OptionCast
 import net.machinemuse.numina.basemod.Numina
 import net.machinemuse.numina.general.MuseLogger
-import net.minecraftforge.client.event.GuiOpenEvent
-import net.minecraft.client.gui.GuiGameOver
+import net.machinemuse.numina.scala.OptionCast
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiGameOver
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraftforge.client.event.GuiOpenEvent
+import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 /**

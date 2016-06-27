@@ -1,9 +1,9 @@
 package net.machinemuse.numina.basemod
 
-import net.machinemuse.numina.general.MuseLogger
-import net.minecraftforge.common.config.Configuration
 import java.io.File
 
+import net.machinemuse.numina.general.MuseLogger
+import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
 /**
@@ -21,7 +21,7 @@ object NuminaConfig {
     }
     // Initialize config file
     isDebugging
-    useFOVFix
+    fovFixDefaultState
     useSounds
     config.save()
   }
@@ -35,7 +35,7 @@ object NuminaConfig {
     }
   }
 
-  def useFOVFix = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Ignore speed boosts for field of view", default = true)
+  def fovFixDefaultState = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Default state of FOVfix on login (enabled = true, disabled = false)", default = true)
 
   def isDebugging = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Debugging info", default = false)
 
