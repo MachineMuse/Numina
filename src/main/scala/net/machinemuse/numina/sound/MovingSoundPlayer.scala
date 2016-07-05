@@ -11,10 +11,11 @@ import net.minecraft.util.{ResourceLocation, SoundCategory, SoundEvent}
 
 // TODO: fix this the proper way. The last 2 params were added to fix building, but it won't be compatible with MPS
 class MovingSoundPlayer(val player:EntityPlayer,
-                        resourceLocation:ResourceLocation,
+                        soundIn: SoundEvent,
                         newvolume:Float,
                         newpitch:Float,
-                        newrepeat:Boolean = false, soundIn: SoundEvent, categoryIn: SoundCategory) extends MovingSound(soundIn, categoryIn) {
+                        newrepeat:Boolean = false,
+                        categoryIn: SoundCategory) extends MovingSound(soundIn, categoryIn) {
 
   this.pitch = newpitch
   this.volume = newvolume

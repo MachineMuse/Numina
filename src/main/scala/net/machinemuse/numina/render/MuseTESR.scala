@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation
  * Author: MachineMuse (Claire Semple)
  * Created: 4:28 PM, 8/3/13
  */
-abstract class MuseTESR extends TileEntitySpecialRenderer {
+abstract class MuseTESR[T <: TileEntity] extends TileEntitySpecialRenderer{
   def bindTextureByName(tex: String) {
     this.bindTexture(new ResourceLocation(tex))
   }

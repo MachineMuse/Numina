@@ -40,7 +40,7 @@ group= group_id // http://maven.apache.org/guides/mini/guide-naming-conventions.
 archivesBaseName = mod_id
 
 minecraft {
-    version = minecraft_version + "-" + forge_version + "-" + minecraft_version + ".0"
+    version = minecraft_version + "-" + forge_version + "-" + "1.10.0"
     runDir = "run"
     mappings = mcp_mappings
     replace "@numina_version@", project.version
@@ -86,6 +86,9 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+
+    // Move access transformers to META-INF
+    rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
 jar {
