@@ -40,7 +40,7 @@ group= group_id // http://maven.apache.org/guides/mini/guide-naming-conventions.
 archivesBaseName = mod_id
 
 minecraft {
-    version = minecraft_version + "-" + forge_version + "-" + "1.10.0"
+    version = minecraft_version + "-" + forge_version //+ "-" + "1.10.0"
     runDir = "run"
     mappings = mcp_mappings
     replace "@numina_version@", project.version
