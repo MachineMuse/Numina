@@ -1,7 +1,7 @@
 package net.machinemuse.numina.item
 
-import net.minecraft.item.Item
 import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.item.Item
 
 /**
  * Author: MachineMuse (Claire Semple)

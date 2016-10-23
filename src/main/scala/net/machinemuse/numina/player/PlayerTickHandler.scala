@@ -1,9 +1,9 @@
 package net.machinemuse.numina.player
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
-import net.minecraft.entity.player.{EntityPlayerMP, EntityPlayer}
 import net.machinemuse.numina.scala.OptionCast
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -12,7 +12,7 @@ import net.machinemuse.numina.scala.OptionCast
 object PlayerTickHandler {
   @SubscribeEvent
   def onPlayerTick(e: LivingUpdateEvent) {
-    OptionCast[EntityPlayer](e).map(player => player.refreshDisplayName())
+    OptionCast[EntityPlayer](e).foreach(player => player.refreshDisplayName())
   }
 
 }

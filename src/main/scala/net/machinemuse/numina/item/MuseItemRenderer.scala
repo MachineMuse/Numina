@@ -1,12 +1,12 @@
 package net.machinemuse.numina.item
 
 import net.minecraft.client.renderer.RenderBlocks
-import net.minecraft.item.ItemStack
+import net.minecraft.client.renderer.texture.TextureManager
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityItem
-import net.minecraft.world.storage.MapData
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.client.renderer.texture.TextureManager
+import net.minecraft.item.ItemStack
+import net.minecraft.world.storage.MapData
 
 /**
  * Author: MachineMuse (Claire Semple)

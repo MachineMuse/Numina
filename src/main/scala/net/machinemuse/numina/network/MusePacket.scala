@@ -1,12 +1,10 @@
 package net.machinemuse.numina.network
 
-import java.io.{DataInputStream, ByteArrayOutputStream, DataOutputStream, IOException}
+import java.io.{DataInputStream, DataOutputStream, IOException}
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket
-import cpw.mods.fml.common.network.simpleimpl.IMessage
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import io.netty.buffer.{ByteBufOutputStream, Unpooled, ByteBuf}
-import net.machinemuse.numina.basemod.Numina
+import io.netty.buffer.{ByteBufOutputStream, Unpooled}
 import net.machinemuse.numina.general.MuseLogger
 import net.minecraft.client.entity.EntityClientPlayerMP
 import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
@@ -31,7 +29,7 @@ abstract class MusePacket {
    * @return Packet250CustomPayload
    */
   def getFMLProxyPacket: FMLProxyPacket = {
-    dataout.writeInt(MusePacketHandler.packagers.inverse.get(packager).get)
+    dataout.writeInt(MusePacketHandler.packagers.inverse(packager))
     write()
     new FMLProxyPacket(bytes, MusePacketHandler.networkChannelName)
   }
@@ -160,6 +158,7 @@ trait MusePackager {
       Some(codec.apply())
     } catch {
       case e: IOException => MuseLogger.logException("PROBLEM READING DATA FROM PACKET D:", e)
+        None
     }
   }
 }

@@ -1,6 +1,7 @@
 package net.machinemuse.numina.render
 
 import java.nio.FloatBuffer
+
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
 
@@ -14,7 +15,7 @@ object BillboardHelper {
 
 
 
-  def unRotate {
+  def unRotate() {
     matrix.clear()
     GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, matrix)
     val scalex: Float = pythag(matrix.get(0), matrix.get(1), matrix.get(2))

@@ -1,10 +1,10 @@
 package net.machinemuse.numina.render
 
 import net.machinemuse.numina.general.MuseMathUtils
-import org.lwjgl.opengl.GL11
-import net.minecraft.client.renderer.Tessellator
 import net.machinemuse.numina.geometry.Colour
+import net.minecraft.client.renderer.Tessellator
 import net.minecraft.util.IIcon
+import org.lwjgl.opengl.GL11
 
 /**
  * Author: MachineMuse (Claire Semple)

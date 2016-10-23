@@ -3,12 +3,12 @@ package net.machinemuse.numina.basemod
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
-import cpw.mods.fml.common.network.simpleimpl.IMessage
+import net.machinemuse.numina.event.{FOVUpdateEventHandler, KeybindKeyHandler}
 import net.machinemuse.numina.general.MuseLogger
 import net.machinemuse.numina.mouse.MouseEventHandler
-import net.machinemuse.numina.network.{MusePacketRecipeUpdate, MusePacket, PacketSender}
+import net.machinemuse.numina.network.{MusePacket, MusePacketRecipeUpdate, PacketSender}
 import net.machinemuse.numina.recipe.JSONRecipeList
-import net.machinemuse.numina.render.{FOVUpdateEventHandler, RenderGameOverlayEventHandler}
+import net.machinemuse.numina.render.RenderGameOverlayEventHandler
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraftforge.common.MinecraftForge
 
@@ -37,9 +37,10 @@ trait NuminaProxy {
 class NuminaProxyClient extends NuminaProxy {
   override def Init() = {
     MuseLogger.logDebug("Client Proxy Started")
-    MinecraftForge.EVENT_BUS.register(MouseEventHandler)
+    MinecraftForge.EVENT_BUS.register(new MouseEventHandler)
     MinecraftForge.EVENT_BUS.register(RenderGameOverlayEventHandler)
-    MinecraftForge.EVENT_BUS.register(FOVUpdateEventHandler)
+    MinecraftForge.EVENT_BUS.register(new FOVUpdateEventHandler)
+    MinecraftForge.EVENT_BUS.register(new KeybindKeyHandler)
   }
 }
 

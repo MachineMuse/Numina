@@ -1,10 +1,9 @@
 package net.machinemuse.numina.render
 
-import java.lang.String
-import scala.Predef.String
 import java.util
-import net.minecraft.util.ResourceLocation
+
 import net.minecraft.client.Minecraft
+import net.minecraft.util.ResourceLocation
 
 /**
  * Author: MachineMuse (Claire Semple)

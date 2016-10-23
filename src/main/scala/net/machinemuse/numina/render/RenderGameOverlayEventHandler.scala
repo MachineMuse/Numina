@@ -1,15 +1,15 @@
 package net.machinemuse.numina.render
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import net.machinemuse.numina.geometry.Colour
+import net.machinemuse.numina.item.ModeChangingItem
+import net.machinemuse.numina.scala.OptionCast
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.ScaledResolution
+import net.minecraft.util.IIcon
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
-import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.client.Minecraft
-import net.machinemuse.numina.item.ModeChangingItem
-import net.minecraft.util.IIcon
 import net.minecraftforge.common.ForgeHooks
-import net.machinemuse.numina.scala.OptionCast
-import net.machinemuse.numina.geometry.Colour
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -133,7 +133,7 @@ object RenderGameOverlayEventHandler {
   }
 
   private def drawIcon(x: Double, y: Double, icon: Option[IIcon], alpha: Double) {
-    icon.map(i => MuseIconUtils.drawIconAt(x, y, i, Colour.WHITE.withAlpha(alpha)))
+    icon.foreach(i => MuseIconUtils.drawIconAt(x, y, i, Colour.WHITE.withAlpha(alpha)))
   }
 
   def updateSwap(dModeSig: Int) {
