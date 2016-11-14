@@ -1,6 +1,6 @@
 package net.machinemuse.numina.player
 
-import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
+import net.minecraft.entity.player.{EntityPlayerMP, EntityPlayer}
 
 /**
  * Created by Claire Semple on 9/9/2014.

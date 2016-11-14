@@ -1,9 +1,8 @@
 package net.machinemuse.numina.basemod
 
-import java.io.File
-
+import cpw.mods.fml.common.{FMLCommonHandler, SidedProxy, Mod}
 import cpw.mods.fml.common.event._
-import cpw.mods.fml.common.{FMLCommonHandler, Mod, SidedProxy}
+import java.io.File
 import net.machinemuse.numina.network.NuminaPackets
 import net.machinemuse.numina.recipe.JSONRecipeList
 

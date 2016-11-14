@@ -37,7 +37,7 @@ class MusePacketModeChangeRequest(player: EntityPlayer, mode: String, slot: Int)
       } {
         val modes = item.getValidModes(stack, player)
         if (modes.contains(mode)) {
-          OptionCast[ModeChangingItem](stack.getItem).foreach(i => i.setActiveMode(stack, mode))
+          OptionCast[ModeChangingItem](stack.getItem).map(i => i.setActiveMode(stack, mode))
         }
       }
     }

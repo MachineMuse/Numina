@@ -2,6 +2,7 @@ package net.machinemuse.numina.item
 
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
+import scala.Array
 
 /**
  * Author: MachineMuse (Claire Semple)

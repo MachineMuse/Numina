@@ -32,7 +32,7 @@ class MusePacketNameChangeRequest(player: EntityPlayer, username: String, newnic
 //    NicknameMap.removeName(username)
 //    NicknameMap.putName(username, newnick)
 
-    OptionCast[EntityPlayer](player.worldObj.getEntityByID(entityID)) foreach {
+    OptionCast[EntityPlayer](player.worldObj.getEntityByID(entityID)) map {
       t => t.refreshDisplayName()
     }
   }
