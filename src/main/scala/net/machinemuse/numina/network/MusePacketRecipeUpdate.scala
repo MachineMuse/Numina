@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayer
  * Created: 11:40 PM, 12/16/13
  */
 object MusePacketRecipeUpdate extends MusePackager {
-  def read(d: DataInputStream, p: EntityPlayer) = {
+  override def read(d: DataInputStream, p: EntityPlayer) = {
     val recipe = readString(d)
     new MusePacketRecipeUpdate(p, recipe)
   }

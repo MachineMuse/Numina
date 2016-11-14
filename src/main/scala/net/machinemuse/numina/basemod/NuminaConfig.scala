@@ -1,9 +1,10 @@
 package net.machinemuse.numina.basemod
 
+import java.io.File
+
+import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import net.machinemuse.numina.general.MuseLogger
 import net.minecraftforge.common.config.Configuration
-import java.io.File
-import cpw.mods.fml.common.event.FMLPreInitializationEvent
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -33,6 +34,8 @@ object NuminaConfig {
       hasWarned=true
     }
   }
+
+  def fovFixDefaultState = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Default state of FOVfix on login (enabled = true, disabled = false)", default = true)
 
   def useFOVFix = getConfigBoolean(Configuration.CATEGORY_GENERAL, "Ignore speed boosts for field of view", default = true)
 

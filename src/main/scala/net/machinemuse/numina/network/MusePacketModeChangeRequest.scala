@@ -5,7 +5,7 @@ package net.machinemuse.numina.network
 
 import java.io.DataInputStream
 
-import net.machinemuse.numina.item.ModeChangingItem
+import net.machinemuse.numina.item.IModeChangingItem
 import net.machinemuse.numina.scala.OptionCast
 import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
 
@@ -14,7 +14,7 @@ import net.minecraft.entity.player.{EntityPlayer, EntityPlayerMP}
  * Created: 12:28 PM, 5/6/13
  */
 object MusePacketModeChangeRequest extends MusePackager {
-  def read(d: DataInputStream, p: EntityPlayer) = {
+  override def read(d: DataInputStream, p: EntityPlayer) = {
     val slot = readInt(d)
     val mode = readString(d)
     new MusePacketModeChangeRequest(p, mode, slot)
@@ -33,14 +33,13 @@ class MusePacketModeChangeRequest(player: EntityPlayer, mode: String, slot: Int)
     if (slot > -1 && slot < 9) {
       for {
         stack <- Option(player.inventory.mainInventory(slot))
-        item <- OptionCast[ModeChangingItem](stack.getItem)
+        item <- OptionCast[IModeChangingItem](stack.getItem)
       } {
         val modes = item.getValidModes(stack, player)
         if (modes.contains(mode)) {
-          OptionCast[ModeChangingItem](stack.getItem).map(i => i.setActiveMode(stack, mode))
+          OptionCast[IModeChangingItem](stack.getItem).foreach(i => i.setActiveMode(stack, mode))
         }
       }
     }
   }
-
 }

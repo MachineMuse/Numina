@@ -1,8 +1,9 @@
 package net.machinemuse.numina.basemod
 
-import cpw.mods.fml.common.{FMLCommonHandler, SidedProxy, Mod}
-import cpw.mods.fml.common.event._
 import java.io.File
+
+import cpw.mods.fml.common.event._
+import cpw.mods.fml.common.{FMLCommonHandler, Mod, SidedProxy}
 import net.machinemuse.numina.network.NuminaPackets
 import net.machinemuse.numina.recipe.JSONRecipeList
 
@@ -16,10 +17,11 @@ object Numina {
   var proxy: NuminaProxy = null
   var configDir: java.io.File = null
 
+  val INSTANCE=this
+
   @Mod.EventHandler def preinit(e: FMLPreInitializationEvent) {
     NuminaConfig.init(e)
     configDir = e.getModConfigurationDirectory
-
     val recipesFolder = new File(configDir, "machinemuse/recipes")
     recipesFolder.mkdirs()
     recipesFolder.mkdir()
@@ -40,6 +42,6 @@ object Numina {
 
   @Mod.EventHandler def serverstart(e: FMLServerStartedEvent) {
     JSONRecipeList.loadRecipesFromDir(Numina.configDir.toString + "/machinemuse/recipes/")
-    FMLCommonHandler.instance().bus().register(NuminaPlayerTracker)
+    FMLCommonHandler.instance().bus().register(new NuminaPlayerTracker)
   }
 }
