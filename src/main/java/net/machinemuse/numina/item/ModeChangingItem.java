@@ -2,13 +2,13 @@ package net.machinemuse.numina.item;
 
 import net.machinemuse.numina.network.MusePacketModeChangeRequest;
 import net.machinemuse.numina.network.PacketSender;
-import net.machinemuse.powersuits.item.ModeChangingModularItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -91,12 +91,12 @@ public class ModeChangingItem extends Item implements IModeChangingItem {
     @Nullable
     @Override
     public IIcon getModeIcon(String mode, ItemStack stack, EntityPlayer player) {
-        return ModeChangingModularItem.getInstance().getModeIcon(mode, stack, player);
+        return null;
     }
 
     @Nullable
     @Override
     public List<String> getValidModes(ItemStack stack, EntityPlayer player) {
-        return ModeChangingModularItem.getInstance(). getValidModes(stack, player);
+        return new ArrayList<String>();
     }
 }
