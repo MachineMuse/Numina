@@ -23,7 +23,6 @@ public class DrawableMuseRect extends MuseRect {
         if (growFromMiddle) {
             this.lastRect = new MuseRect(left, top, right, bottom);
         }
-
     }
 
     public DrawableMuseRect(double left, double top, double right,
@@ -106,6 +105,5 @@ public class DrawableMuseRect extends MuseRect {
     public DrawableMuseRect setOutsideColour(Colour outsideColour) {
         this.outsideColour = outsideColour;
         return this;
-
     }
 }

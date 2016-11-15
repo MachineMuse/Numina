@@ -59,9 +59,3 @@ public class MusePacketNameChangeRequest extends MusePacket {
         }
     }
 }
-
-
-
-
-
-

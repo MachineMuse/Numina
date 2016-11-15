@@ -19,7 +19,6 @@ import java.io.File;
  *
  * Ported to Java by lehjr on 11/15/16.
  */
-
 @Mod(modid = "numina")
 public class Numina {
 

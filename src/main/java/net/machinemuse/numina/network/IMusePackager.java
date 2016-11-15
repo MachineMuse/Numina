@@ -35,6 +35,4 @@ public interface IMusePackager {
     ItemStack readItemStack(DataInputStream datain);
 
     NBTTagCompound readNBTTagCompound(DataInputStream datain);
-
-//    <T> Option<T> safeRead(Function0<T> p0) throws IOException;
 }

@@ -93,7 +93,6 @@ public class SimpleItemMatcher implements IItemMatcher {
         return copy;
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if(! (obj instanceof SimpleItemMatcher) ) return false;
@@ -121,5 +120,4 @@ public class SimpleItemMatcher implements IItemMatcher {
         }
         return false;
     }
-
 }

@@ -150,4 +150,3 @@ public class RenderGameOverlayEventHandler {
         lastSwapDirection = dModeSig;
     }
 }
-

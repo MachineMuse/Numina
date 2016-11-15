@@ -21,6 +21,5 @@ public class MuseTESR extends TileEntitySpecialRenderer {
     }
 
     public void renderAt(TileEntity var1, double var2, double var4, double var6, float var8) {
-
     }
 }

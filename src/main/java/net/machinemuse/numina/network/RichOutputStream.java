@@ -19,4 +19,3 @@ public final class RichOutputStream {
         this.out = out;
     }
 }
-

@@ -14,23 +14,11 @@ public class NuminaProxyClient implements NuminaProxy
 {
     @Override
     public void PreInit() {
-//        NuminaProxy$class.PreInit(this);
     }
 
     @Override
     public void PostInit() {
-//        NuminaProxy$class.PostInit(this);
     }
-
-//    @Override
-//    public void sendPacketToClient(final MusePacket packet, final EntityPlayerMP player) {
-//        NuminaProxy.sendPacketToClient(this, packet, player);
-//    }
-//
-//    @Override
-//    public void sendPacketToServer(final MusePacket packet) {
-//        NuminaProxy$class.sendPacketToServer(this, packet);
-//    }
 
     @Override
     public void Init() {
@@ -42,6 +30,5 @@ public class NuminaProxyClient implements NuminaProxy
     }
 
     public NuminaProxyClient() {
-//        NuminaProxy$class.$init$(this);
     }
 }

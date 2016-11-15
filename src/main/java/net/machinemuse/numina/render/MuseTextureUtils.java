@@ -25,7 +25,6 @@ public final class MuseTextureUtils {
     private MuseTextureUtils() {
     }
 
-
     public static void pushTexture(final String filename) {
         texturestack.push(TEXTURE_MAP);
         TEXTURE_MAP = filename;

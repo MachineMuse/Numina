@@ -13,7 +13,6 @@ import java.util.List;
  * Ported to Java by lehjr on 10/10/16.
  */
 public class GradientAndArcCalculator {
-
     /**
      * Efficient algorithm for drawing circles and arcs in pure opengl!
      *

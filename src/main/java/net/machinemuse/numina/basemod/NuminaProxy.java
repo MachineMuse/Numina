@@ -13,8 +13,4 @@ public interface NuminaProxy
     void Init();
 
     void PostInit();
-
-//    void sendPacketToClient(final MusePacket p0, final EntityPlayerMP p1);
-//
-//    void sendPacketToServer(final MusePacket p0);
 }

@@ -1,11 +1,5 @@
 package net.machinemuse.numina.event;
 
-/**
- * Created by leon on 10/17/16.
- *
- * Yes, a Keybind handler for a single key
- */
-
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
@@ -19,6 +13,11 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.input.Keyboard;
 
+/**
+ * Created by leon on 10/17/16.
+ *
+ * Yes, a Keybind handler for a single key
+ */
 @SideOnly(Side.CLIENT)
 public class KeybindKeyHandler {
     public static KeyBinding fovToggleKey = new KeyBinding(I18n.format("keybind.fovfixtoggle"), Keyboard.KEY_NONE, "Numina");
