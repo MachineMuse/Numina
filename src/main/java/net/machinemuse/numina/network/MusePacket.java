@@ -27,7 +27,7 @@ public abstract class MusePacket
     private final ByteBuf bytes;
     private final DataOutputStream dataout;
 
-    public abstract IMusePackager packager();
+    public abstract MusePackager packager();
 
     public abstract void write();
 
@@ -40,9 +40,9 @@ public abstract class MusePacket
     }
 
     public FMLProxyPacket getFMLProxyPacket() throws IOException {
-        this.dataout().writeInt((Integer) MusePacketHandler.packagers.inverse().get(this.packager()));
+        this.dataout.writeInt((Integer) MusePacketHandler.packagers.inverse().get(this.packager()));
         this.write();
-        return new FMLProxyPacket(this.bytes(), MusePacketHandler.networkChannelName);
+        return new FMLProxyPacket(this.bytes, MusePacketHandler.networkChannelName);
     }
 
     public MusePacket getPacket131() {
@@ -58,7 +58,7 @@ public abstract class MusePacket
 
     public void writeInt(final int i) {
         try {
-            this.dataout().writeInt(i);
+            this.dataout.writeInt(i);
         } catch (IOException exception) {
             MuseLogger.logException("PROBLEM WRITING DATA TO PACKET:", exception);
         }
@@ -66,7 +66,7 @@ public abstract class MusePacket
 
     public void writeIntArray(final int[] data) {
         try {
-            this.dataout().writeInt(data.length);
+            this.dataout.writeInt(data.length);
             for (int k :  data)
                 dataout.writeInt(k);
         } catch (IOException exception) {
@@ -76,7 +76,7 @@ public abstract class MusePacket
 
     public void writeBoolean(final boolean b) {
         try {
-            this.dataout().writeBoolean(b);
+            this.dataout.writeBoolean(b);
         } catch (IOException exception) {
             MuseLogger.logException("PROBLEM WRITING DATA TO PACKET:", exception);
         }
@@ -84,7 +84,7 @@ public abstract class MusePacket
 
     public void writeDouble(final double i) {
         try {
-            this.dataout().writeDouble(i);
+            this.dataout.writeDouble(i);
         } catch (IOException exception) {
             MuseLogger.logException("PROBLEM WRITING DATA TO PACKET:", exception);
         }
@@ -93,7 +93,7 @@ public abstract class MusePacket
     public void writeItemStack(final ItemStack stack) {
         try {
             if (stack == null) {
-                this.dataout().writeShort(-1);
+                this.dataout.writeShort(-1);
             }
             else {
                 final NBTTagCompound nbt = new NBTTagCompound();
@@ -108,12 +108,12 @@ public abstract class MusePacket
     public void writeNBTTagCompound(final NBTTagCompound nbt) {
         try {
             if (nbt == null) {
-                this.dataout().writeShort(-1);
+                this.dataout.writeShort(-1);
             }
             else {
                 final byte[] compressednbt = CompressedStreamTools.compress(nbt);
-                this.dataout().writeShort((short)compressednbt.length);
-                this.dataout().write(compressednbt);
+                this.dataout.writeShort((short)compressednbt.length);
+                this.dataout.write(compressednbt);
             }
         } catch (IOException exception) {
             MuseLogger.logException("PROBLEM WRITING DATA TO PACKET:", exception);
@@ -122,7 +122,7 @@ public abstract class MusePacket
 
     public void writeString(final String string) {
         try {
-            this.dataout().writeUTF(string);
+            this.dataout.writeUTF(string);
         } catch (IOException exception) {
             MuseLogger.logException("PROBLEM WRITING DATA TO PACKET:", exception);
         }
@@ -130,6 +130,6 @@ public abstract class MusePacket
 
     public MusePacket() {
         this.bytes = Unpooled.buffer();
-        this.dataout = new DataOutputStream(new ByteBufOutputStream(this.bytes()));
+        this.dataout = new DataOutputStream(new ByteBufOutputStream(this.bytes));
     }
 }

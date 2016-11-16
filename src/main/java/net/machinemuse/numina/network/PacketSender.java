@@ -48,7 +48,7 @@ public class PacketSender {
 
     public static void sendToDimension(MusePacket message, int dimensionId) {
         channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.DIMENSION);
-        channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(new Integer(dimensionId));
+        channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(dimensionId);
         channels.get(Side.SERVER).writeOutbound(message);
     }
 

@@ -13,19 +13,14 @@ import net.machinemuse.numina.recipe.JSONRecipeList;
 import javax.annotation.Nonnull;
 import java.io.File;
 
-import static net.machinemuse.numina.basemod.Numina.MODID;
-import static net.machinemuse.numina.basemod.Numina.VERSION;
-
 /**
  * Author: MachineMuse (Claire Semple)
  * Created: 6:06 AM, 6/18/13
  *
  * Ported to Java by lehjr on 11/15/16.
  */
-@Mod(modid = MODID, version = VERSION)
+@Mod(modid = "numina")
 public class Numina {
-    public static final String MODID = "numina";
-    public static final String VERSION = "@numina_version@";
 
     @SidedProxy(clientSide = "net.machinemuse.numina.basemod.NuminaProxyClient", serverSide = "net.machinemuse.numina.basemod.NuminaProxyServer")
     static NuminaProxy proxy = null;

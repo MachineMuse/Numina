@@ -27,7 +27,7 @@ public class MusePacketModeChangeRequest extends MusePacket {
     }
 
     @Override
-    public IMusePackager packager() {
+    public MusePackager packager() {
         return getPackagerInstance();
     }
 

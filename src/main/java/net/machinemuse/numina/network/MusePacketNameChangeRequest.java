@@ -25,7 +25,7 @@ public class MusePacketNameChangeRequest extends MusePacket {
     }
 
     @Override
-    public IMusePackager packager() {
+    public MusePackager packager() {
         return getPackagerInstance();
     }
 

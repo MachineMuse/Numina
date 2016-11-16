@@ -32,7 +32,7 @@ import java.util.List;
 public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacket, MusePacket>
 {
     public static String networkChannelName;
-    public static MuseNumericRegistry<IMusePackager> packagers;
+    public static MuseNumericRegistry<MusePackager> packagers;
     public static EnumMap<Side, FMLEmbeddedChannel> channels;
 
 
@@ -62,7 +62,7 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
             if (handler instanceof NetHandlerPlayServer) {
                 final EntityPlayerMP playerServer = ((NetHandlerPlayServer)handler).playerEntity;
                 packetType = data.readInt();
-                IMusePackager packagerServer = this.packagers.get(packetType);
+                MusePackager packagerServer = this.packagers.get(packetType);
                 MusePacket packetServer = packagerServer.read(data, playerServer);
                 packetServer.handleServer(playerServer);
             }
@@ -72,7 +72,7 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
                 }
                 final EntityClientPlayerMP playerClient = Minecraft.getMinecraft().thePlayer;
                 packetType = data.readInt();
-                IMusePackager packagerClient = this.packagers.get(packetType);
+                MusePackager packagerClient = this.packagers.get(packetType);
                 MusePacket packetClient = packagerClient.read(data, playerClient);
                 packetClient.handleClient(playerClient);
             }

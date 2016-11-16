@@ -9,8 +9,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.opengl.GL11;
 
-import java.util.Iterator;
-
 /**
  * Ported to Java by lehjr on 10/10/16.
  */
@@ -36,9 +34,8 @@ public class GuiGameOverPlus extends GuiScreen {
                 ((GuiButton)this.buttonList.get(1)).enabled = false;
             }
         }
-        Iterator<GuiButton> iterator = this.buttonList.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().enabled = false;
+        for (GuiButton aButtonList : (Iterable<GuiButton>) this.buttonList) {
+            aButtonList.enabled = false;
         }
     }
 
@@ -107,9 +104,8 @@ public class GuiGameOverPlus extends GuiScreen {
         super.updateScreen();
         this.cooldownTimer += 1;
         if (this.cooldownTimer == 20) {
-            Iterator<GuiButton> iterator = this.buttonList.iterator();
-            while (iterator.hasNext()) {
-                iterator.next().enabled = false;
+            for (GuiButton aButtonList : (Iterable<GuiButton>) this.buttonList) {
+                aButtonList.enabled = false;
             }
         }
     }

@@ -14,9 +14,11 @@ import java.io.IOException;
  *
  * Ported to Java by lehjr on 11/4/16.
  */
-public class MusePackager implements IMusePackager {
+public class MusePackager {//implements IMusePackager {
 
     private static MusePackager INSTANCE;
+    public short READ_ERROR = -150;
+
 
     public static MusePackager getInstance() {
         if (INSTANCE == null)
@@ -24,12 +26,12 @@ public class MusePackager implements IMusePackager {
         return INSTANCE;
     }
 
-    @Override
+    //@Override
     public MusePacket read(DataInputStream datain, EntityPlayer player) {
         return null;
     }
 
-    @Override
+    //@Override
     public byte readByte(DataInputStream datain) {
         try {
             return datain.readByte();
@@ -39,7 +41,7 @@ public class MusePackager implements IMusePackager {
         }
     }
 
-    @Override
+    //@Override
     public short readShort(DataInputStream datain) {
         try {
             return datain.readShort();
@@ -49,7 +51,7 @@ public class MusePackager implements IMusePackager {
         }
     }
 
-    @Override
+    //@Override
     public int readInt(DataInputStream datain) {
         try {
             return datain.readInt();
@@ -59,7 +61,7 @@ public class MusePackager implements IMusePackager {
         }
     }
 
-    @Override
+    //@Override
     public long readLong(DataInputStream datain) {
         try {
             return datain.readLong();
@@ -69,7 +71,7 @@ public class MusePackager implements IMusePackager {
         }
     }
 
-    @Override
+    //@Override
     public boolean readBoolean(DataInputStream datain) {
         try {
             return datain.readBoolean();
@@ -79,7 +81,7 @@ public class MusePackager implements IMusePackager {
         }
     }
 
-    @Override
+    //@Override
     public float readFloat(DataInputStream datain) {
         try {
             return datain.readFloat();
@@ -89,7 +91,7 @@ public class MusePackager implements IMusePackager {
         }
     }
 
-    @Override
+    //@Override
     public double readDouble(DataInputStream datain) {
         try {
             return datain.readDouble();
@@ -99,24 +101,23 @@ public class MusePackager implements IMusePackager {
         }
     }
 
-
     /* RichInputStream ---------------------------------------------------------------------------- */
-    @Override
+    //@Override
     public int[] readIntArray(DataInputStream datain) {
         return RichInputStream.toRichStream(datain).readIntArray();
     }
 
-    @Override
+    //@Override
     public String readString(DataInputStream datain) {
         return RichInputStream.toRichStream(datain).readString();
     }
 
-    @Override
+    //@Override
     public ItemStack readItemStack(DataInputStream datain) {
         return RichInputStream.toRichStream(datain).readItemStack();
     }
 
-    @Override
+    //@Override
     public NBTTagCompound readNBTTagCompound(DataInputStream datain) {
         return RichInputStream.toRichStream(datain).readNBTTagCompound();
     }

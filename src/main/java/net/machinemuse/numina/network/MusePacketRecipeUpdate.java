@@ -32,7 +32,7 @@ public class MusePacketRecipeUpdate extends MusePacket {
     }
 
     @Override
-    public IMusePackager packager() {
+    public MusePackager packager() {
         return getPackagerInstance();
     }
 
