@@ -39,6 +39,7 @@ archivesBaseName = "${config.mod_id}"
 
 minecraft {
     version = "${config.minecraft_version}-${config.forge_version}"
+    replace "@numina_version@", version
     runDir = "run"
 }
 
