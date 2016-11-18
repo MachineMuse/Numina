@@ -77,12 +77,16 @@ public class RenderGameOverlayEventHandler {
         int i = player.inventory.currentItem;
         ItemStack stack = player.inventory.getCurrentItem();
         if (stack != null && stack.getItem() instanceof IModeChangingItem) {
+
+
+
+
             IModeChangingItem item = (IModeChangingItem)(stack.getItem());
             ScaledResolution screen = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
             MuseTextureUtils.pushTexture(MuseTextureUtils.ITEM_TEXTURE_QUILT);
             RenderState.blendingOn();
             long swapTime = Math.min(System.currentTimeMillis() - lastSwapTime, SWAPTIME);
-            IIcon currentMode = item.getModeIcon(item.getActiveMode(stack, player), stack, player);
+            IIcon currentMode = item.getModeIcon(item.getActiveMode(stack), stack, player);
             IIcon nextMode = item.getModeIcon(item.nextMode(stack, player), stack, player);
             IIcon prevMode = item.getModeIcon(item.prevMode(stack, player), stack, player);
             double prevX = .0;

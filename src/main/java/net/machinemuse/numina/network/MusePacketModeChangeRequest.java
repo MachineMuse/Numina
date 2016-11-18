@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.machinemuse.numina.item.IModeChangingItem;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -37,15 +38,14 @@ public class MusePacketModeChangeRequest extends MusePacket {
         writeString(mode);
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
-    public void handleClient(EntityClientPlayerMP player) {
+    public void handleServer(EntityPlayerMP player) {
         if (slot > -1 && slot < 9) {
             ItemStack stack = player.inventory.mainInventory[slot];
             if (stack != null) {
                 Item item = stack.getItem();
                 if (item instanceof IModeChangingItem) {
-                    List<String> modes = ((IModeChangingItem) item).getValidModes(stack, player);
+                    List<String> modes = ((IModeChangingItem) item).getValidModes(stack);
                     if (modes.contains(mode)) {
                         ((IModeChangingItem) item).setActiveMode(stack, mode);
                     }

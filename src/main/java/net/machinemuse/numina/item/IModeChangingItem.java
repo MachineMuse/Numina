@@ -13,21 +13,19 @@ import java.util.List;
  *
  * Ported to Java by lehjr on 11/1/16.
  */
-public interface IModeChangingItem
-{
-    void setActiveMode(ItemStack stack, String newMode) ;
+public interface IModeChangingItem {
+    @Nullable
+    IIcon getModeIcon(String mode, ItemStack stack, EntityPlayer player);
 
-    String getActiveMode(ItemStack stack, EntityPlayer player);
+    List<String> getValidModes(ItemStack stack);
+
+    String getActiveMode(ItemStack stack);
+
+    void setActiveMode(ItemStack stack, String newMode);
 
     void cycleMode(ItemStack stack, EntityPlayer player, int dMode);
 
     String nextMode(ItemStack stack, EntityPlayer player);
 
     String prevMode(ItemStack stack, EntityPlayer player);
-
-    @Nullable
-    IIcon getModeIcon(String mode, ItemStack stack, EntityPlayer player);
-
-    @Nullable
-    List<String> getValidModes(ItemStack stack, EntityPlayer player);
 }
