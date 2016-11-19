@@ -62,8 +62,6 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
             if (handler instanceof NetHandlerPlayServer) {
                 final EntityPlayerMP playerServer = ((NetHandlerPlayServer)handler).playerEntity;
                 packetType = data.readInt();
-                System.out.println("packet type server: " + packetType);
-
                 MusePackager packagerServer = this.packagers.get(packetType);
                 MusePacket packetServer = packagerServer.read(data, playerServer);
                 packetServer.handleServer(playerServer);
@@ -74,8 +72,6 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
                 }
                 final EntityClientPlayerMP playerClient = Minecraft.getMinecraft().thePlayer;
                 packetType = data.readInt();
-                System.out.println("packet type client: " + packetType);
-
                 MusePackager packagerClient = this.packagers.get(packetType);
                 MusePacket packetClient = packagerClient.read(data, playerClient);
                 packetClient.handleClient(playerClient);
