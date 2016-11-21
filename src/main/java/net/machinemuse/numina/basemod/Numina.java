@@ -1,14 +1,14 @@
 package net.machinemuse.numina.basemod;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import net.machinemuse.numina.network.NuminaPackets;
 import net.machinemuse.numina.recipe.JSONRecipeList;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -63,6 +63,6 @@ public class Numina {
 
     @Mod.EventHandler private void serverstart(FMLServerStartedEvent e) {
         JSONRecipeList.loadRecipesFromDir(Numina.configDir.toString() + "/machinemuse/recipes/");
-        FMLCommonHandler.instance().bus().register(new NuminaPlayerTracker());
+        MinecraftForge.EVENT_BUS.register(new NuminaPlayerTracker());
     }
 }

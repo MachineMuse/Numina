@@ -1,8 +1,8 @@
 package net.machinemuse.numina.player;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -13,8 +13,8 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 public final class PlayerTickHandler {
     @SubscribeEvent
     public static void onPlayerTick(LivingEvent.LivingUpdateEvent livingUpdateEvent) {
-        if (livingUpdateEvent.entityLiving instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) livingUpdateEvent.entityLiving;
+        if (livingUpdateEvent.getEntityLiving() instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) livingUpdateEvent.getEntityLiving();
             player.refreshDisplayName();
         }
     }

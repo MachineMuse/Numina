@@ -1,13 +1,13 @@
 package net.machinemuse.numina.basemod;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.machinemuse.numina.network.MusePacketRecipeUpdate;
 import net.machinemuse.numina.network.PacketSender;
 import net.machinemuse.numina.recipe.JSONRecipe;
 import net.machinemuse.numina.recipe.JSONRecipeList;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 /**
  * Author: MachineMuse (Claire Semple)

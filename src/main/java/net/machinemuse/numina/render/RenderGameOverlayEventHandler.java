@@ -1,15 +1,15 @@
 package net.machinemuse.numina.render;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.machinemuse.numina.geometry.Colour;
 import net.machinemuse.numina.item.IModeChangingItem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -50,7 +50,7 @@ public class RenderGameOverlayEventHandler {
 
     @SubscribeEvent
     public void onPostRenderGameOverlayEvent(final RenderGameOverlayEvent.Post e) {
-        switch (e.type) {
+        switch (e.getType()) {
 //            case ALL: break;
 //            case HELMET: break;
 //            case PORTAL: break;
@@ -73,7 +73,7 @@ public class RenderGameOverlayEventHandler {
 
     public void drawModeChangeIcons() {
         Minecraft mc = Minecraft.getMinecraft();
-        EntityClientPlayerMP player = mc.thePlayer;
+        EntityPlayerSP player = mc.thePlayer;
         int i = player.inventory.currentItem;
         ItemStack stack = player.inventory.getCurrentItem();
         if (stack != null && stack.getItem() instanceof IModeChangingItem) {
@@ -82,13 +82,13 @@ public class RenderGameOverlayEventHandler {
 
 
             IModeChangingItem item = (IModeChangingItem)(stack.getItem());
-            ScaledResolution screen = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+            ScaledResolution screen = new ScaledResolution(mc);
             MuseTextureUtils.pushTexture(MuseTextureUtils.ITEM_TEXTURE_QUILT);
             RenderState.blendingOn();
             long swapTime = Math.min(System.currentTimeMillis() - lastSwapTime, SWAPTIME);
-            IIcon currentMode = item.getModeIcon(item.getActiveMode(stack), stack, player);
-            IIcon nextMode = item.getModeIcon(item.nextMode(stack, player), stack, player);
-            IIcon prevMode = item.getModeIcon(item.prevMode(stack, player), stack, player);
+            TextureAtlasSprite currentMode = item.getModeIcon(item.getActiveMode(stack), stack, player);
+            TextureAtlasSprite nextMode = item.getModeIcon(item.nextMode(stack, player), stack, player);
+            TextureAtlasSprite prevMode = item.getModeIcon(item.prevMode(stack, player), stack, player);
             double prevX = .0;
             double prevY = .0;
             double currX = .0;
@@ -144,7 +144,7 @@ public class RenderGameOverlayEventHandler {
         }
     }
 
-    public void drawIcon(double x, double y, IIcon icon, double alpha) {
+    public void drawIcon(double x, double y, TextureAtlasSprite icon, double alpha) {
         if (icon !=null)
             MuseIconUtils.drawIconAt(x, y, icon, Colour.WHITE.withAlpha(alpha));
     }

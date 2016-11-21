@@ -1,13 +1,13 @@
 package net.machinemuse.numina.gui;
 
-import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.machinemuse.numina.death.GuiGameOverPlus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -24,8 +24,7 @@ public class NuminaGuiHandler implements IGuiHandler {
     @Override
     @SideOnly(Side.CLIENT)
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        Minecraft.getMinecraft().thePlayer.addStat(AchievementList.openInventory, 1);
-
+        Minecraft.getMinecraft().thePlayer.addStat(AchievementList.OPEN_INVENTORY, 1);
         if (ID== 0)
             return new GuiGameOverPlus();
         return null;

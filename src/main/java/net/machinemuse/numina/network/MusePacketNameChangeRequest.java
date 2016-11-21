@@ -1,9 +1,9 @@
 package net.machinemuse.numina.network;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.DataInputStream;
 
@@ -37,7 +37,7 @@ public class MusePacketNameChangeRequest extends MusePacket {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void handleClient(EntityClientPlayerMP player) {
+    public void handleClient(EntityPlayerSP player) {
         EntityPlayer anotherPlayer = (EntityPlayer) player.worldObj.getEntityByID(entityID);
         anotherPlayer.refreshDisplayName();
     }

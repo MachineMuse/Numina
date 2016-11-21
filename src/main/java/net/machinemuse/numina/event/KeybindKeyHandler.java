@@ -1,16 +1,16 @@
 package net.machinemuse.numina.event;
 
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.machinemuse.numina.basemod.NuminaConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 /**
@@ -29,13 +29,13 @@ public class KeybindKeyHandler {
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         if (fovToggleKey.isPressed()){
             fovIsActive = !fovIsActive;
             if (fovIsActive)
-                player.addChatComponentMessage(new ChatComponentText(I18n.format("fovfixtoggle.enabled")));
+                player.addChatComponentMessage(new TextComponentString(I18n.format("fovfixtoggle.enabled")));
             else
-                player.addChatComponentMessage(new ChatComponentText(I18n.format("fovfixtoggle.disabled")));
+                player.addChatComponentMessage(new TextComponentString(I18n.format("fovfixtoggle.disabled")));
         }
     }
 }

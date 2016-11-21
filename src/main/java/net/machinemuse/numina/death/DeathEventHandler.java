@@ -1,14 +1,14 @@
 package net.machinemuse.numina.death;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.machinemuse.numina.basemod.Numina;
 import net.machinemuse.numina.general.MuseLogger;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * Author: MachineMuse (Claire Semple)
@@ -19,7 +19,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 public class DeathEventHandler {
     @SubscribeEvent
     public void onLivingDeath(LivingDeathEvent e) {
-        EntityPlayer player = (EntityPlayer) e.entityLiving;
+        EntityPlayer player = (EntityPlayer) e.getEntityLiving();
         e.setCanceled(true);
         player.openGui(Numina.getInstance(), 0, player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
         MuseLogger.logDebug("Death");
@@ -28,9 +28,9 @@ public class DeathEventHandler {
 
     @SubscribeEvent
     public void onOpenGui(GuiOpenEvent e) {
-        if (e.gui instanceof GuiGameOver) {
+        if (e.getGui() instanceof GuiGameOver) {
             e.setCanceled(true);
-            EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+            EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
             player.openGui(Numina.getInstance(), 0, player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
     }

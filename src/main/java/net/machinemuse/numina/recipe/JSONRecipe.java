@@ -99,6 +99,18 @@ public class JSONRecipe implements IRecipe {
         return result.getRecipeOutput();
     }
 
+    @Override
+    public ItemStack[] getRemainingItems(InventoryCrafting inv) {
+        ItemStack[] aitemstack = new ItemStack[inv.getSizeInventory()];
+        for (int i = 0; i < aitemstack.length; ++i)
+        {
+            ItemStack itemstack = inv.getStackInSlot(i);
+            aitemstack[i] = net.minecraftforge.common.ForgeHooks.getContainerItem(itemstack);
+        }
+        return aitemstack;
+        //return new ItemStack[0];
+    }
+
     public int getWidth() {
         int size = 0;
         for (IItemMatcher[] row : ingredients) {

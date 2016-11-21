@@ -86,7 +86,7 @@ public final class RenderState {
         Minecraft mc = Minecraft.getMinecraft();
         int dw = mc.displayWidth;
         int dh = mc.displayHeight;
-        ScaledResolution res  = new ScaledResolution(mc, dw, dh);
+        ScaledResolution res  = new ScaledResolution(mc);
         double newx = x * res.getScaleFactor();
         double newy = dh - h * res.getScaleFactor() - y * res.getScaleFactor();
         double neww = w * res.getScaleFactor();

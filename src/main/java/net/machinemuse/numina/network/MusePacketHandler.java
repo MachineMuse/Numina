@@ -1,9 +1,5 @@
 package net.machinemuse.numina.network;
 
-import cpw.mods.fml.common.network.FMLEmbeddedChannel;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.internal.FMLProxyPacket;
-import cpw.mods.fml.relauncher.Side;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -11,11 +7,15 @@ import io.netty.handler.codec.MessageToMessageCodec;
 import net.machinemuse.numina.general.MuseLogger;
 import net.machinemuse.numina.scala.MuseNumericRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.NetHandlerPlayServer;
+import net.minecraftforge.fml.common.network.FMLEmbeddedChannel;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
+import net.minecraftforge.fml.relauncher.Side;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -70,7 +70,7 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
                 if (!(handler instanceof NetHandlerPlayClient)) {
                     throw new IOException("Error with (INetHandler) handler. Should be instance of NetHandlerPlayClient.");
                 }
-                final EntityClientPlayerMP playerClient = Minecraft.getMinecraft().thePlayer;
+                final EntityPlayerSP playerClient = Minecraft.getMinecraft().thePlayer;
                 packetType = data.readInt();
                 MusePackager packagerClient = this.packagers.get(packetType);
                 MusePacket packetClient = packagerClient.read(data, playerClient);

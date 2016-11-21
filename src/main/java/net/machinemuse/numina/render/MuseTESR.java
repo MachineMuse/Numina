@@ -16,9 +16,14 @@ public class MuseTESR extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tileentity, double d0, double d1, double d2, float f) {
-        this.renderAt(tileentity, d0, d1, d2, f);
+    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
+        super.renderTileEntityAt(te, x, y, z, partialTicks, destroyStage);
     }
+
+//    @Override //FIXME: fixe to match above
+//    public void renderTileEntityAt(TileEntity tileentity, double d0, double d1, double d2, float f) {
+//        this.renderAt(tileentity, d0, d1, d2, f);
+//    }
 
     public void renderAt(TileEntity var1, double var2, double var4, double var6, float var8) {
     }

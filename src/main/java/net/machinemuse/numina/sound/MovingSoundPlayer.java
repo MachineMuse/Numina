@@ -4,6 +4,8 @@ import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.MovingSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 
 /**
  * Ported to Java by lehjr on 10/22/16.
@@ -11,12 +13,21 @@ import net.minecraft.util.ResourceLocation;
 public class MovingSoundPlayer extends MovingSound {
     private static EntityPlayer player;
 
+    /*
+     * Important porting note:
+     * Sounds are now event based instead of resource location.
+     */
+    public MovingSoundPlayer(SoundEvent soundIn,
+                             SoundCategory categoryIn,
+                             EntityPlayer player,
+                             float newvolume,
+                             float newpitch,
+                             boolean newrepeat) {
 
-    public MovingSoundPlayer(final EntityPlayer player, final ResourceLocation resourceLocation, final float newvolume, final float newpitch, final boolean newrepeat) {
-        super(resourceLocation);
+        super(soundIn, categoryIn);
         this.player = player;
 
-        this.field_147663_c = newpitch;
+        this.pitch = newpitch;
         this.volume = newvolume;
         this.repeat = newrepeat;
     }
@@ -25,17 +36,17 @@ public class MovingSoundPlayer extends MovingSound {
         return this.player;
     }
 
-    public MovingSoundPlayer updatePitch(final float newpitch) {
-        this.field_147663_c = newpitch;
+    public MovingSoundPlayer updatePitch(float newpitch) {
+        this.pitch = newpitch;
         return this;
     }
 
-    public MovingSoundPlayer updateVolume(final float newvolume) {
+    public MovingSoundPlayer updateVolume(float newvolume) {
         this.volume = (4.0f * this.volume + newvolume) / 5.0f;
         return this;
     }
 
-    public MovingSoundPlayer updateRepeat(final boolean newrepeat) {
+    public MovingSoundPlayer updateRepeat(boolean newrepeat) {
         this.repeat = newrepeat;
         return this;
     }

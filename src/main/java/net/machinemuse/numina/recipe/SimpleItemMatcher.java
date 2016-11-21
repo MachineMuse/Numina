@@ -1,12 +1,13 @@
 package net.machinemuse.numina.recipe;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.machinemuse.numina.basemod.NuminaConfig;
 import net.machinemuse.numina.general.MuseLogger;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -50,7 +51,7 @@ public class SimpleItemMatcher implements IItemMatcher {
         }
         if (registryName != null) {
             String[] names = registryName.split(":");
-            Item item = GameRegistry.findItem(names[0], names[1]);
+            Item item = Item.REGISTRY.getObject(new ResourceLocation(itemStackName));
             if (item == null) {
                 MuseLogger.logError("Item " + registryName + " not found in registry for recipe.");
                 return false;
@@ -59,7 +60,7 @@ public class SimpleItemMatcher implements IItemMatcher {
         }
         if (itemStackName != null) {
             String[] names = itemStackName.split(":");
-            ItemStack compareStack = GameRegistry.findItemStack(names[0], names[1], 1);
+            ItemStack compareStack = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(itemStackName)), 1);
             if (compareStack == null) {
                 MuseLogger.logError("ItemStack " + itemStackName + " not found in registry for recipe.");
                 return false;
@@ -67,11 +68,10 @@ public class SimpleItemMatcher implements IItemMatcher {
             if (stack.getItemDamage() != compareStack.getItemDamage()) return false;
             if (stack.getItem() != compareStack.getItem()) return false;
             if (!stack.getTagCompound().equals(compareStack.getTagCompound())) return false;
-
         }
         if (nbtString != null) {
             try {
-                NBTTagCompound nbt = (NBTTagCompound) JsonToNBT.func_150315_a(nbtString);
+                NBTTagCompound nbt = (NBTTagCompound) JsonToNBT.getTagFromJson(nbtString);
                 if (!nbt.equals(stack.getTagCompound())) {
                     return false;
                 }
@@ -80,7 +80,6 @@ public class SimpleItemMatcher implements IItemMatcher {
                 return false;
             }
         }
-
         return true;
     }
 

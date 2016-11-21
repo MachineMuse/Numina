@@ -2,10 +2,10 @@ package net.machinemuse.numina.item;
 
 import net.machinemuse.numina.network.MusePacketModeChangeRequest;
 import net.machinemuse.numina.network.PacketSender;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class ModeChangingItem implements IModeChangingItem {
 
     @Nullable
     @Override
-    public IIcon getModeIcon(String mode, ItemStack stack, EntityPlayer player) {
+    public TextureAtlasSprite getModeIcon(String mode, ItemStack stack, EntityPlayer player) {
         if (this.mcItem != null)
             return ((IModeChangingItem) mcItem).getModeIcon(mode, stack, player);
         return null;

@@ -1,8 +1,8 @@
 package net.machinemuse.numina.item;
 
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface IModeChangingItem {
     @Nullable
-    IIcon getModeIcon(String mode, ItemStack stack, EntityPlayer player);
+    TextureAtlasSprite getModeIcon(String mode, ItemStack stack, EntityPlayer player);
 
     List<String> getValidModes(ItemStack stack);
 

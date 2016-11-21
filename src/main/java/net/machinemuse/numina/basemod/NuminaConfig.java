@@ -1,9 +1,9 @@
 package net.machinemuse.numina.basemod;
 
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.machinemuse.numina.general.MuseLogger;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
 

@@ -12,8 +12,7 @@ public final class NuminaPlayerUtils {
     public static void resetFloatKickTicks(EntityPlayer player) {
         if (player instanceof EntityPlayerMP) {
             EntityPlayerMP entityPlayerMP = (EntityPlayerMP)player;
-            entityPlayerMP.playerNetServerHandler.floatingTickCount = 0;
+            entityPlayerMP.connection.floatingTickCount = 0;
         }
     }
 }
-
