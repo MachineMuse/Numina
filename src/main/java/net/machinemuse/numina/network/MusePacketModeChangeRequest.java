@@ -1,9 +1,6 @@
 package net.machinemuse.numina.network;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.machinemuse.numina.item.IModeChangingItem;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -39,7 +36,7 @@ public class MusePacketModeChangeRequest extends MusePacket {
     }
 
     @Override
-    public void handleServer(EntityPlayerMP player) {
+    public void handleServer(EntityPlayer player) {
         if (slot > -1 && slot < 9) {
             ItemStack stack = player.inventory.mainInventory[slot];
             if (stack != null) {

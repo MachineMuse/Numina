@@ -8,6 +8,7 @@ import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
 import net.machinemuse.numina.general.MuseLogger;
 import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -22,8 +23,7 @@ import java.io.IOException;
  *
  * Ported to Java by lehjr on 10/25/16.
  */
-public abstract class MusePacket
-{
+public abstract class MusePacket {
     private final ByteBuf bytes;
     private final DataOutputStream dataout;
 
@@ -50,13 +50,13 @@ public abstract class MusePacket
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleClient(final EntityClientPlayerMP player) {
+    public void handleClient(EntityPlayer player) {
     }
 
-    public void handleServer(final EntityPlayerMP player) {
+    public void handleServer(EntityPlayer player) {
     }
 
-    public void writeInt(final int i) {
+    public void writeInt(int i) {
         try {
             this.dataout.writeInt(i);
         } catch (IOException exception) {
@@ -64,7 +64,7 @@ public abstract class MusePacket
         }
     }
 
-    public void writeIntArray(final int[] data) {
+    public void writeIntArray(int[] data) {
         try {
             this.dataout.writeInt(data.length);
             for (int k :  data)
@@ -74,7 +74,7 @@ public abstract class MusePacket
         }
     }
 
-    public void writeBoolean(final boolean b) {
+    public void writeBoolean(boolean b) {
         try {
             this.dataout.writeBoolean(b);
         } catch (IOException exception) {
@@ -82,7 +82,7 @@ public abstract class MusePacket
         }
     }
 
-    public void writeDouble(final double i) {
+    public void writeDouble(double i) {
         try {
             this.dataout.writeDouble(i);
         } catch (IOException exception) {
@@ -90,13 +90,13 @@ public abstract class MusePacket
         }
     }
 
-    public void writeItemStack(final ItemStack stack) {
+    public void writeItemStack(ItemStack stack) {
         try {
             if (stack == null) {
                 this.dataout.writeShort(-1);
             }
             else {
-                final NBTTagCompound nbt = new NBTTagCompound();
+                NBTTagCompound nbt = new NBTTagCompound();
                 stack.writeToNBT(nbt);
                 this.writeNBTTagCompound(nbt);
             }
@@ -105,13 +105,13 @@ public abstract class MusePacket
         }
     }
 
-    public void writeNBTTagCompound(final NBTTagCompound nbt) {
+    public void writeNBTTagCompound(NBTTagCompound nbt) {
         try {
             if (nbt == null) {
                 this.dataout.writeShort(-1);
             }
             else {
-                final byte[] compressednbt = CompressedStreamTools.compress(nbt);
+                byte[] compressednbt = CompressedStreamTools.compress(nbt);
                 this.dataout.writeShort((short)compressednbt.length);
                 this.dataout.write(compressednbt);
             }
@@ -120,7 +120,7 @@ public abstract class MusePacket
         }
     }
 
-    public void writeString(final String string) {
+    public void writeString(String string) {
         try {
             this.dataout.writeUTF(string);
         } catch (IOException exception) {

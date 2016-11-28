@@ -1,9 +1,11 @@
 package net.machinemuse.numina.network;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -13,6 +15,7 @@ import net.machinemuse.numina.scala.MuseNumericRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.NetHandlerPlayServer;
@@ -35,7 +38,6 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
     public static MuseNumericRegistry<MusePackager> packagers;
     public static EnumMap<Side, FMLEmbeddedChannel> channels;
 
-
     private MusePacketHandler() {
         this.networkChannelName = "Numina";
         this.packagers = new MuseNumericRegistry<>();
@@ -46,7 +48,7 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
         new MusePacketHandler();
     }
 
-    public void encode(final ChannelHandlerContext ctx, final MusePacket msg, final List<Object> out) {
+    public void encode(ChannelHandlerContext ctx, MusePacket msg, List<Object> out) {
         try {
             out.add(msg.getFMLProxyPacket());
         } catch (IOException e) {
@@ -54,30 +56,35 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
         }
     }
 
-    public void decode(final ChannelHandlerContext ctx, final FMLProxyPacket msg, final List<Object> out) {
-        final DataInputStream data = new DataInputStream((InputStream)new ByteBufInputStream(msg.payload()));
+    @SideOnly(Side.CLIENT)
+    private EntityPlayer getClientPlayer() {
+        return Minecraft.getMinecraft().thePlayer;
+    }
+
+    public void decode(ChannelHandlerContext ctx, FMLProxyPacket msg, List<Object> out) {
+        DataInputStream data = new DataInputStream((InputStream)new ByteBufInputStream(msg.payload()));
         int packetType = 0;
+
+        INetHandler handler = msg.handler();
+        EntityPlayer player;
+
         try {
-            final INetHandler handler = msg.handler();
-            if (handler instanceof NetHandlerPlayServer) {
-                final EntityPlayerMP playerServer = ((NetHandlerPlayServer)handler).playerEntity;
-                packetType = data.readInt();
-                MusePackager packagerServer = this.packagers.get(packetType);
-                MusePacket packetServer = packagerServer.read(data, playerServer);
-                packetServer.handleServer(playerServer);
+            switch (FMLCommonHandler.instance().getEffectiveSide()) {
+                case SERVER:
+                    player = ((NetHandlerPlayServer) handler).playerEntity;
+                    packetType = data.readInt();
+                    MusePackager packagerServer = this.packagers.get(packetType);
+                    MusePacket packetServer = packagerServer.read(data, player);
+                    packetServer.handleServer(player);
+
+                case CLIENT:
+                    player = this.getClientPlayer();
+                    packetType = data.readInt();
+                    MusePackager packagerClient = this.packagers.get(packetType);
+                    MusePacket packetClient = packagerClient.read(data, player);
+                    packetClient.handleClient(player);
             }
-            else {
-                if (!(handler instanceof NetHandlerPlayClient)) {
-                    throw new IOException("Error with (INetHandler) handler. Should be instance of NetHandlerPlayClient.");
-                }
-                final EntityClientPlayerMP playerClient = Minecraft.getMinecraft().thePlayer;
-                packetType = data.readInt();
-                MusePackager packagerClient = this.packagers.get(packetType);
-                MusePacket packetClient = packagerClient.read(data, playerClient);
-                packetClient.handleClient(playerClient);
-            }
-        }
-        catch (IOException exception) {
+        }catch (Exception exception) {
             MuseLogger.logException("PROBLEM READING PACKET IN DECODE STEP D:", exception);
         }
     }
