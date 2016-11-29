@@ -76,6 +76,7 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
                     MusePackager packagerServer = this.packagers.get(packetType);
                     MusePacket packetServer = packagerServer.read(data, player);
                     packetServer.handleServer(player);
+                    break;
 
                 case CLIENT:
                     player = this.getClientPlayer();
@@ -83,6 +84,7 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
                     MusePackager packagerClient = this.packagers.get(packetType);
                     MusePacket packetClient = packagerClient.read(data, player);
                     packetClient.handleClient(player);
+                    break;
             }
         }catch (Exception exception) {
             MuseLogger.logException("PROBLEM READING PACKET IN DECODE STEP D:", exception);
