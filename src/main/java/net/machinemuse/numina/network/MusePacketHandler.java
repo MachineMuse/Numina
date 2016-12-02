@@ -69,22 +69,22 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
         EntityPlayer player;
 
         try {
-            switch (FMLCommonHandler.instance().getEffectiveSide()) {
-                case SERVER:
-                    player = ((NetHandlerPlayServer) handler).playerEntity;
-                    packetType = data.readInt();
-                    MusePackager packagerServer = this.packagers.get(packetType);
-                    MusePacket packetServer = packagerServer.read(data, player);
-                    packetServer.handleServer(player);
-                    break;
+            if (handler instanceof NetHandlerPlayServer) {
+                player = ((NetHandlerPlayServer) handler).playerEntity;
+                packetType = data.readInt();
+                MusePackager packagerServer = this.packagers.get(packetType);
+                MusePacket packetServer = packagerServer.read(data, player);
+                packetServer.handleServer(player);
 
-                case CLIENT:
-                    player = this.getClientPlayer();
-                    packetType = data.readInt();
-                    MusePackager packagerClient = this.packagers.get(packetType);
-                    MusePacket packetClient = packagerClient.read(data, player);
-                    packetClient.handleClient(player);
-                    break;
+            } else {
+                if (!(handler instanceof NetHandlerPlayClient)) {
+                    throw new IOException("Error with (INetHandler) handler. Should be instance of NetHandlerPlayClient.");
+                }
+                player = this.getClientPlayer();
+                packetType = data.readInt();
+                MusePackager packagerClient = this.packagers.get(packetType);
+                MusePacket packetClient = packagerClient.read(data, player);
+                packetClient.handleClient(player);
             }
         }catch (Exception exception) {
             MuseLogger.logException("PROBLEM READING PACKET IN DECODE STEP D:", exception);
