@@ -1,10 +1,10 @@
 package net.machinemuse.numina.basemod;
 
 import net.machinemuse.numina.event.FOVUpdateEventHandler;
+import net.machinemuse.numina.event.KeybindKeyHandler;
 import net.machinemuse.numina.general.MuseLogger;
 import net.machinemuse.numina.mouse.MouseEventHandler;
 import net.machinemuse.numina.render.RenderGameOverlayEventHandler;
-import net.machinemuse.powersuits.control.KeybindKeyHandler;
 import net.minecraftforge.common.MinecraftForge;
 
 /**
