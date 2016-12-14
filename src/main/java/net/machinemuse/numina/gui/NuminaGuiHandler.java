@@ -21,12 +21,11 @@ public class NuminaGuiHandler implements IGuiHandler {
         return null;
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
+    @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         Minecraft.getMinecraft().thePlayer.addStat(AchievementList.openInventory, 1);
-
-        if (ID== 0)
+        if (ID == 0)
             return new GuiGameOverPlus();
         return null;
     }

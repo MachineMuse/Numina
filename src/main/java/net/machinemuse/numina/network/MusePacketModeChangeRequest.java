@@ -36,13 +36,13 @@ public class MusePacketModeChangeRequest extends MusePacket {
     }
 
     @Override
-    public void handleServer(EntityPlayer player) {
+    public void handleServer(EntityPlayerMP player) {
         if (slot > -1 && slot < 9) {
             ItemStack stack = player.inventory.mainInventory[slot];
             if (stack != null) {
                 Item item = stack.getItem();
                 if (item instanceof IModeChangingItem) {
-                    List<String> modes = ((IModeChangingItem) item).getValidModes(stack);
+                    List<String> modes = ((IModeChangingItem) item).getValidModes(stack, player);
                     if (modes.contains(mode)) {
                         ((IModeChangingItem) item).setActiveMode(stack, mode);
                     }

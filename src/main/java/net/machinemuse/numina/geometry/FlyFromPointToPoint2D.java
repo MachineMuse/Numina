@@ -1,9 +1,9 @@
 package net.machinemuse.numina.geometry;
 
 public class FlyFromPointToPoint2D extends MusePoint2D {
-    protected final MusePoint2D prev;
-    protected final long spawnTime;
-    protected final double timeTo;
+    protected MusePoint2D prev;
+    protected long spawnTime;
+    protected double timeTo;
 
     public FlyFromPointToPoint2D(double x, double y, double x2, double y2,
                                  double timeTo) {

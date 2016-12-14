@@ -102,7 +102,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
 
     public static ArrayList<ItemStack> getItemByUnlocalizedName(String unlocalizedName)
     {
-        ArrayList<ItemStack> result = new ArrayList<>();
+        ArrayList<ItemStack> result = new ArrayList<ItemStack>();
         if (itemMap == null)
         {
             if (ItemList.items.isEmpty()) 
@@ -111,7 +111,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
                 if (stack != null)
                     result.add(stack);
             } else {
-                itemMap = new HashMap<>();
+                itemMap = new HashMap<String, ArrayList<ItemStack>>();
                 for (ItemStack stack : ItemList.items)
                 {
                     String key = stack.getItem().getUnlocalizedName(stack);
@@ -137,7 +137,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             result = OreDictionary.getOres(cell.oredictName);
 
             if (cell.meta != null && result != null && cell.meta != OreDictionary.WILDCARD_VALUE) {
-                ArrayList<ItemStack> t = new ArrayList<>();
+                ArrayList<ItemStack> t = new ArrayList<ItemStack>();
                 for (ItemStack stack : result)
                     if (cell.meta == stack.getItemDamage())
                         t.add(stack);
@@ -147,7 +147,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
 
         if (cell.itemStackName != null) {
             String[] names = cell.itemStackName.split(":");
-            result = new ArrayList<>();
+            result = new ArrayList<ItemStack>();
             ItemStack stack = GameRegistry.findItemStack(names[0], names[1], 1);
             if(stack != null) {
                 stack = stack.copy();
@@ -160,7 +160,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
 
         if(cell.registryName != null) {
             String[] names = cell.registryName.split(":");
-            result = new ArrayList<>();
+            result = new ArrayList<ItemStack>();
             Item item = GameRegistry.findItem(names[0], names[1]);
             if(item != null) {
                 int newMeta = cell.meta == null ? 0 : cell.meta;
@@ -174,7 +174,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
             if (result == null) {
                 result = getItemByUnlocalizedName(cell.unlocalizedName);
             } else {
-                ArrayList<ItemStack> t = new ArrayList<>();
+                ArrayList<ItemStack> t = new ArrayList<ItemStack>();
                 for (ItemStack stack : result)
                     if (cell.unlocalizedName.equals(stack.getItem().getUnlocalizedName(stack)))
                         t.add(stack);
@@ -185,7 +185,7 @@ public class JSONRecipeHandler extends ShapedRecipeHandler {
 
 
         if (cell.nbtString != null && result != null) {
-            ArrayList<ItemStack> t = new ArrayList<>();
+            ArrayList<ItemStack> t = new ArrayList<ItemStack>();
             for (ItemStack stack : result) {
                 ItemStack stack2 = stack.copy();
                 try {

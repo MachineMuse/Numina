@@ -38,22 +38,22 @@ public class PacketSender {
         channels.get(Side.SERVER).writeOutbound(message);
     }
 
-    public static void sendToAllAround(MusePacket packet, TileEntity tileEntity, double d) {
-        sendToAllAround(packet, new NetworkRegistry.TargetPoint(tileEntity.getWorldObj().provider.dimensionId, tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, d));
-    }
-
-    public static void sendToAllAround(MusePacket packet, Entity entity, double d) {
-        sendToAllAround(packet, new NetworkRegistry.TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, d));
-    }
-
     public static void sendToDimension(MusePacket message, int dimensionId) {
         channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.DIMENSION);
-        channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(dimensionId);
+        channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(new Integer(dimensionId));
         channels.get(Side.SERVER).writeOutbound(message);
     }
 
     public static void sendToServer(MusePacket message) {
         channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.TOSERVER);
         channels.get(Side.CLIENT).writeOutbound(message);
+    }
+
+    public static void sendToAllAround(MusePacket packet, TileEntity entity, double d) {
+        sendToAllAround(packet, new NetworkRegistry.TargetPoint(entity.getWorldObj().provider.dimensionId, entity.xCoord, entity.yCoord, entity.zCoord, d));
+    }
+
+    public static void sendToAllAround(MusePacket packet, Entity entity, double d) {
+        sendToAllAround(packet, new NetworkRegistry.TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, d));
     }
 }

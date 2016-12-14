@@ -9,7 +9,7 @@ import java.nio.DoubleBuffer;
 public class DrawableMuseCircle {
     public static final double detail = 4;
     protected static DoubleBuffer points;
-    protected final DoubleBuffer colour;
+    protected DoubleBuffer colour;
 
     public DrawableMuseCircle(Colour c1, Colour c2) {
         if (points == null) {

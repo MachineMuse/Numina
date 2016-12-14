@@ -23,7 +23,7 @@ import java.io.File;
 public class Numina {
 
     @SidedProxy(clientSide = "net.machinemuse.numina.basemod.NuminaProxyClient", serverSide = "net.machinemuse.numina.basemod.NuminaProxyServer")
-    static NuminaProxy proxy = null;
+    static NuminaProxy proxy;
     public static File configDir = null;
 
     @Nonnull

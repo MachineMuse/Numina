@@ -16,7 +16,7 @@ public class ItemNameMappings {
 
     private static Map<String, ItemStack> getItemMap() {
         if (itemMap == null) {
-            itemMap = new HashMap<>();
+            itemMap = new HashMap<String, ItemStack>();
             for (Object obj : Block.blockRegistry) {
                 Block block = (Block)obj;
                 if (block != null && block.getUnlocalizedName() != null) {

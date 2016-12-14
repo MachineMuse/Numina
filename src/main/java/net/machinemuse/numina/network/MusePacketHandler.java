@@ -1,6 +1,5 @@
 package net.machinemuse.numina.network;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -13,7 +12,6 @@ import io.netty.handler.codec.MessageToMessageCodec;
 import net.machinemuse.numina.general.MuseLogger;
 import net.machinemuse.numina.scala.MuseNumericRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -32,8 +30,7 @@ import java.util.List;
  * Ported to Java by lehjr on 10/23/16.
  */
 @ChannelHandler.Sharable
-public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacket, MusePacket>
-{
+public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacket, MusePacket> {
     public static String networkChannelName;
     public static MuseNumericRegistry<MusePackager> packagers;
     public static EnumMap<Side, FMLEmbeddedChannel> channels;
@@ -41,7 +38,7 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
     private MusePacketHandler() {
         this.networkChannelName = "Numina";
         this.packagers = new MuseNumericRegistry<>();
-        this.channels = NetworkRegistry.INSTANCE.newChannel(this.networkChannelName, new ChannelHandler[] { this });
+        this.channels = NetworkRegistry.INSTANCE.newChannel(this.networkChannelName, this);
     }
 
     static {
@@ -66,11 +63,9 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
         int packetType = 0;
 
         INetHandler handler = msg.handler();
-        EntityPlayer player;
-
         try {
             if (handler instanceof NetHandlerPlayServer) {
-                player = ((NetHandlerPlayServer) handler).playerEntity;
+                EntityPlayerMP player = ((NetHandlerPlayServer) handler).playerEntity;
                 packetType = data.readInt();
                 MusePackager packagerServer = this.packagers.get(packetType);
                 MusePacket packetServer = packagerServer.read(data, player);
@@ -80,7 +75,7 @@ public final class MusePacketHandler extends MessageToMessageCodec<FMLProxyPacke
                 if (!(handler instanceof NetHandlerPlayClient)) {
                     throw new IOException("Error with (INetHandler) handler. Should be instance of NetHandlerPlayClient.");
                 }
-                player = this.getClientPlayer();
+                EntityPlayer player = this.getClientPlayer();
                 packetType = data.readInt();
                 MusePackager packagerClient = this.packagers.get(packetType);
                 MusePacket packetClient = packagerClient.read(data, player);

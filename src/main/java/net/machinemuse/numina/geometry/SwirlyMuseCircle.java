@@ -9,7 +9,7 @@ public class SwirlyMuseCircle {
 
     public static final double detail = 4;
     protected DoubleBuffer points;
-    protected final DoubleBuffer colour;
+    protected DoubleBuffer colour;
 
     public SwirlyMuseCircle(Colour c1, Colour c2) {
         if (points == null) {

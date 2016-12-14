@@ -19,10 +19,10 @@ import java.util.List;
  * Created: 5:54 PM, 11/4/13
  */
 public class JSONRecipeList {
-    static final List<JSONRecipe> recipesList = new ArrayList<>();
+    static List<JSONRecipe> recipesList = new ArrayList<JSONRecipe>();
     public static final Gson gson = new Gson();
 
-    private static final FilenameFilter filter = new FilenameFilter() {
+    private static FilenameFilter filter = new FilenameFilter() {
         @Override
         public boolean accept(File dir, String name) {
             return name.endsWith(".recipe") || name.endsWith(".recipes");
@@ -35,7 +35,6 @@ public class JSONRecipeList {
             if (file.exists()) {
                 if (file.isDirectory()) {
                     String[] filenames = file.list(filter);
-                    assert filenames != null;
                     for (String filename : filenames) {
                         String json = readFile(dir + "/" + filename, Charsets.UTF_8);
                         MuseLogger.logDebug("Loading recipes from " + filename);
@@ -69,7 +68,6 @@ public class JSONRecipeList {
                 getCraftingRecipeList().add(recipe);
                 MuseLogger.logDebug("Recipe received:" + recipe.result.oredictName + " / " + recipe.result.registryName);
             } else {
-                assert recipe != null;
                 MuseLogger.logDebug("Recipe duplicate, not added:" + recipe.result.oredictName + " / " + recipe.result.registryName);
             }
         }

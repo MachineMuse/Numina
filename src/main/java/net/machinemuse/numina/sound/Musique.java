@@ -20,10 +20,10 @@ import java.util.HashMap;
  * Ported to Java by lehjr on 10/22/16.
  */
 @SideOnly(Side.CLIENT)
-public final class Musique
+public class Musique
 {
-    private static final HashMap<String, MovingSoundPlayer> soundMap = new HashMap<>();
-    private static final String soundprefix = "Numina";
+    private static HashMap<String, MovingSoundPlayer> soundMap = new HashMap<>();
+    private static String soundprefix = "Numina";
 
     @SideOnly(value=Side.CLIENT)
     public static SoundHandler mcsound() {
@@ -42,14 +42,14 @@ public final class Musique
         }
     }
 
-    public static String makeSoundString(final EntityPlayer player, final String soundname) {
+    public static String makeSoundString(EntityPlayer player, String soundname) {
         return soundprefix + player.getCommandSenderName() + soundname;
     }
 
-    public static void playerSound(final EntityPlayer player, final String soundname, final float volume, Float pitch, Boolean continuous) {
+    public static void playerSound(EntityPlayer player, String soundname, float volume, Float pitch, Boolean continuous) {
         pitch = (pitch != null) ? pitch : 1.0F;
         continuous = (continuous != null) ? continuous : true;
-        if ((FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) && NuminaConfig.useSounds()) {
+        if ((player.worldObj.isRemote) && NuminaConfig.useSounds()) {
             String soundID = makeSoundString(player, soundname);
             MovingSoundPlayer sound = soundMap.get(soundID);
             if (sound != null && (sound.isDonePlaying() || !sound.canRepeat())) {
@@ -67,7 +67,7 @@ public final class Musique
         }
     }
 
-    public static void stopPlayerSound(final EntityPlayer player, final String soundname) {
+    public static void stopPlayerSound(EntityPlayer player, String soundname) {
         if ((FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) && NuminaConfig.useSounds()) {
             String soundID = makeSoundString(player, soundname);
             MovingSoundPlayer sound = soundMap.get(soundID);

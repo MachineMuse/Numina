@@ -14,7 +14,7 @@ import net.minecraftforge.client.IItemRenderer;
  * Created: 7:48 PM, 6/28/13
  */
 public class ItemRenderDelegator implements IItemRenderer {
-    public final MuseItemRenderer renderer;
+    public MuseItemRenderer renderer;
 
     public ItemRenderDelegator(MuseItemRenderer renderer) {
         this.renderer = renderer;

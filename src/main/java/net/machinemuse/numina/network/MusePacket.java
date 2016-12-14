@@ -7,7 +7,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
 import net.machinemuse.numina.general.MuseLogger;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -53,7 +52,7 @@ public abstract class MusePacket {
     public void handleClient(EntityPlayer player) {
     }
 
-    public void handleServer(EntityPlayer player) {
+    public void handleServer(EntityPlayerMP player) {
     }
 
     public void writeInt(int i) {

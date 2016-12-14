@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -14,18 +13,17 @@ import java.util.List;
  * Ported to Java by lehjr on 11/1/16.
  */
 public interface IModeChangingItem {
-    @Nullable
-    IIcon getModeIcon(String mode, ItemStack stack, EntityPlayer player);
+    void setActiveMode(ItemStack itemstack, String newMode);
 
-    List<String> getValidModes(ItemStack stack);
+    String getActiveMode(ItemStack itemStack, EntityPlayer player);
 
-    String getActiveMode(ItemStack stack);
+    void cycleMode(ItemStack itemStack, EntityPlayer player, int dMode);
 
-    void setActiveMode(ItemStack stack, String newMode);
+    String nextMode(ItemStack itemStack, EntityPlayer player);
 
-    void cycleMode(ItemStack stack, EntityPlayer player, int dMode);
+    String prevMode(ItemStack itemStack, EntityPlayer player);
 
-    String nextMode(ItemStack stack, EntityPlayer player);
+    IIcon getModeIcon(String mode, ItemStack itemStack, EntityPlayer player);
 
-    String prevMode(ItemStack stack, EntityPlayer player);
+    List<String> getValidModes(ItemStack stack, EntityPlayer player);
 }

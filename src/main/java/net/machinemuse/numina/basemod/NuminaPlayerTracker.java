@@ -15,8 +15,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
  *
  * Ported to Java by lehjr on 10/26/16.
  */
-public final class NuminaPlayerTracker
-{
+public class NuminaPlayerTracker {
     @SubscribeEvent
     public void onPlayerLogin(final PlayerEvent.PlayerLoggedInEvent event) {
         if (!FMLCommonHandler.instance().getMinecraftServerInstance().isSinglePlayer()) {
