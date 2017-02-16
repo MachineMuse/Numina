@@ -5,8 +5,7 @@ import codechicken.nei.api.IConfigureNEI;
 
 public class NEINuminaConfig implements IConfigureNEI {
     @Override
-    public void loadConfig()
-    {
+    public void loadConfig() {
         API.registerRecipeHandler(new JSONRecipeHandler());
         API.registerUsageHandler(new JSONRecipeHandler());
     }

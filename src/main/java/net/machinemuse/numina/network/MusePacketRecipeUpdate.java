@@ -3,7 +3,6 @@ package net.machinemuse.numina.network;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.machinemuse.numina.recipe.JSONRecipeList;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.io.DataInputStream;
