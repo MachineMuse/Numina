@@ -41,7 +41,7 @@ public final class NuminaConfig {
     }
 
     public static boolean useFOVFix() {
-        return getConfigBoolean(Configuration.CATEGORY_GENERAL, "Ignore speed boosts for field of view", true);
+        return getConfigBoolean(Configuration.CATEGORY_GENERAL, "Limit FOV", true);
     }
 
     public static boolean isDebugging() {
