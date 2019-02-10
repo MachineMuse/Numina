@@ -1,55 +1,85 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
         maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
-apply plugin: 'scala'
-apply plugin: 'forge'
-apply plugin: 'curseforge'
+plugins {
+    id "com.github.johnrengelman.shadow" version "4.0.4"
+    id 'idea'
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
 
-// define the properties file
-ext.configFile = file "project.properties"
-
-configFile.withReader {
-    // read config.  it shall from now on be referenced as simply config or as project.config
-    def prop = new Properties()
-    prop.load(it)
-    project.ext.config = new ConfigSlurper().parse prop
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
 }
 
 def buildnumber = System.getenv("BUILD_NUMBER")
-def travisbuildnumber = (System.getenv("TRAVIS_BUILD_NUMBER") ?: -111).toInteger() + 111
-version = "${config.mod_version}." + (buildnumber ?: travisbuildnumber)
-group= "${config.group_id}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "${config.mod_id}"
+def travisbuildnumber = (System.getenv("TRAVIS_BUILD_NUMBER") ?: -000).toInteger() + 00
+version = "${minecraft_version}-${mod_version}.${buildnumber ?: travisbuildnumber}"
+group = group_id // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = mod_id
 
-minecraft {
-    version = "${config.minecraft_version}-${config.forge_version}"
-    runDir = "run"
-}
-
-repositories {
-    maven {
-        name = "ChickenBones"
-        url = "http://chickenbones.net/maven"
-    }
-}
 
 dependencies {
-    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev'
-    compile 'codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev'
+    // Apache commons-text used for word wrapping
+    compile group: 'org.apache.commons', name: 'commons-text', version: '1.6'
+    shadow group: 'org.apache.commons', name: 'commons-text', version: '1.6'
+}
+
+shadowJar {
+    archiveName = tasks.jar.archiveName
+    classifier = ""
+    exclude 'org.apache.commons.lang*'
+    relocate 'org.apache.commons.text', "net.machinemuse.repack.org.apache.commons.text"
+    configurations = [project.configurations.shadow]
+}
+
+reobf {
+    shadowJar {
+                mappingType = "SEARGE"
+            }
+}
+
+tasks.reobfShadowJar.mustRunAfter shadowJar
+
+minecraft {
+    version = minecraft_version + "-" + forge_version// + "-" + "1.10.0"
+    runDir = "run"
+    mappings = mcp_mappings
+    replace "@VERSION@", project.version
+    useDepAts = true
+}
+
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        // replace version and mcversion
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
+
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+    // Move access transformers to META-INF
+    rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
 jar {
@@ -58,72 +88,12 @@ jar {
     }
 }
 
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+idea {
+    module {
+        inheritOutputDirs = true
     }
 }
 
-task devJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'dev'
-}
-artifacts {
-    archives devJar
-}
-
-
-def getGitChangelog = { ->
-    try {
-        def stdout = new ByteArrayOutputStream()
-        def gitHash = System.getenv("GIT_COMMIT")
-        def gitPrevHash = System.getenv("GIT_PREVIOUS_COMMIT")
-        if(gitHash && gitPrevHash) {
-            exec {
-                commandLine 'git', 'log', '--pretty=tformat:%s - %aN', '' + gitPrevHash + '...' + gitHash
-                standardOutput = stdout
-            }
-            return stdout.toString().trim()
-        } else {
-            return "";
-        }
-    } catch(ignored) {
-        return "";
-    }
-}
-
-
-curse {
-    projectId = '235440'
-    apiKey = project.hasProperty('curseForgeApiKey') ? project.curseForgeApiKey : ''
-    def branch = System.getenv("GIT_BRANCH")
-    if(branch == null) {
-        releaseType = 'alpha'
-    } else if(branch.equals("origin/experimental")) {
-        releaseType = 'beta'
-    } else if(branch.equals("origin/master")) {
-        releaseType = 'release'
-    } else {
-        releaseType = 'alpha'
-    }
-
-
-    changelog = getGitChangelog()
-
-    addGameVersion '1.7.10'
-
+runClient {
+    jvmArgs "-Xmx3G"
 }
