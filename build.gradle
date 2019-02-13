@@ -32,11 +32,25 @@ version = "${minecraft_version}-${mod_version}.${buildnumber ?: travisbuildnumbe
 group = group_id // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = mod_id
 
+repositories {
+    //url                                                           //dependencies
+    maven { url = "http://maven.ic2.player.to" }                    //IC2 Forestry
+    maven { url = 'http://maven.mcmoddev.com' }                     //TESLA API
+    maven { url = "http://maven.covers1624.net/" }                  //CoFH
+
+}
+
+
+
 
 dependencies {
-    // Apache commons-text used for word wrapping
-    compile group: 'org.apache.commons', name: 'commons-text', version: '1.6'
-    shadow group: 'org.apache.commons', name: 'commons-text', version: '1.6'
+    compile group: 'org.apache.commons', name: 'commons-text', version: '1.6'  // Apache commons-text used for word wrapping
+    shadow group: 'org.apache.commons', name: 'commons-text', version: '1.6'  // Apache commons-text used for word wrapping (Shadow copy)
+    deobfCompile "net.sengir.forestry:forestry_${minecraft_version}:${forestry_version}"            //Forestry
+    compile "net.darkhax.tesla:Tesla-${minecraft_version}:${tesla_version}"                         //Tesla
+    deobfCompile "cofh:RedstoneFlux:1.12-${rf_version}:universal"
+    deobfCompile "net.industrial-craft:industrialcraft-2:${ic2api_version}-ex112"                   //IC2 API
+    
 }
 
 shadowJar {
@@ -63,6 +77,7 @@ minecraft {
     useDepAts = true
 }
 
+processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
