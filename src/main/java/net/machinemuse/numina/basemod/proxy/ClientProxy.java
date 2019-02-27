@@ -1,8 +1,8 @@
 package net.machinemuse.numina.basemod.proxy;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import net.machinemuse.numina.event.FOVUpdateEventHandler;
-import net.machinemuse.numina.event.KeybindKeyHandler;
 import net.machinemuse.numina.mouse.MouseEventHandler;
 import net.machinemuse.numina.render.RenderGameOverlayEventHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -17,6 +17,6 @@ public class ClientProxy extends CommonProxy {
         MinecraftForge.EVENT_BUS.register((Object)new MouseEventHandler());
         MinecraftForge.EVENT_BUS.register((Object)new RenderGameOverlayEventHandler());
         MinecraftForge.EVENT_BUS.register((Object)new FOVUpdateEventHandler());
-        MinecraftForge.EVENT_BUS.register((Object)new KeybindKeyHandler());
+        ClientRegistry.registerKeyBinding(FOVUpdateEventHandler.fovToggleKey);
     }
 }

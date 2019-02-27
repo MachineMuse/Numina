@@ -24,7 +24,7 @@ public final class NuminaConfig {
         }
         // Initialize config file
         isDebugging();
-        useFOVFix();
+        useFOVFixLevel();
         useSounds();
         config.save();
     }
@@ -40,8 +40,12 @@ public final class NuminaConfig {
         return getConfigBoolean(Configuration.CATEGORY_GENERAL, "Default state of FOVfix on login (enabled = true, disabled = false)", true);
     }
 
-    public static boolean useFOVFix() {
-        return getConfigBoolean(Configuration.CATEGORY_GENERAL, "Ignore speed boosts for field of view", true);
+//    public static boolean useFOVFix() {
+//        return getConfigBoolean(Configuration.CATEGORY_GENERAL, "Ignore speed boosts for field of view", true);
+//    }
+
+    public static int useFOVFixLevel() {
+        return config.get(Configuration.CATEGORY_GENERAL, "0=FOVFix off; 1=Full speed boost ignore; 2=FOV normalized", 1).getInt();
     }
 
     public static boolean isDebugging() {
