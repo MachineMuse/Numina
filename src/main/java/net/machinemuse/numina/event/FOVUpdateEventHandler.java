@@ -37,7 +37,7 @@ public class FOVUpdateEventHandler {
                     e.entity.addChatComponentMessage(new ChatComponentText(I18n.format("fovfixtoggle.disabled")));
             }
 
-            if (fovIsActive && e.entity.moveForward > 0) {
+            if (fovIsActive) {
                 IAttributeInstance attributeinstance = e.entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
                 e.newfov = (float) (e.fov / ((attributeinstance.getAttributeValue() / e.entity.capabilities.getWalkSpeed() + 1.0) / 2.0));
                 if ( NuminaConfig.useFOVFixLevel() > 1 && e.entity.isSprinting() ) {
