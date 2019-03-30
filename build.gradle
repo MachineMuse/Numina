@@ -17,7 +17,6 @@ buildscript {
 
 plugins {
     id "com.github.johnrengelman.shadow" version "4.0.4"
-    id 'idea'
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
@@ -39,9 +38,6 @@ repositories {
     maven { url = "http://maven.covers1624.net/" }                  //CoFH
 
 }
-
-
-
 
 dependencies {
     compile group: 'org.apache.commons', name: 'commons-text', version: '1.6'  // Apache commons-text used for word wrapping
@@ -70,10 +66,10 @@ reobf {
 tasks.reobfShadowJar.mustRunAfter shadowJar
 
 minecraft {
-    version = minecraft_version + "-" + forge_version// + "-" + "1.10.0"
+    version = minecraft_version + "-" + forge_version
     runDir = "run"
     mappings = mcp_mappings
-    replace "@VERSION@", project.version
+    replace "@NUMINA_VERSION@", project.version
     useDepAts = true
 }
 
@@ -103,10 +99,13 @@ jar {
     }
 }
 
-idea {
-    module {
-        inheritOutputDirs = true
-    }
+task devJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+}
+
+artifacts {
+    archives devJar
 }
 
 runClient {
