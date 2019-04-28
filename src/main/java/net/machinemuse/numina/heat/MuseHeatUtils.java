@@ -7,6 +7,7 @@ import net.machinemuse.numina.item.MuseItemUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -34,7 +35,7 @@ public class MuseHeatUtils {
     }
 
     public static double coolPlayer(EntityPlayer player, double coolJoules) {
-        List<ItemStack> items = MuseItemUtils.getModularItemsInInventory(player);
+        NonNullList<ItemStack> items = MuseItemUtils.getModularItemsInInventory(player);
         if (player.isHandActive()) {
             items.remove(player.inventory.getCurrentItem());
         }
@@ -60,7 +61,7 @@ public class MuseHeatUtils {
      * Should only be called server side
      */
     public static double heatPlayer(EntityPlayer player, double heatJoules) {
-        List<ItemStack> items = MuseItemUtils.getModularItemsEquipped(player);
+        NonNullList<ItemStack> items = MuseItemUtils.getModularItemsEquippedWithoutActive(player);
         if (player.isHandActive()) {
             items.remove(player.inventory.getCurrentItem());
         }

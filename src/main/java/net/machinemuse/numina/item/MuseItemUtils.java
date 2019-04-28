@@ -1,5 +1,6 @@
 package net.machinemuse.numina.item;
 
+import net.machinemuse.numina.basemod.MuseLogger;
 import net.machinemuse.numina.math.MuseMathUtils;
 import net.machinemuse.numina.nbt.MuseNBTUtils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,6 +9,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -30,6 +32,30 @@ public class MuseItemUtils {
     public static NonNullList<ItemStack> getModularItemsEquipped(EntityPlayer player) {
         NonNullList<ItemStack> modulars = NonNullList.create();
         for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
+
+            ItemStack itemStack = player.getItemStackFromSlot(slot);
+            if (!itemStack.isEmpty() && itemStack.getItem() instanceof IModularItem) {
+                if (slot.getSlotType() == EntityEquipmentSlot.Type.ARMOR ||
+                        // eliminates having held armor count as equipped item
+                        (slot.getSlotType() == EntityEquipmentSlot.Type.HAND && itemStack.getItem() instanceof IModeChangingItem)) {
+                    modulars.add(itemStack);
+                }
+            }
+        }
+        return modulars;
+    }
+
+    public static EntityEquipmentSlot toHand(EnumHand hand) {
+        return hand == EnumHand.MAIN_HAND ? EntityEquipmentSlot.MAINHAND : EntityEquipmentSlot.OFFHAND;
+    }
+
+    public static NonNullList<ItemStack> getModularItemsEquippedWithoutActive(EntityPlayer player) {
+        NonNullList<ItemStack> modulars = NonNullList.create();
+        for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
+            if(slot.getSlotType() == EntityEquipmentSlot.Type.HAND && player.isHandActive()) {
+                if (slot == toHand(player.getActiveHand()))
+                    continue;
+            }
 
             ItemStack itemStack = player.getItemStackFromSlot(slot);
             if (!itemStack.isEmpty() && itemStack.getItem() instanceof IModularItem) {
