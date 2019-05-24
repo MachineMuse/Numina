@@ -4,8 +4,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
 import net.machinemuse.numina.basemod.MuseLogger;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 import javax.annotation.Nonnull;
@@ -16,16 +18,15 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class MuseByteBufferUtils extends ByteBufUtils {
+    public static void writeCompressedItemStack(ByteBuf buf, @Nonnull ItemStack itemStack) {
+        writeCompressedNBT(buf, itemStack.serializeNBT());
+    }
 
-
-//    public static PlayerInputMap readPlayerInputMap(ByteBuf buf) {
-//        ByteBufInputStream bis = new ByteBufInputStream(buf);
-//        DataInputStream dis = new DataInputStream(bis);
-//
-//
-//
-//
-//    }
+    @Nonnull
+    public static ItemStack readCompressedItemStack(ByteBuf buf) {
+        NBTTagCompound nbt = readCompressedNBT(buf);
+        return new ItemStack(nbt);
+    }
 
     public static void writeCompressedNBT(ByteBuf buf, NBTTagCompound nbt) {
         ByteBufOutputStream bos = new ByteBufOutputStream(buf);
@@ -186,7 +187,15 @@ public class MuseByteBufferUtils extends ByteBufUtils {
                 ++i;
             }
         } else if (o instanceof NBTTagCompound) {
-            CompressedStreamTools.write((NBTTagCompound)o, dataOut);
+            CompressedStreamTools.write((NBTTagCompound) o, dataOut);
+        } else if (o instanceof ItemStack) {
+            CompressedStreamTools.write(((ItemStack) o).serializeNBT(), dataOut);
+        } else if (o instanceof ItemStack[]) {
+            final ItemStack[] stackList = (ItemStack[]) o;
+            dataOut.writeInt(stackList.length);
+            for (ItemStack stack : stackList) {
+                CompressedStreamTools.write(stack.serializeNBT(), dataOut);
+            }
         } else if (o instanceof int[]) {
             final int[] array2 = (int[]) o;
             dataOut.writeInt(array2.length);
@@ -194,7 +203,6 @@ public class MuseByteBufferUtils extends ByteBufUtils {
                 dataOut.writeInt(array2[i]);
                 ++i;
             }
-
             // this probably won't work and should be tested. Should not even be needed.
 //        } else if (objectType == HashMap.class) {
 //            writeMapToStream((Map) o);
@@ -225,6 +233,22 @@ public class MuseByteBufferUtils extends ByteBufUtils {
         if (clazz == NBTTagCompound.class) {
             return CompressedStreamTools.read(dataIn);
         }
+        if (clazz == ItemStack.class) {
+            return new ItemStack(CompressedStreamTools.read(dataIn));
+        }
+
+        if (clazz == ItemStack[].class) {
+            NonNullList<ItemStack> outList = NonNullList.create();
+            final int size = dataIn.readInt();
+            int j =0;
+
+            while (j > size) {
+                outList.add(j, (ItemStack) readObject(dataIn, ItemStack.class));
+                j++;
+            }
+            return outList;
+        }
+
         if (clazz == int[].class) {
             final int int1 = dataIn.readInt();
             final int[] array = new int[int1];
