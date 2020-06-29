@@ -2,12 +2,13 @@ package net.machinemuse.numina.string;
 
 import net.machinemuse.numina.client.render.MuseRenderer;
 import net.minecraft.util.ResourceLocation;
-import org.apache.commons.text.WordUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class MuseStringUtils {
     /*
@@ -193,11 +194,98 @@ public abstract class MuseStringUtils {
         if (str == null)
             str = "";
 
-        String wrapped = WordUtils.wrap(str, length);
-        String[] stringArray = wrapped.split(System.lineSeparator());
+        String[] stringArray = wordUtilsWrap(str, length);
         List<String> strlist = Arrays.asList(stringArray);
         return strlist;
     }
+
+    // org.apache.commons.lang3.StringUtils.isBlank
+    static boolean isBlank(final CharSequence cs) {
+        int strLen;
+        if (cs == null || (strLen = cs.length()) == 0) {
+            return true;
+        }
+        for (int i = 0; i < strLen; i++) {
+            if (!Character.isWhitespace(cs.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // TODO: return List of strings
+    // org.apache.commons.text.WordUtils
+    static String[] wordUtilsWrap(final String str, int wrapLength) {
+        if (str == null) {
+            return null;
+        }
+
+        String newLineStr = System.lineSeparator();
+        String wrapOn = " ";
+        if (wrapLength < 1) {
+            wrapLength = 1;
+        }
+        if (isBlank(wrapOn)) {
+            wrapOn = " ";
+        }
+
+        final Pattern patternToWrapOn = Pattern.compile(wrapOn);
+        final int inputLineLength = str.length();
+        int offset = 0;
+
+        final StringBuilder wrappedLine = new StringBuilder(inputLineLength + 32);
+
+        while (offset < inputLineLength) {
+            int spaceToWrapAt = -1;
+            Matcher matcher = patternToWrapOn.matcher(str.substring(offset,
+                    Math.min((int) Math.min(Integer.MAX_VALUE, offset + wrapLength + 1L), inputLineLength)));
+            if (matcher.find()) {
+                if (matcher.start() == 0) {
+                    offset += matcher.end();
+                    continue;
+                }
+                spaceToWrapAt = matcher.start() + offset;
+            }
+
+            // only last line without leading spaces is left
+            if (inputLineLength - offset <= wrapLength) {
+                break;
+            }
+
+            while (matcher.find()) {
+                spaceToWrapAt = matcher.start() + offset;
+            }
+
+            if (spaceToWrapAt >= offset) {
+                // normal case
+                wrappedLine.append(str, offset, spaceToWrapAt);
+                wrappedLine.append(newLineStr);
+                offset = spaceToWrapAt + 1;
+
+            } else {
+                // do not wrap really long word, just extend beyond limit
+                matcher = patternToWrapOn.matcher(str.substring(offset + wrapLength));
+                if (matcher.find()) {
+                    spaceToWrapAt = matcher.start() + offset + wrapLength;
+                }
+
+                if (spaceToWrapAt >= 0) {
+                    wrappedLine.append(str, offset, spaceToWrapAt);
+                    wrappedLine.append(newLineStr);
+                    offset = spaceToWrapAt + 1;
+                } else {
+                    wrappedLine.append(str, offset, str.length());
+                    offset = inputLineLength;
+                }
+            }
+        }
+
+        // Whatever is left in line is short enough to just pass through
+        wrappedLine.append(str, offset, str.length());
+
+        return wrappedLine.toString().split(System.lineSeparator());
+    }
+
 
     /**
      * Takes a string and wraps it to a certain length using MuseRenderer's string length
